@@ -3,11 +3,30 @@ from classes.FtpManager import FtpManager
 # gene file downloader
 class GeneDownloader:
     # constructor
-    def __init__(self, output_folder):
+    def __init__(self, output_folder, list_file):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.list_file_path = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
         self.list_file_name = 'assembly_summary_refseq.txt'
         self.output_folder = output_folder
+        self.species_list = self.__get_species_list(list_file)
+
+
+    # get species list
+    def __get_species_list(self, list_file):
+        list = []
+
+        fp = open(list_file, 'r')
+        line = fp.readline()
+        while line:
+            line = line.strip()
+            tokens = line.split('\t')
+            if len(tokens) >= 2:
+                species = tokens[1]
+                
+                list.append(species)
+            line = fp.readline()
+        fp.close()
+        return list
 
     # download
     def download(self):
@@ -28,12 +47,14 @@ class GeneDownloader:
             line = line.strip()
             if not line.startswith('#'):
                 tokens = line.split('\t')
-                if len(tokens) >= 0:
+                if len(tokens) >= 8:
                     gene_id = tokens[0]
+                    species = tokens[7]
                     url = None
-                    for token in tokens:
-                        if token.startswith('ftp://'):
-                            url = token
+                    if species in self.species_list:
+                        for token in tokens:
+                            if token.startswith('ftp://'):
+                                url = token
                     if not url == None:
                         self.__download_gene_file(gene_id, url)
             line = fp.readline()

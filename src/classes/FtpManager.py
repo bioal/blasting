@@ -2,6 +2,7 @@ import os
 import datetime
 from ftplib import FTP
 from dateutil import parser
+from classes.TxtFile import TxtFile
 
 # FTP manager
 class FtpManager:
@@ -22,7 +23,8 @@ class FtpManager:
         if self.__check_file(path, output_file):
             print('Downloading... ' + path)
             fp = open(output_file, 'w', encoding='UTF-8')
-            self.ftp.retrlines('RETR ' + path, lambda s: self.__write_line(fp, s))
+            txt_file = TxtFile(fp)
+            self.ftp.retrlines('RETR ' + path, txt_file.write_line)
             fp.close()
         else:
             print('Skip... ' + path)
@@ -50,7 +52,8 @@ class FtpManager:
         download_flag = True
         if os.path.exists(output_file):
             timestamp = datetime.datetime.fromtimestamp(os.stat(output_file).st_mtime)
-            if timestamp >= remote_time:
+            if os.path.getsize(output_file) > 0 and timestamp >= remote_time:
+
                 download_flag = False
 
         return download_flag
