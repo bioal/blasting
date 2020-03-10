@@ -1,5 +1,6 @@
 import os
 import datetime
+import gzip
 from ftplib import FTP
 from dateutil import parser
 from classes.TxtFile import TxtFile
@@ -38,6 +39,27 @@ class FtpManager:
             fp.close()
         else:
             print('Skip... ' + path)
+
+    # download gz
+    def download_gz(self, path, output_file):
+        unzip_file = output_file.replace('.gz', '')
+        if self.__check_file(path, unzip_file):
+            print('Downloading... ' + path)
+            fp = open(output_file, 'wb')
+            self.ftp.retrbinary('RETR ' + path, fp.write)
+            fp.close()
+
+            in_fp = gzip.open(output_file, 'rb')
+            out_fp = open(unzip_file, 'wb')
+            out_fp.write(in_fp.read())
+
+            in_fp.close()
+            out_fp.close()
+
+            os.remove(output_file)
+        else:
+            print('Skip... ' + path)
+
 
     # list
     def list(self, path):

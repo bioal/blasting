@@ -8,7 +8,23 @@ class GeneDownloader:
         self.list_file_path = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
         self.list_file_name = 'assembly_summary_refseq.txt'
         self.output_folder = output_folder
+        self.id_list = self.__get_id_list(list_file)
         self.species_list = self.__get_species_list(list_file)
+
+    # get id list
+    def __get_id_list(self, list_file):
+        list = []
+        fp = open(list_file, 'r')
+        line = fp.readline()
+        while line:
+            line = line.strip()
+            tokens = line.split('\t')
+            if len(tokens) >= 7:
+                list.append(tokens[5])
+                list.append(tokens[6])
+            line = fp.readline()
+        fp.close()
+        return list
 
 
     # get species list
@@ -51,7 +67,7 @@ class GeneDownloader:
                     gene_id = tokens[0]
                     species = tokens[7]
                     url = None
-                    if species in self.species_list:
+                    if (species in self.species_list) or (gene_id in self.id_list):
                         for token in tokens:
                             if token.startswith('ftp://'):
                                 url = token
@@ -76,4 +92,4 @@ class GeneDownloader:
         if not faa == None:
             index = faa.rfind('/')
             faa_file = self.output_folder + '/' + faa[index + 1:]
-            ftp.download_binary(faa, faa_file)
+            ftp.download_gz(faa, faa_file)
