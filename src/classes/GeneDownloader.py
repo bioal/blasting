@@ -58,6 +58,7 @@ class GeneDownloader:
     # downloads gene files
     def __download_gene_files(self):
         fp = open(self.list_file, 'r', encoding='UTF-8')
+        result_fp = open(self.output_folder + '/gene_files.txt', 'w')
         line = fp.readline()
         while line:
             line = line.strip()
@@ -72,7 +73,8 @@ class GeneDownloader:
                             if token.startswith('ftp://'):
                                 url = token
                     if not url == None:
-                        self.__download_gene_file(gene_id, url)
+                        gene_file = self.__download_gene_file(gene_id, url)
+                        result_fp.write(gene_id + '\t' + species + '\t' + gene_file + '\n')
             line = fp.readline()
         fp.close()
     
@@ -86,10 +88,14 @@ class GeneDownloader:
         files = ftp.list(path)
 
         faa = None
+        file_name = None
         for file in files:
             if file.endswith('faa.gz'):
                 faa = file
         if not faa == None:
             index = faa.rfind('/')
-            faa_file = self.output_folder + '/' + faa[index + 1:]
+            file_name = faa[index + 1:]
+            faa_file = self.output_folder + '/' + file_name
             ftp.download_gz(faa, faa_file)
+            file_name = file_name.replace('faa.gz', 'faa')
+        return file_name
