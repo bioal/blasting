@@ -1,53 +1,73 @@
 from threading import Thread, Semaphore
 import time
 import subprocess
+import os
 
 class BlastManager:
     # constructor
-    def __init__(self, output_folder, list_file):
+    def __init__(self, output_folder, list_file, num):
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder) 
         self.output_folder = output_folder
-        self.list_file = list_file
-        index = list_file.rfind('/')
-        if index < 0:
-            self.data_folder = '.'
-        else:
-            self.data_folder = list_file[0:index]
-        self.semaphore = Semaphore(4)
+        self.genome_list = self.__get_list(list_file)
+        self.semaphore = Semaphore(int(num))
         self.command = '/opt/packages/blast/ncbi-blast-2.10.0+-src/c++/ReleaseMT/bin/blastp'
 
-    # search
-    def search(self):
-        list = self.__get_gene_list()
-        self.gene_list = list 
-        for i in range(len(self.gene_list)):
-            gene1 = self.gene_list[i]
-            for j in range(i + 1, len(self.gene_list)):
-                gene2 = self.gene_list[j]
-                thread = Thread(target=self.__execute_blast, args=(gene1, gene2))
-                thread.start()
-
-    # get gene list
-    def __get_gene_list(self):
-        fp = open(self.list_file, 'r')
+    # get list
+    def __get_list(self, list_file):
+        fp = open(list_file, 'r')
         list = []
         for line in fp:
             tokens = line.strip().split('\t')
-            if len(tokens) >= 3:
-                gene = {'id':tokens[0], 'species':tokens[1], 'file':tokens[2]}
-                list.append(gene)
+            if len(tokens) >= 6:
+                id = tokens[0]
+                gene_id = tokens[1]
+                species = tokens[2]
+                faa_file = tokens[3]
+                list_file = tokens[4]
+                database = tokens[5]
+                
+                genome = {'id':id, 'gene_id':gene_id, 'species':species, 'faa_file':faa_file, 'list_file': list_file, 'database': database}
+                list.append(genome)
         fp.close()
         return list
 
+    # search
+    def search(self):
+        human = None
+        for genome in self.genome_list:
+            if int(genome['id']) == 1:
+                human = genome
+
+        for genome in self.genome_list:
+            thread1 = Thread(target=self.__execute_blast, args=(genome, human))
+            thread1.start()
+
+            if not genome == human:
+                thread2 = Thread(target=self.__execute_blast, args=(human, genome))
+                thread2.start()
+
+
     # blast
-    def __execute_blast(self, gene1, gene2):
+    def __execute_blast(self, genome1, genome2):
         with self.semaphore:
-            output_file = self.output_folder + '/' + gene1['id'] + '-' + gene2['id'] + '.txt'
-            faa_file1 = self.data_folder + '/' + gene1['file']
-            faa_file2 = self.data_folder + '/' + gene2['file']
-            
-            command_line = self.command + ' -query ' + faa_file1 + ' -subject ' + faa_file2 + ' -out ' + output_file
-            print('Execute: ' + command_line)
-            process = subprocess.Popen(command_line.strip().split(' '))
+            output_file = self.output_folder + '/' + genome1['id'] + '-' + genome2['id'] + '.txt'
+            database = genome2['database']
+            query = genome1['faa_file']
+
+            command = [
+                self.command,
+                '-db',
+                database,
+                '-query',
+                query,
+                '-outfmt',
+                '6',
+                '-out',
+                output_file
+            ]
+            command_line = ' '.join(command)
+            print('Exec: ' + command_line)
+            process = subprocess.Popen(command)
             process.wait()
-            print('Done: ' + command_line)
 
