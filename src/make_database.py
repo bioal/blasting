@@ -11,7 +11,7 @@ list_file = parser.get_option('l')
 
 if database_folder == None or list_file == None:
     print('Usage: make_database.py -o [output_folder] -l [list_file]')
-    print('    e.g., make_database.py -o /opt/orthology/data/genome/database -l gene_files.txt')
+    print(' e.g., make_database.py -o /opt/orthology/data/genome/database -l gene_files.txt')
 else:
     manager = DatabaseManager(database_folder, list_file)
     manager.make_database()
