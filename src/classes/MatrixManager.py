@@ -36,6 +36,7 @@ class MatrixManager:
         fp2 = open(self.output_folder + '/matrix2.txt', 'w')
         fp3 = open(self.output_folder + '/matrix3.txt', 'w')
         fp4 = open(self.output_folder + '/matrix4.txt', 'w')
+        fp5 = open(self.output_folder + '/matrix5.txt', 'w')
 
         human_genome = self.genome_list[0]
         human_fp = open(human_genome['list_file'], 'r')
@@ -58,16 +59,26 @@ class MatrixManager:
 
                     fp3.write(result['number'] + '\t')
                     fp4.write(result['score'] + '\t')
+                    if result['number'] == 'n/a':
+                        fp5.write('n/a' + '\t')
+                    elif int(result['number']) == int(number):
+                        fp5.write(result['number'] + '\t')
+                    else:
+                        fp5.write('NULL' + '\t')
+
                 fp1.write('\n')
                 fp2.write('\n')
                 fp3.write('\n')
                 fp4.write('\n')
+                fp5.write('\n')
 
         human_fp.close()
         fp1.close()
         fp2.close()
         fp3.close()
         fp4.close()
+        fp5.close()
+       
 
     # search from human
     def __search_from_human(self, title, genome):
