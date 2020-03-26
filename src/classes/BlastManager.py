@@ -5,13 +5,13 @@ import os
 
 class BlastManager:
     # constructor
-    def __init__(self, output_folder, list_file, num):
+    def __init__(self, output_folder, list_file, num, command):
         if not os.path.exists(output_folder):
             os.makedirs(output_folder) 
         self.output_folder = output_folder
         self.genome_list = self.__get_list(list_file)
         self.semaphore = Semaphore(int(num))
-        self.command = '/opt/packages/blast/ncbi-blast-2.10.0+-src/c++/ReleaseMT/bin/blastp'
+        self.command = command
 
     # get list
     def __get_list(self, list_file):
