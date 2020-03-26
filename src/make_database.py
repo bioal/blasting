@@ -13,6 +13,6 @@ if database_folder == None or list_file == None:
     print('Usage: make_database.py -o [output_folder] -l [list_file]')
     print(' e.g., make_database.py -o /opt/orthology/data/genome/database -l gene_files.txt')
 else:
-    manager = DatabaseManager(database_folder, list_file)
+    manager = DatabaseManager(database_folder, list_file, '/opt/packages/blast/ncbi-blast-2.10.0+-src/c++/ReleaseMT/bin/makeblastdb')
     manager.make_database()
 

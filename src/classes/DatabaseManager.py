@@ -3,12 +3,12 @@ import os
 
 class DatabaseManager:
     # constructor
-    def __init__(self, output_folder, list_file):
+    def __init__(self, output_folder, list_file, command):
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
         self.list_file = self.__read_list_file(list_file)
-        self.command = '/opt/packages/blast/ncbi-blast-2.10.0+-src/c++/ReleaseMT/bin/makeblastdb'
+        self.command = command
 
 
     # read list file
