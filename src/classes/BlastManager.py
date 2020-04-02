@@ -61,6 +61,7 @@ class BlastManager:
                 database,
                 '-query',
                 query,
+                '-max_target_seqs', '1',
                 '-outfmt',
                 '6',
                 '-out',
