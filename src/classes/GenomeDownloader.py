@@ -85,7 +85,7 @@ class GenomeDownloader:
                             url = token
                 if url is not None:
                     if debug:
-                        print(url)
+                        print(id + ' ' + url)
                     else:
                         gene_file = self.__download_gene_file(gcf_id, url)
                         result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gene_file + '\n')
