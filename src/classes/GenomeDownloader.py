@@ -106,7 +106,7 @@ class GenomeDownloader:
         if debug:
             for id in self.species_hash.values():
                 if not obtained.get(id):
-                    print(hash[id])
+                    print(self.hash[id])
     
     def __download_gene_file(self, gene_id, url):
         server = url.replace('ftp://', '')
