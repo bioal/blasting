@@ -69,13 +69,16 @@ class GenomeDownloader:
                 species_taxid = tokens[6]
                 species = tokens[7]
                 url = None
-                id = None
-                if species in self.species_hash:
-                    id = self.species_hash[species]
-                if taxid in self.taxid_hash:
-                    id = self.taxid_hash[taxid]
-                if species_taxid in self.taxid_hash:
-                    id = self.taxid_hash[species_taxid]
+                # id = None
+                # if species in self.species_hash:
+                #     id = self.species_hash[species]
+                # if taxid in self.taxid_hash:
+                #     id = self.taxid_hash[taxid]
+                # if species_taxid in self.taxid_hash:
+                #     id = self.taxid_hash[species_taxid]
+                id = self.species_hash.get(species) or \
+                     self.taxid_hash.get(taxid) or \
+                     self.taxid_hash.get(species_taxid)
                 if id is not None:
                     for token in tokens:
                         if token.startswith('ftp://'):
