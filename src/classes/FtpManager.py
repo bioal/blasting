@@ -56,7 +56,7 @@ class FtpManager:
             in_fp.close()
             out_fp.close()
 
-            os.remove(output_file)
+            # os.remove(output_file)
         else:
             print('Skip... ' + path)
 
