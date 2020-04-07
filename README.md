@@ -1,5 +1,7 @@
 # hop
 
+Python3
+
 ## Usage
     $ 1.download_gene_files.py -l species_list.tsv -o genome
     $ 2.make_database.py -l gene_files.txt -o database
