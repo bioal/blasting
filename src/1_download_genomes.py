@@ -12,11 +12,11 @@ data_folder = parser.get_option('o')
 if data_folder == None:
     data_folder = 'genomes'
 
-if data_folder == None or len(sys.argv) != 1:
+if data_folder == None or len(sys.argv) != 2:
     print('Usage: download_gene_files.py -o [output_folder] -l [list_file]')
     print(' e.g., download_gene_files.py -o /opt/orthology/data/genome -l /opt/orthology/data/species_list.tsv')
 else:
-    list_file = sys.argv[0]
+    list_file = sys.argv[1]
     downloader = GenomeDownloader(data_folder, list_file)
     downloader.download()
 
