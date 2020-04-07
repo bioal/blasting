@@ -1,8 +1,8 @@
 from classes.FtpManager import FtpManager
 import os
 
-# gene file downloader
-class GeneDownloader:
+# genome file downloader
+class GenomeDownloader:
     # constructor
     def __init__(self, output_folder, list_file):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
