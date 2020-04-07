@@ -87,7 +87,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		NCBI 
 86	Botryotinia fuckeliana	Botryotinia fuckeliana	Fungi	1302.5	UP000012045	1290391	UP000008177	Botryotinia fuckeliana totivirus 1	425009	425009
 87	Puccinia graminis f. sp. tritici	Puccinia graminis	Fungi	1302.5	UP000008783	418459			56615	5297
 88	Thielavia terrestris NRRL 8126	Thielavia terrestris	Fungi	1302.5	UP000008181	578455				35720
-89	Nosema ceranae BRL01	Nosema ceranae	Fungi	1302.5	UP000009082	578460				40302
+89	Nosema ceranae BRL01	Nosema ceranae	Fungi	1302.5	UP000009082	40302				40302
 90	Melampsora larici-populina 98ag31	Melampsora larici-populina	Fungi	1302.5	UP000001072	747676		Melampsora larici-populina 98AG31		203908
 91	Gibberella zeae PH-1 (Fusarium)	Gibberella zeae	Fungi		UP000070720	229533		NOT_FOUND		
 92	Chaetomium globosum CBS 148.51	Chaetomium globosum	Fungi	1302.5	UP000001056	306901				38033
@@ -97,22 +97,22 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		NCBI 
 96	Sclerotinia sclerotiorum 1980 UF-70	Sclerotinia sclerotiorum	Fungi	1302.5		665079				5180
 97	Schizophyllum commune H4-8	Schizophyllum commune	Fungi	1302.5		578458				5334
 98	Neosartorya fischeri NRRL 181	Neosartorya fischeri	Fungi	1302.5				Aspergillus fischeri NRRL 181	331117	36630
-99	Phaeosphaeria nodorum SN15	Phaeosphaeria nodorum	Fungi	1302.5				Parastagonospora nodorum SN15	321614	13684
-100	Postia placenta	Postia placenta	Fungi	1302.5				Postia placenta Mad-698-R	561896	104341
+99	Phaeosphaeria nodorum SN15	Phaeosphaeria nodorum	Fungi	1302.5		13684		Parastagonospora nodorum SN15	321614	13684
+100	Postia placenta	Postia placenta	Fungi	1302.5		104341		Postia placenta Mad-698-R	561896	104341
 101	Ustilago maydis	Ustilago maydis	Fungi	1302.5		5270				
 102	Enterocytozoon bieneusi h348	Enterocytozoon bieneusi	Fungi	1302.5		481877		Enterocytozoon bieneusi H348		31281
 103	Malassezia globosa	Malassezia globosa	Fungi	1302.5		76773				
-104	Pyrenophora teres f. teres 0-1	Pyrenophora teres	Fungi	1302.5		861557				53485
+104	Pyrenophora teres f. teres 0-1	Pyrenophora teres	Fungi	1302.5		45151				53485
 105	Aspergillus nidulans FGSC A4	Aspergillus nidulans	Fungi	1302.5		227321				162425
 106	Moniliophthora perniciosa FA553	Moniliophthora perniciosa	Fungi	1302.5		554373				153609
 107	Laccaria bicolor s238n-h82	Laccaria bicolor	Fungi	1302.5		486041		Laccaria bicolor S238N-H82		29883
-108	Cryptococcus neoformans jec21	Cryptococcus neoformans	Fungi	1302.5				Cryptococcus neoformans AD hybrid	192011	192011
+108	Cryptococcus neoformans jec21	Cryptococcus neoformans	Fungi	1302.5		5207		Cryptococcus neoformans AD hybrid	192011	192011
 109	Ajellomyces dermatitidis SLH14081	Ajellomyces dermatitidis	Fungi	1302.5				Blastomyces dermatitidis ATCC 18187	946394	5039
 110	Uncinocarpus reesii 1704	Uncinocarpus reesii	Fungi	1302.5		336963				33188
 111	Nectria haematococca mpVI 77-13-4	Nectria haematococca	Fungi	1302.5		660122		[Nectria] haematococca mpVI 77-13-4		140110
 112	Arthroderma gypseum CBS 118893	Arthroderma gypseum	Fungi	1302.5				Nannizzia gypsea CBS 118893	535722	63402
 113	Trichophyton rubrum CBS 118892	Trichophyton rubrum	Fungi	1302.5		559305				5551
-114	Paracoccidioides brasiliensis Pb01	Paracoccidioides brasiliensis	Fungi	1302.5				Paracoccidioides brasiliensis Pb03	482561	121759
+114	Paracoccidioides brasiliensis Pb01	Paracoccidioides brasiliensis	Fungi	1302.5		121759		Paracoccidioides brasiliensis Pb03	482561	121759
 115	Clavispora lusitaniae ATCC 42720	Clavispora lusitaniae	Fungi	1302.5		306902				36911
 116	Coccidioides posadasii C735 delta SOWgp	Coccidioides posadasii	Fungi	1302.5		222929				199306
 117	Komagataella pastoris GS115	Komagataella pastoris	Fungi	1302.5				Komagataella phaffii GS115	644223	460519
@@ -141,7 +141,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		NCBI 
 140	Selaginella moellendorffii	Selaginella	Plantae	1513.9		88036				
 141	Physcomitrella patens subsp.patens	Moss	Plantae			3218		Physcomitrella patens		
 142	Chlamydomonas reinhardtii	Chlamydomonas	Plantae	1513.9		3055				
-143	Volvox carteri	Volvox	Plantae	1513.9				NOT_FOUND		
+143	Volvox carteri	Volvox	Plantae	1513.9		3067				
 144	Coccomyxa subellipsoidea c-169	Coccomyxa subellipsoidea	Plantae	1513.9		574566		Coccomyxa subellipsoidea C-169		248742
 145	Ostreococcus tauri	Ostreococcus alga	Plantae	1513.9		70448				
 146	Micromonas pusilla ccmp1545	Micromonas	Plantae	1513.9		564608		Micromonas pusilla CCMP1545		38833
@@ -165,7 +165,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		NCBI 
 164	Galdieria sulphuraria	Galdieria sulphuraria	Other protists	1513.9		130081				
 165	Phytophthora infestans	Phytophthora infestans	Other protists	1724.7		4787				
 166	Leishmania major	Leishmania major	Other protists	1768.6		40284		Leishmania arabica		
-167	Giardia lamblia	Giardia lamblia	Other protists	2041		658858		Giardia lamblia P15		5741
+167	Giardia lamblia	Giardia lamblia	Other protists	2041		5741		Giardia lamblia P15		5741
 168	Tetrahymena thermophila	Tetrahymena thermophila	Other protists	1724.7		312017		Tetrahymena thermophila SB210		5911
 169	Perkinsus marinus	Perkinsus marinus	Other protists	1724.7		423536		Perkinsus marinus ATCC 50983		31276
 170	Cryptosporidium parvum	Cryptosporidium parvum	Other protists	1724.7		5807				
@@ -186,7 +186,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		NCBI 
 185	Stentor coeruleus					5963				
 186	Reticulomyxa filosa					46433				
 187	Cyclospora cayetanensis					88456				
-188	Thalassiosira pseudonana							Thalassiosira pseudonana CCMP1335	296543	35128
+188	Thalassiosira pseudonana					35128		Thalassiosira pseudonana CCMP1335	296543	35128
 189	Aureococcus anophagefferens					44056				
 190	Nanochloropsis gaditana					72520		Nannochloropsis gaditana		
 191	Lotharella oceanica					641309				
