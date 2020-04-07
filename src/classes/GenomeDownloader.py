@@ -4,18 +4,18 @@ import os
 # genome file downloader
 class GenomeDownloader:
     # constructor
-    def __init__(self, output_folder, list_file):
+    def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.list_file_path = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
         self.list_file_name = 'assembly_summary_refseq.txt'
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
-        self.id_list = self.__get_id_list(list_file)
-        self.species_list = self.__get_species_list(list_file)
+        self.taxid_hash = self.__get_taxid_hash(species_list)
+        self.species_hash = self.__get_species_hash(species_list)
 
     # get id list
-    def __get_id_list(self, list_file):
+    def __get_taxid_hash(self, list_file):
         list = {}
         fp = open(list_file, 'r')
         line = fp.readline()
@@ -31,7 +31,7 @@ class GenomeDownloader:
 
 
     # get species list
-    def __get_species_list(self, list_file):
+    def __get_species_hash(self, list_file):
         list = {}
 
         fp = open(list_file, 'r')
@@ -69,10 +69,10 @@ class GenomeDownloader:
                 species = tokens[7]
                 url = None
                 id = None
-                if species in self.species_list:
-                    id = self.species_list[species]
-                if gene_id in self.id_list:
-                    id = self.id_list[gene_id]
+                if species in self.species_hash:
+                    id = self.species_hash[species]
+                if gene_id in self.taxid_hash:
+                    id = self.taxid_hash[gene_id]
                 if id is not None:
                     for token in tokens:
                         if token.startswith('ftp://'):
