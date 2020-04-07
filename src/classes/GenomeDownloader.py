@@ -58,7 +58,7 @@ class GenomeDownloader:
     # download
     def download(self, debug):
         self.__download_list_file()
-        self.__download_gene_files(debug)
+        self.__download_genomes(debug)
 
     # downloads list file
     def __download_list_file(self):
@@ -66,9 +66,9 @@ class GenomeDownloader:
         ftp = FtpManager(self.ftp_server)
         ftp.download(self.list_file_path, self.list_file)
 
-    def __download_gene_files(self, debug):
+    def __download_genomes(self, debug):
         fp = open(self.list_file, 'r', encoding='UTF-8')
-        result_fp = open('./gene_files.txt', 'w')
+        result_fp = open('./downloaded_genomes.tsv', 'w')
         obtained = {}
         line = fp.readline()
         while line:
@@ -80,13 +80,6 @@ class GenomeDownloader:
                 species_taxid = tokens[6]
                 species = tokens[7]
                 url = None
-                # id = None
-                # if species in self.species_hash:
-                #     id = self.species_hash[species]
-                # if taxid in self.taxid_hash:
-                #     id = self.taxid_hash[taxid]
-                # if species_taxid in self.taxid_hash:
-                #     id = self.taxid_hash[species_taxid]
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
