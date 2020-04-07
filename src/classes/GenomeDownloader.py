@@ -23,7 +23,6 @@ class GenomeDownloader:
             line = line.strip()
             tokens = line.split('\t')
             if len(tokens) >= 7:
-                list[tokens[5]] = tokens[0]
                 list[tokens[6]] = tokens[0]
             line = fp.readline()
         fp.close()
@@ -65,14 +64,18 @@ class GenomeDownloader:
             line = line.strip()
             tokens = line.split('\t')
             if not line.startswith('#') and len(tokens) >= 8:
-                gene_id = tokens[0]
+                gcf_id = tokens[0]
+                taxid = tokens[5]
+                species_taxid = tokens[6]
                 species = tokens[7]
                 url = None
                 id = None
                 if species in self.species_hash:
                     id = self.species_hash[species]
-                if gene_id in self.taxid_hash:
-                    id = self.taxid_hash[gene_id]
+                if taxid in self.taxid_hash:
+                    id = self.taxid_hash[taxid]
+                if species_taxid in self.taxid_hash:
+                    id = self.taxid_hash[species_taxid]
                 if id is not None:
                     for token in tokens:
                         if token.startswith('ftp://'):
@@ -81,8 +84,8 @@ class GenomeDownloader:
                     if debug:
                         print(url)
                     else:
-                        gene_file = self.__download_gene_file(gene_id, url)
-                        result_fp.write(id + '\t' + gene_id + '\t' + species + '\t' + gene_file + '\n')
+                        gene_file = self.__download_gene_file(gcf_id, url)
+                        result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gene_file + '\n')
                         
             line = fp.readline()
         fp.close()
