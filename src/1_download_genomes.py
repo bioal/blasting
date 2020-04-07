@@ -16,7 +16,7 @@ if data_folder == None or len(sys.argv) != 1:
     print('Usage: download_gene_files.py -o [output_folder] -l [list_file]')
     print(' e.g., download_gene_files.py -o /opt/orthology/data/genome -l /opt/orthology/data/species_list.tsv')
 else:
-    list = sys.argv[0]
+    list_file = sys.argv[0]
     downloader = GenomeDownloader(data_folder, list_file)
     downloader.download()
 
