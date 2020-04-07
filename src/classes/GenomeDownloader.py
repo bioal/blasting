@@ -59,6 +59,7 @@ class GenomeDownloader:
     def __download_gene_files(self, debug):
         fp = open(self.list_file, 'r', encoding='UTF-8')
         result_fp = open('./gene_files.txt', 'w')
+        obtained = {}
         line = fp.readline()
         while line:
             line = line.strip()
@@ -79,13 +80,14 @@ class GenomeDownloader:
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
-                if id is not None:
+                if id is not None and obtained.get(id) is not None:
                     for token in tokens:
                         if token.startswith('ftp://'):
                             url = token
+                            obtained[id] = True
                 if url is not None:
                     if debug:
-                        print(id + ' ' + url)
+                        print(id + '\t' + url)
                     else:
                         gene_file = self.__download_gene_file(gcf_id, url)
                         result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gene_file + '\n')
