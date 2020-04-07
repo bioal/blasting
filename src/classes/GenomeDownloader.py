@@ -74,11 +74,11 @@ class GenomeDownloader:
                         id = self.species_list[species]
                     if gene_id in self.id_list:
                         id = self.id_list[gene_id]
-                    if not id == None:
+                    if id is not None:
                         for token in tokens:
                             if token.startswith('ftp://'):
                                 url = token
-                    if not url == None:
+                    if url is not None:
                         if debug:
                             print(url)
                         else:
@@ -101,7 +101,7 @@ class GenomeDownloader:
         for file in files:
             if file.endswith('faa.gz'):
                 faa = file
-        if not faa == None:
+        if faa is not None:
             index = faa.rfind('/')
             file_name = faa[index + 1:]
             faa_file = self.output_folder + '/' + file_name
