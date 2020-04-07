@@ -11,10 +11,22 @@ class GenomeDownloader:
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
+        self.hash = self.__get_hash(species_list)
         self.taxid_hash = self.__get_taxid_hash(species_list)
         self.species_hash = self.__get_species_hash(species_list)
 
-    # get id list
+    def __get_hash(self, list_file):
+        hash = {}
+        fp = open(list_file, 'r')
+        line = fp.readline()
+        while line:
+            line = line.strip()
+            tokens = line.split('\t')
+            hash[tokens[0]] = line
+            line = fp.readline()
+        fp.close()
+        return hash
+
     def __get_taxid_hash(self, list_file):
         list = {}
         fp = open(list_file, 'r')
@@ -28,8 +40,6 @@ class GenomeDownloader:
         fp.close()
         return list
 
-
-    # get species list
     def __get_species_hash(self, list_file):
         list = {}
 
@@ -96,7 +106,7 @@ class GenomeDownloader:
         if debug:
             for id in self.species_hash.values():
                 if not obtained.get(id):
-                    print(id)
+                    print(hash[id])
     
     def __download_gene_file(self, gene_id, url):
         server = url.replace('ftp://', '')
