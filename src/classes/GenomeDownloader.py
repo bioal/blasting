@@ -80,7 +80,7 @@ class GenomeDownloader:
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
-                if id is not None and obtained.get(id) is not None:
+                if id is not None and obtained.get(id) is None:
                     for token in tokens:
                         if token.startswith('ftp://'):
                             url = token
