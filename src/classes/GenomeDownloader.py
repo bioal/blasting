@@ -63,27 +63,26 @@ class GenomeDownloader:
         line = fp.readline()
         while line:
             line = line.strip()
-            if not line.startswith('#'):
-                tokens = line.split('\t')
-                if len(tokens) >= 8:
-                    gene_id = tokens[0]
-                    species = tokens[7]
-                    url = None
-                    id = None
-                    if species in self.species_list:
-                        id = self.species_list[species]
-                    if gene_id in self.id_list:
-                        id = self.id_list[gene_id]
-                    if id is not None:
-                        for token in tokens:
-                            if token.startswith('ftp://'):
-                                url = token
-                    if url is not None:
-                        if debug:
-                            print(url)
-                        else:
-                            gene_file = self.__download_gene_file(gene_id, url)
-                            result_fp.write(id + '\t' + gene_id + '\t' + species + '\t' + gene_file + '\n')
+            tokens = line.split('\t')
+            if not line.startswith('#') and len(tokens) >= 8:
+                gene_id = tokens[0]
+                species = tokens[7]
+                url = None
+                id = None
+                if species in self.species_list:
+                    id = self.species_list[species]
+                if gene_id in self.id_list:
+                    id = self.id_list[gene_id]
+                if id is not None:
+                    for token in tokens:
+                        if token.startswith('ftp://'):
+                            url = token
+                if url is not None:
+                    if debug:
+                        print(url)
+                    else:
+                        gene_file = self.__download_gene_file(gene_id, url)
+                        result_fp.write(id + '\t' + gene_id + '\t' + species + '\t' + gene_file + '\n')
                         
             line = fp.readline()
         fp.close()
