@@ -92,8 +92,8 @@ class GenomeDownloader:
                     if debug:
                         print(id + '\t' + url)
                     else:
-                        gene_file = self.__download_gene_file(gcf_id, url)
-                        result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gene_file + '\n')
+                        gcf_file = self.__download_gcf_file(url)
+                        result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gcf_file + '\n')
             line = fp.readline()
         fp.close()
         if debug:
@@ -101,7 +101,7 @@ class GenomeDownloader:
                 if not obtained.get(id):
                     print(self.hash[id])
     
-    def __download_gene_file(self, gene_id, url):
+    def __download_gcf_file(self, url):
         server = url.replace('ftp://', '')
         index = server.find('/')
         path = server[index:]
