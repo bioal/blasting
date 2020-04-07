@@ -94,7 +94,7 @@ class GenomeDownloader:
             line = fp.readline()
         fp.close()
         if debug:
-            for id in self.species_hash:
+            for id in self.species_hash.values():
                 if not obtained.get(id):
                     print(id + '\t' + self.species_hash[id])
     
