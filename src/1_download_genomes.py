@@ -6,7 +6,7 @@ from classes.OptionParser import OptionParser
 
 parser = OptionParser(sys.argv)
 
-list_file = parser.get_option('l')
+# list_file = parser.get_option('l')
 
 data_folder = parser.get_option('o')
 if data_folder == None:
