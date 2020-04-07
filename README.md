@@ -8,11 +8,13 @@ Requires Python3
 - `blastp` should be in the command path.
 
 ## Usage
-    $ 1_download_gene_files.py -l LIST -o OUTPUT_DIR
-    $ 2_make_database.py -l LIST -o OUTPUT_DIR [-p path/to/makeblastdb]
-    $ 3_blast_search.py -l LIST -o OUTPUT_DIR -n THREADS [-p path/to/blastp]
-    $ 4_make_matrix.py -l LIST -i INPUT_DIR -o OUTPUT_DIR
+    1_download_gene_files.py -l LIST -o OUTPUT_DIR
 
+    2_make_database.py -l LIST -o OUTPUT_DIR [-p path/to/makeblastdb]
+
+    3_blast_search.py -l LIST -o OUTPUT_DIR -n THREADS [-p path/to/blastp]
+
+    4_make_matrix.py -l LIST -i INPUT_DIR -o OUTPUT_DIR
 
 ## Example
     $ cd ~/work/orthology/data
