@@ -57,7 +57,6 @@ class GenomeDownloader:
         ftp = FtpManager(self.ftp_server)
         ftp.download(self.list_file_path, self.list_file)
 
-    # downloads gene files
     def __download_gene_files(self):
         fp = open(self.list_file, 'r', encoding='UTF-8')
         result_fp = open('./gene_files.txt', 'w')
@@ -80,12 +79,12 @@ class GenomeDownloader:
                             if token.startswith('ftp://'):
                                 url = token
                     if not url == None:
-                        gene_file = self.__download_gene_file(gene_id, url)
-                        result_fp.write(id + '\t' + gene_id + '\t' + species + '\t' + gene_file + '\n')
+                        # gene_file = self.__download_gene_file(gene_id, url)
+                        # result_fp.write(id + '\t' + gene_id + '\t' + species + '\t' + gene_file + '\n')
+                        print(url)
             line = fp.readline()
         fp.close()
     
-    # download gene file
     def __download_gene_file(self, gene_id, url):
         server = url.replace('ftp://', '')
         index = server.find('/')
