@@ -95,7 +95,7 @@ class GenomeDownloader:
         fp.close()
         if debug:
             for id in self.species_hash:
-                if obtained.get(id) is None:
+                if not obtained.get(id):
                     print(id + '\t' + self.species_hash[id])
     
     def __download_gene_file(self, gene_id, url):
