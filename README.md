@@ -1,4 +1,4 @@
-# hop
+# HOP
 
 ## Dependencies
 Requires Python3
