@@ -1,11 +1,11 @@
 # HOP
 
 ## Dependencies
-Requires Python3
-- `python3` should be in the command path.
+Python3 should be installed
+- `python3` is necessary (preferably in the command path).
 
 [BLAST+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) should be installed.
-- `blastp` should be in the command path.
+- `blastp` is necessary (preferably in the command path).
 
 ## Usage
     1_download_gene_files.py -l LIST -o OUTPUT_DIR
