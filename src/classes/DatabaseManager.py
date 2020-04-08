@@ -4,7 +4,8 @@ import os
 class DatabaseManager:
     def __init__(self, genome_file_list, command):
         self.list_dir = 'gene_lists'
-        self.db_dir = 'blastdb'
+        self.db_list = 'dbs.tsv'
+        self.db_dir = 'db'
         if not os.path.exists(self.list_dir):
             os.makedirs(self.list_dir)
         if not os.path.exists(self.db_dir):
@@ -25,7 +26,7 @@ class DatabaseManager:
         return genome_list
 
     def preprocess(self):
-        fp = open('./dbs.txt', 'w')
+        fp = open(self.db_list, 'w')
 
         for genome in self.genome_list:
             id = genome['id']
