@@ -4,7 +4,6 @@ import os
 class DataManager:
     def __init__(self, genome_file_list, command):
         self.genes_dir = 'genes_lists'
-        self.db_list = 'dbs.tsv'
         self.db_dir = 'db'
         if not os.path.exists(self.genes_dir):
             os.makedirs(self.genes_dir)
@@ -19,31 +18,21 @@ class DataManager:
         for line in fp:
             tokens = line.strip().split('\t')
             if len(tokens) >= 4:
-                genome = { 'id': tokens[0], 'gene_id': tokens[1], 'species': tokens[2], 'file': tokens[3] }
+                genome = { 'id': tokens[0], 'gene_id': tokens[1], 'species': tokens[2], 'fasta_file': tokens[3] }
                 genome_list.append(genome)
         fp.close()
         genome_list.sort(key=lambda x: int(x['id']))
         return genome_list
 
     def preprocess(self):
-        fp = open(self.db_list, 'w')
-
         for genome in self.genome_list:
             id = genome['id']
-            file = genome['file']
-            species = genome['species']
-            gene_id = genome['gene_id']
-
+            fasta_file = genome['fasta_file']
             genes_list = self.genes_dir + '/' + id
             db = self.db_dir + '/' + id
 
-            self.__make_genes_list(file, genes_list)
-            self.__make_db(file, db)
-
-            line = id + '\t' + gene_id + '\t' + species + '\t' + file + '\t' + genes_list + '\t' + db + '\n'
-            fp.write(line)
-
-        fp.close()
+            self.__make_genes_list(fasta_file, genes_list)
+            self.__make_db(fasta_file, db)
 
     def __make_genes_list(self, fasta_file, genes_list):
         in_fp = open(fasta_file, 'r')
