@@ -8,25 +8,35 @@ Python3 should be installed
 - `blastp` is necessary (preferably in the command path).
 
 ## Usage
-    1_download_gene_files.py -l LIST -o OUTPUT_DIR
+    0_get_species_list.py
 
-    2_make_database.py -l LIST -o OUTPUT_DIR [-p path/to/makeblastdb]
+    1_download_genomes.py [-o OUT_DIR] SPECIES_LIST
 
-    3_blast_search.py -l LIST -o OUTPUT_DIR -n THREADS [-p path/to/blastp]
+    2_process_genomes.py [-p path/to/makeblastdb] GENOME_LIST
 
-    4_make_matrix.py -l LIST -i INPUT_DIR -o OUTPUT_DIR
+    3_blast_search.py -n THREADS [-p path/to/blastp] [-o OUT_DIR] DB_LIST
+
+    4_make_matrix.py -i INPUT_DIR -o OUT_DIR -l LIST
 
 ## Example
     cd ~/work/orthology/data
 
-    ~/github/hop/src/1_download_gene_files.py -l ~/github/hop/species_list.tsv -o data/genome
-    # ~/work/orthology/data/genome/* will be generated.
+    ~/github/hop/src/0_get_species_list.py
+    # This is not mandatory.
+    # This will create ./species_list.tsv (which is same as ~/github/hop/species_list.tsv)
 
-    ~/github/hop/src/2_make_database.py -l gene_files.txt -o data/genome/database
-    # ~/work/orthology/data/genome/database/* will be generated.
+    ~/github/hop/src/1_download_genomes.py ~/github/hop/species_list.tsv
+    # This will create ~/work/orthology/data/genomes/*
+    # and ~/work/orthology/data/genome_list.tsv
 
-    ~/github/hop/src/3_blast_search.py -l databases.txt -n 4 -o data/genome/blast
-    # ~/work/orthology/data/blast/* will be generated.
+    ~/github/hop/src/2_process_genomes.py genome_list.tsv
+    # makeblastdb command should be in the command path. Or, use -p option to specify the location
+    # This will create ~/work/orthology/data/db/*
+    # and ~/work/orthology/data/dbs.tsv
 
-    ~/github/hop/src/4_make_matrix.py -l databases.txt -i data/genome/blast -o data/matrix
-    # ~/work/orthology/data/matrix/* will be generated.
+    ~/github/hop/src/3_blast_search.py -n 4 dbs.tsv
+    # blastp command should be in the command path. Or, use -p option to specify the location
+    # This will create ~/work/orthology/data/blast/*
+
+    ~/github/hop/src/4_make_matrix.py -i data/genome/blast -o data/matrix -l databases.txt
+    # This will create ~/work/orthology/data/matrix/*
