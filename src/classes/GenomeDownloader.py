@@ -7,7 +7,7 @@ class GenomeDownloader:
     def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
-        self.downloaded_genome_files = 'downloaded_genome_files.tsv';
+        self.downloaded_genome_files = 'genome_list.tsv';
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
