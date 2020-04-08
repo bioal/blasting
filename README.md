@@ -1,11 +1,11 @@
 # HOP
 
 ## Dependencies
-Python3 should be installed
-- `python3` is necessary (preferably in the command path).
+Python3 should be installed.
+- `python3` command is necessary (preferably in the command path).
 
 [BLAST+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) should be installed.
-- `blastp` is necessary (preferably in the command path).
+- `blastp` command is necessary (preferably in the command path).
 
 ## Usage
     0_get_species_list.py
