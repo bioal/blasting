@@ -8,7 +8,7 @@ Python3 should be installed.
 - `blastp` command is necessary (preferably in the command path).
 
 ## Usage
-    0_get_species_list.py
+    0_get_species_list.py [-o OUT_FILE]
 
     1_download_genomes.py [-o OUT_DIR] SPECIES_LIST
 
@@ -21,7 +21,7 @@ Python3 should be installed.
 ## Example
     cd ~/work/orthology/data
 
-    ~/github/hop/src/0_get_species_list.py
+    ~/github/hop/src/0_get_species_list.py -o species_list.tsv
     # This is not mandatory.
     # This will create ./species_list.tsv (which is same as ~/github/hop/species_list.tsv)
 
