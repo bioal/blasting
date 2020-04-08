@@ -3,11 +3,11 @@ import os
 
 class DataManager:
     def __init__(self, genome_file_list, command):
-        self.list_dir = 'genes_lists'
+        self.genes_dir = 'genes_lists'
         self.db_list = 'dbs.tsv'
         self.db_dir = 'db'
-        if not os.path.exists(self.list_dir):
-            os.makedirs(self.list_dir)
+        if not os.path.exists(self.genes_dir):
+            os.makedirs(self.genes_dir)
         if not os.path.exists(self.db_dir):
             os.makedirs(self.db_dir)
         self.genome_list = self.__read_genome_list(genome_file_list)
@@ -34,7 +34,7 @@ class DataManager:
             species = genome['species']
             gene_id = genome['gene_id']
 
-            genes_list = self.list_dir + '/' + id
+            genes_list = self.genes_dir + '/' + id
             db = self.db_dir + '/' + id
 
             self.__make_genes_list(file, genes_list)
