@@ -6,8 +6,8 @@ class GenomeDownloader:
     # constructor
     def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
-        self.list_file_path = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
-        self.list_file_name = 'assembly_summary_refseq.txt'
+        self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
+        self.downloaded_genome_files = 'downloaded_genome_files.tsv';
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
@@ -15,9 +15,9 @@ class GenomeDownloader:
         self.taxid_hash = self.__get_taxid_hash(species_list)
         self.species_hash = self.__get_species_hash(species_list)
 
-    def __get_hash(self, list_file):
+    def __get_hash(self, species_list):
         hash = {}
-        fp = open(list_file, 'r')
+        fp = open(species_list, 'r')
         line = fp.readline()
         while line:
             line = line.strip()
@@ -27,49 +27,45 @@ class GenomeDownloader:
         fp.close()
         return hash
 
-    def __get_taxid_hash(self, list_file):
-        list = {}
-        fp = open(list_file, 'r')
+    def __get_taxid_hash(self, species_list):
+        hash = {}
+        fp = open(species_list, 'r')
         line = fp.readline()
         while line:
             line = line.strip()
             tokens = line.split('\t')
             if len(tokens) >= 7:
-                list[tokens[6]] = tokens[0]
+                hash[tokens[6]] = tokens[0]
             line = fp.readline()
         fp.close()
-        return list
+        return hash
 
-    def __get_species_hash(self, list_file):
-        list = {}
+    def __get_species_hash(self, species_list):
+        hash = {}
 
-        fp = open(list_file, 'r')
+        fp = open(species_list, 'r')
         line = fp.readline()
         while line:
             line = line.strip()
             tokens = line.split('\t')
             if len(tokens) >= 2:
                 species = tokens[1]
-                list[species] = tokens[0]
+                hash[species] = tokens[0]
             line = fp.readline()
         fp.close()
-        return list
+        return hash
 
-    # download
     def download(self, debug):
-        self.__download_list_file()
-        self.__download_genomes(debug)
-
-    # downloads list file
-    def __download_list_file(self):
-        self.list_file = './' + self.list_file_name
+        index = self.summary_file_source.rfind('/')
+        summary_file = self.summary_file_source[index + 1:]
         ftp = FtpManager(self.ftp_server)
-        ftp.download(self.list_file_path, self.list_file)
+        ftp.download(self.summary_file_source, summary_file)
+        self.__download_genomes(summary_file, debug)
 
-    def __download_genomes(self, debug):
-        fp = open(self.list_file, 'r', encoding='UTF-8')
-        result_fp = open('./downloaded_genomes.tsv', 'w')
+    def __download_genomes(self, summary_file, debug):
+        result_fp = open(self.downloaded_genome_files, 'W')
         obtained = {}
+        fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
         while line:
             line = line.strip()
@@ -96,6 +92,7 @@ class GenomeDownloader:
                         result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gcf_file + '\n')
             line = fp.readline()
         fp.close()
+        result_fp.close()
         if debug:
             for id in self.species_hash.values():
                 if not obtained.get(id):
