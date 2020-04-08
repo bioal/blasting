@@ -3,11 +3,12 @@ import os
 
 class DatabaseManager:
     # constructor
-    def __init__(self, output_folder, genome_file_list, command):
+    def __init__(self, output_folder, genome_file_list, makedb, command):
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
         self.genome_list = self.__read_genome_list(genome_file_list)
+        self.makedb = makedb
         self.command = command
 
 
@@ -24,8 +25,7 @@ class DatabaseManager:
         genome_list.sort(key=lambda x: int(x['id']))
         return genome_list
 
-    # make database
-    def make_database(self):
+    def preprocess(self):
         fp = open('./databases.txt', 'w')
 
         database_dir = self.output_folder + '/blastdb'
@@ -45,7 +45,8 @@ class DatabaseManager:
             database = database_dir + '/' + id
 
             self.__make_list(file, gene_list_file)
-            self.__make_db(file, database)
+            if self.makedb:
+                self.__make_db(file, database)
 
             line = id + '\t' + gene_id + '\t' + species + '\t' + file + '\t' + gene_list_file + '\t' + database + '\n'
             fp.write(line)
@@ -67,7 +68,7 @@ class DatabaseManager:
         out_fp.close()
 
 
-    # make db file
+    # make blast db file
     def __make_db(self, faa_file, database):
         command = [
             self.command,
