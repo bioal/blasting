@@ -1,9 +1,9 @@
 import subprocess
 import os
 
-class DatabaseManager:
+class DataManager:
     def __init__(self, genome_file_list, command):
-        self.list_dir = 'gene_lists'
+        self.list_dir = 'genes_lists'
         self.db_list = 'dbs.tsv'
         self.db_dir = 'db'
         if not os.path.exists(self.list_dir):
