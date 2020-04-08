@@ -28,7 +28,7 @@ class DatabaseManager:
     def make_database(self):
         fp = open('./databases.txt', 'w')
 
-        database_dir = self.output_folder + '/database'
+        database_dir = self.output_folder + '/blastdb'
         if not os.path.exists(database_dir):
             os.makedirs(database_dir)
         list_dir = self.output_folder + '/gene_list'
