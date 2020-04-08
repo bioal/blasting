@@ -2,16 +2,16 @@ import subprocess
 import os
 
 class DatabaseManager:
-    def __init__(self, output_folder, genome_file_list, makedb, command):
+    def __init__(self, genome_file_list, makedb, command):
         # if not os.path.exists(output_folder):
         #     os.makedirs(output_folder)
         self.list_dir = 'gene_lists'
         self.db_dir = 'blastdb'
         if not os.path.exists(self.list_dir):
             os.makedirs(self.list_dir)
-        if not os.path.exists(self.db_dir):
+        if makedb and not os.path.exists(self.db_dir):
             os.makedirs(self.db_dir)
-        self.output_folder = output_folder
+        # self.output_folder = output_folder
         self.genome_list = self.__read_genome_list(genome_file_list)
         self.makedb = makedb
         self.command = command
