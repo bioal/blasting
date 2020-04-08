@@ -19,14 +19,12 @@ class BlastManager:
         list = []
         for line in fp:
             tokens = line.strip().split('\t')
-            if len(tokens) >= 6:
+            if len(tokens) >= 4:
                 id = tokens[0]
                 gcf_id = tokens[1]
                 species = tokens[2]
                 fasta_file = tokens[3]
-                genes_file = tokens[4]
-                db = tokens[5]
-                genome = {'id':id, 'gcf_id':gcf_id, 'species':species, 'fasta_file':fasta_file, 'genes_file': genes_file, 'db': db}
+                genome = {'id':id, 'gcf_id':gcf_id, 'species':species, 'fasta_file':fasta_file}
                 list.append(genome)
         fp.close()
         return list
@@ -50,7 +48,7 @@ class BlastManager:
         with self.semaphore:
             output_file = self.output_folder + '/' + genome1['id'] + '-' + genome2['id']
             query = genome1['fasta_file']
-            db = genome2['db']
+            db = 'db/' + genome2['id']
 
             command = [
                 self.command,
