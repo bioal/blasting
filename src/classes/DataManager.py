@@ -3,7 +3,7 @@ import os
 
 class DataManager:
     def __init__(self, genome_file_list, command):
-        self.genes_dir = 'genes_lists'
+        self.genes_dir = 'genes'
         self.db_dir = 'db'
         if not os.path.exists(self.genes_dir):
             os.makedirs(self.genes_dir)
