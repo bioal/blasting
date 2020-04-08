@@ -34,21 +34,20 @@ class DataManager:
             species = genome['species']
             gene_id = genome['gene_id']
 
-            gene_list_file = self.list_dir + '/' + id + '.txt'
+            genes_list = self.list_dir + '/' + id
             db = self.db_dir + '/' + id
 
-            self.__make_list(file, gene_list_file)
+            self.__make_genes_list(file, genes_list)
             self.__make_db(file, db)
 
-            line = id + '\t' + gene_id + '\t' + species + '\t' + file + '\t' + gene_list_file + '\t' + db + '\n'
+            line = id + '\t' + gene_id + '\t' + species + '\t' + file + '\t' + genes_list + '\t' + db + '\n'
             fp.write(line)
 
         fp.close()
 
-    # make list file
-    def __make_list(self, faa_file, gene_list_file):
-        in_fp = open(faa_file, 'r')
-        out_fp = open(gene_list_file, 'w')
+    def __make_genes_list(self, fasta_file, genes_list):
+        in_fp = open(fasta_file, 'r')
+        out_fp = open(genes_list, 'w')
 
         count = 1
         for line in in_fp:
@@ -59,16 +58,14 @@ class DataManager:
         in_fp.close()
         out_fp.close()
 
-
-    # make blast db file
-    def __make_db(self, faa_file, db):
+    def __make_db(self, fasta_file, db):
         command = [
             self.command,
             '-dbtype',
             'prot',
             '-parse_seqids',
             '-in',
-            faa_file,
+            fasta_file,
             '-out',
             db
         ]

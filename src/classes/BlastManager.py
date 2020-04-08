@@ -26,7 +26,6 @@ class BlastManager:
                 faa_file = tokens[3]
                 genes_file = tokens[4]
                 db = tokens[5]
-                
                 genome = {'id':id, 'gcf_id':gcf_id, 'species':species, 'faa_file':faa_file, 'genes_file': genes_file, 'db': db}
                 list.append(genome)
         fp.close()
@@ -47,11 +46,9 @@ class BlastManager:
                 thread2 = Thread(target=self.__execute_blast, args=(human, genome))
                 thread2.start()
 
-
-    # blast
     def __execute_blast(self, genome1, genome2):
         with self.semaphore:
-            output_file = self.output_folder + '/' + genome1['id'] + '-' + genome2['id'] + '.txt'
+            output_file = self.output_folder + '/' + genome1['id'] + '-' + genome2['id']
             db = genome2['db']
             query = genome1['faa_file']
 
