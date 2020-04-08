@@ -9,5 +9,5 @@ parser.add_argument('-p', '--program', default='blastp', help='Path to blastp co
 parser.add_argument('-o', '--outdir', default='blast', help='Output directory')
 args = parser.parse_args()
 
-manager = BlastManager(args.outdir, args.db_list, args.threads, args.program)
+manager = BlastManager(args.program, args.threads, args.db_list, args.outdir)
 manager.search()

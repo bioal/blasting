@@ -5,7 +5,7 @@ import os
 
 class BlastManager:
     # constructor
-    def __init__(self, output_folder, db_list, num, command):
+    def __init__(self, command, num, db_list, output_folder):
         if not os.path.exists(output_folder):
             os.makedirs(output_folder) 
         self.output_folder = output_folder
@@ -23,10 +23,10 @@ class BlastManager:
                 id = tokens[0]
                 gcf_id = tokens[1]
                 species = tokens[2]
-                faa_file = tokens[3]
+                fasta_file = tokens[3]
                 genes_file = tokens[4]
                 db = tokens[5]
-                genome = {'id':id, 'gcf_id':gcf_id, 'species':species, 'faa_file':faa_file, 'genes_file': genes_file, 'db': db}
+                genome = {'id':id, 'gcf_id':gcf_id, 'species':species, 'fasta_file':fasta_file, 'genes_file': genes_file, 'db': db}
                 list.append(genome)
         fp.close()
         return list
@@ -49,20 +49,16 @@ class BlastManager:
     def __execute_blast(self, genome1, genome2):
         with self.semaphore:
             output_file = self.output_folder + '/' + genome1['id'] + '-' + genome2['id']
+            query = genome1['fasta_file']
             db = genome2['db']
-            query = genome1['faa_file']
 
             command = [
                 self.command,
-                '-db',
-                db,
-                '-query',
-                query,
+                '-query', query,
+                '-db', db,
                 '-max_target_seqs', '1',
-                '-outfmt',
-                '6',
-                '-out',
-                output_file
+                '-outfmt', '6',
+                '-out', output_file
             ]
             command_line = ' '.join(command)
             print('Exec: ' + command_line)
