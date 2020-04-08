@@ -14,7 +14,7 @@ Python3 should be installed.
 
     2_process_genomes.py [-p path/to/makeblastdb] GENOMES_LIST
 
-    3_blast_search.py -n THREADS [-p path/to/blastp] [-o OUT_DIR] DB_LIST
+    3_blast_search.py -n THREADS [-p path/to/blastp] [-o OUT_DIR] GENOMES_LIST
 
     4_make_matrix.py -i INPUT_DIR -o OUT_DIR -l LIST
 
@@ -31,9 +31,8 @@ Python3 should be installed.
 
     ~/github/hop/src/2_process_genomes.py genomes_list.tsv
     # This assumes makeblastdb is in the command path. Or, use -p option.
-    # This will create ~/work/orthology/data/genes_lists/*
+    # This will create ~/work/orthology/data/genes/*
     # and ~/work/orthology/data/db/*
-    # and ~/work/orthology/data/dbs.tsv
 
     ~/github/hop/src/3_blast_search.py -n 4 dbs.tsv
     # This assumes blastp is in the command path. Or, use -p option.
