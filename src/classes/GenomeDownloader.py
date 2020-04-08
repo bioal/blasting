@@ -63,7 +63,7 @@ class GenomeDownloader:
         self.__download_genomes(summary_file, debug)
 
     def __download_genomes(self, summary_file, debug):
-        result_fp = open(self.downloaded_genome_files, 'W')
+        result_fp = open(self.downloaded_genome_files, 'w')
         obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
