@@ -2,17 +2,20 @@ import subprocess
 import os
 
 class DatabaseManager:
-    # constructor
     def __init__(self, output_folder, genome_file_list, makedb, command):
-        if not os.path.exists(output_folder):
-            os.makedirs(output_folder)
+        # if not os.path.exists(output_folder):
+        #     os.makedirs(output_folder)
+        self.list_dir = 'gene_lists'
+        self.db_dir = 'blastdb'
+        if not os.path.exists(self.list_dir):
+            os.makedirs(self.list_dir)
+        if not os.path.exists(self.db_dir):
+            os.makedirs(self.db_dir)
         self.output_folder = output_folder
         self.genome_list = self.__read_genome_list(genome_file_list)
         self.makedb = makedb
         self.command = command
 
-
-    # read list file
     def __read_genome_list(self, genome_file_list):
         genome_list = []
         fp = open(genome_file_list, 'r')
@@ -26,14 +29,7 @@ class DatabaseManager:
         return genome_list
 
     def preprocess(self):
-        fp = open('./databases.txt', 'w')
-
-        database_dir = self.output_folder + '/blastdb'
-        if not os.path.exists(database_dir):
-            os.makedirs(database_dir)
-        list_dir = self.output_folder + '/gene_list'
-        if not os.path.exists(list_dir):
-            os.makedirs(list_dir)
+        fp = open('./dbs.txt', 'w')
 
         for genome in self.genome_list:
             id = genome['id']
@@ -41,14 +37,14 @@ class DatabaseManager:
             species = genome['species']
             gene_id = genome['gene_id']
 
-            gene_list_file = list_dir + '/' + id + '.txt'
-            database = database_dir + '/' + id
+            gene_list_file = self.list_dir + '/' + id + '.txt'
+            db = self.db_dir + '/' + id
 
             self.__make_list(file, gene_list_file)
             if self.makedb:
-                self.__make_db(file, database)
+                self.__make_db(file, db)
 
-            line = id + '\t' + gene_id + '\t' + species + '\t' + file + '\t' + gene_list_file + '\t' + database + '\n'
+            line = id + '\t' + gene_id + '\t' + species + '\t' + file + '\t' + gene_list_file + '\t' + db + '\n'
             fp.write(line)
 
         fp.close()
@@ -69,7 +65,7 @@ class DatabaseManager:
 
 
     # make blast db file
-    def __make_db(self, faa_file, database):
+    def __make_db(self, faa_file, db):
         command = [
             self.command,
             '-dbtype',
@@ -78,7 +74,7 @@ class DatabaseManager:
             '-in',
             faa_file,
             '-out',
-            database
+            db
         ]
         print('Exec: ' + ' '.join(command))
         process = subprocess.Popen(command)
