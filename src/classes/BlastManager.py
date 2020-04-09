@@ -17,8 +17,8 @@ class BlastManager:
         list = []
         for line in fp:
             tokens = line.strip().split('\t')
-            if len(tokens) >= 4:
-                list.append({'id':tokens[0], 'gcf_id':tokens[1], 'species':tokens[2], 'fasta_file':tokens[3]})
+            if len(tokens) >= 2:
+                list.append({'id':tokens[0], 'fasta_file':tokens[1]})
         fp.close()
         return list
 

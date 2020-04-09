@@ -7,7 +7,7 @@ class GenomeDownloader:
     def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
-        self.downloaded_genomes = 'genomes_list.tsv';
+        self.downloaded_genomes = 'genome_list.tsv';
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
@@ -22,7 +22,8 @@ class GenomeDownloader:
         while line:
             line = line.strip()
             tokens = line.split('\t')
-            hash[tokens[0]] = line
+            if tokens[0].isdigit():
+                hash[tokens[0]] = line
             line = fp.readline()
         fp.close()
         return hash
@@ -63,8 +64,7 @@ class GenomeDownloader:
         self.__download_genomes(summary_file, debug)
 
     def __download_genomes(self, summary_file, debug):
-        result_fp = open(self.downloaded_genomes, 'w')
-        obtained = {}
+        file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
         while line:
@@ -75,30 +75,25 @@ class GenomeDownloader:
                 taxid = tokens[5]
                 species_taxid = tokens[6]
                 species = tokens[7]
-                url = None
+                url = tokens[19]
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
-                if id is not None and obtained.get(id) is None:
-                    for token in tokens:
-                        if token.startswith('ftp://'):
-                            url = token
-                            obtained[id] = True
-                if url is not None:
-                    if debug:
-                        print(id + '\t' + url)
-                    else:
-                        gcf_file = self.__download_gcf_file(url)
-                        result_fp.write(id + '\t' + gcf_id + '\t' + species + '\t' + gcf_file + '\n')
+                if id is not None and file_obtained.get(id) is None:
+                    gcf_file = self.__download_gcf_file(url, debug)
+                    file_obtained[id] = gcf_file
             line = fp.readline()
         fp.close()
+
+        result_fp = open(self.downloaded_genomes, 'w')
+        for id in self.hash:
+            if file_obtained.get(id) is None:
+                print('Genome not obtained for: ' + self.hash[id])
+            else:
+                result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
-        if debug:
-            for id in self.species_hash.values():
-                if not obtained.get(id):
-                    print(self.hash[id])
     
-    def __download_gcf_file(self, url):
+    def __download_gcf_file(self, url, debug):
         server = url.replace('ftp://', '')
         index = server.find('/')
         path = server[index:]
@@ -115,6 +110,7 @@ class GenomeDownloader:
             index = faa.rfind('/')
             file_name = faa[index + 1:]
             faa_file = self.output_folder + '/' + file_name
-            ftp.download_gz(faa, faa_file)
+            if not debug:
+                ftp.download_gz(faa, faa_file)
             file_name = file_name.replace('faa.gz', 'faa')
         return self.output_folder + '/' + file_name

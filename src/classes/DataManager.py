@@ -17,8 +17,8 @@ class DataManager:
         fp = open(genome_file_list, 'r')
         for line in fp:
             tokens = line.strip().split('\t')
-            if len(tokens) >= 4:
-                genome = { 'id': tokens[0], 'gene_id': tokens[1], 'species': tokens[2], 'fasta_file': tokens[3] }
+            if len(tokens) >= 2:
+                genome = { 'id': tokens[0], 'fasta_file': tokens[1] }
                 genome_list.append(genome)
         fp.close()
         genome_list.sort(key=lambda x: int(x['id']))
