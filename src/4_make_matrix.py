@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
-
-import sys
+import argparse
 from classes.MatrixManager import MatrixManager
-from classes.OptionParser import OptionParser
 
-parser = OptionParser(sys.argv)
+parser = argparse.ArgumentParser(description='Summarize BLAST search resutls.')
+parser.add_argument('genome_list', help='List of genomes in tsv format')
+parser.add_argument('-i', '--input', required=True, help='BLAST results directory')
+parser.add_argument('-o', '--outdir', default='matrix', help='Output directory')
+args = parser.parse_args()
 
-matrix_folder = parser.get_option('o')
-list_file = parser.get_option('l')
-input_folder = parser.get_option('i')
-
-if matrix_folder == None or list_file == None or input_folder == None:
-    print('Usage: make_matrix.py -o [output_folder] -l [list_file] -i [input_folder]')
-    print(' e.g., make_matrix.py -o /opt/orthology/data/genome/matrix -l databases.txt -i /opt/orthology/data/genome/blast')
-else:
-    manager = MatrixManager(matrix_folder, list_file, input_folder)
-    manager.make_matrix()
-
+manager = MatrixManager(args.outdir, args.genome_list, args.input)
+manager.make_matrix()
