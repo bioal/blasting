@@ -50,15 +50,9 @@ class DataManager:
     def __make_db(self, fasta_file, db):
         command = [
             self.command,
-            '-dbtype',
-            'prot',
-            '-parse_seqids',
-            '-in',
-            fasta_file,
-            '-out',
-            db
+            '-in', fasta_file,
+            '-out', db,
+            '-dbtype', 'prot',
+            '-parse_seqids'
         ]
-        print('Exec: ' + ' '.join(command))
-        process = subprocess.Popen(command)
-        process.wait()
-
+        subprocess.run(command)
