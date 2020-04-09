@@ -96,6 +96,16 @@ class MatrixManager:
             print('File does not exist: ' + path)
         return result
 
+    def __parse_blast_result(self, path):
+        result_fp = open(path, 'r')
+        for line in result_fp:
+            fields = line.strip().split('\t')
+            if len(fields) >= 12:
+                query_seq = fields[0]
+                db_seq = fields[1]
+                score = fields[11]
+                print(query_seq + '\t' + db_seq + '\t' + score)
+        return
 
     # search from other 
     def __search_from_other(self, title, genome, human_genome):
