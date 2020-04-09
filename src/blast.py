@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(description='BLAST search for the specified gen
 parser.add_argument('query_id', help='Query genome ID')
 parser.add_argument('db_id', help='DB genome ID')
 parser.add_argument('-f', '--format', default='6', help='Output format')
-parser.add_argument('-o', '--outfile', help='Output file')
+parser.add_argument('-n', '--num', default='1', help='max_target_seq')
 args = parser.parse_args()
 
 gcf_files = {}
@@ -25,9 +25,8 @@ command = [
     'blastp',
     '-query', query_file,
     '-db', db_file,
-    '-max_target_seqs', '1',
     '-outfmt', args.format,
-    '-out', args.outfile
+    '-max_target_seqs', args.num
 ]
 
 subprocess.run(command)
