@@ -11,6 +11,12 @@ class BlastManager:
         self.genome_list = self.__read_genome_list(genome_list)
         self.semaphore = Semaphore(int(num))
         self.command = command
+        self.err_dir = 'blast_err'
+        self.log_dir = 'blast_log'
+        if not os.path.exists(self.err_dir):
+            os.makedirs(self.err_dir)
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
 
     def __read_genome_list(self, genome_list):
         fp = open(genome_list, 'r')
@@ -38,14 +44,24 @@ class BlastManager:
 
     def __execute_blast(self, genome1, genome2):
         with self.semaphore:
+            result_name = genome1['id'] + '-' + genome2['id']
+            log_file = self.log_dir + '/' + result_name
+            err_file = self.err_dir + '/' + result_name
+            if os.path.exists(err_file):
+                return
             command = [
                 self.command,
                 '-query', genome1['fasta_file'],
                 '-db', 'db/' + genome2['id'],
                 '-max_target_seqs', '1',
                 '-outfmt', '6',
-                '-out', self.output_folder + '/' + genome1['id'] + '-' + genome2['id']
+                '-out', self.output_folder + '/' + result_name
             ]
-            print('Exec: ' + ' '.join(command))
-            process = subprocess.Popen(command)
-            process.wait()
+            log_fp = open(log_file, 'w')
+            log_fp.write(' '.join(command) + '\n')
+            ret = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            log_fp.write(ret.stdout.decode())
+            log_fp.close()
+            err_fp = open(err_file, 'w')
+            err_fp.write(ret.stderr.decode())
+            err_fp.close()
