@@ -5,8 +5,10 @@ import subprocess
 parser = argparse.ArgumentParser(description='BLAST search for the specified genomes.')
 parser.add_argument('query_id', help='Query genome ID')
 parser.add_argument('db_id', help='DB genome ID')
+parser.add_argument('-o', '--outfile', help='Output file')
+parser.add_argument('-e', '--errfile', help='Error file')
 parser.add_argument('-f', '--format', default='6', help='Output format')
-parser.add_argument('-n', '--num', default='1', help='max_target_seq')
+parser.add_argument('-m', '--max', default='1', help='max_target_seq')
 args = parser.parse_args()
 
 gcf_files = {}
@@ -26,7 +28,16 @@ command = [
     '-query', query_file,
     '-db', db_file,
     '-outfmt', args.format,
-    '-max_target_seqs', args.num
+    '-max_target_seqs', args.max
 ]
 
+if args.outfile:
+    command += ['-out', args.outfile]
+
 subprocess.run(command)
+
+if args.errfile:
+    ret = subprocess.run(command, stderr=subprocess.PIPE)
+    fp = open(args.errfile, 'w')
+    fp.write(ret.stderr.decode())
+    fp.close()
