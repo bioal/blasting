@@ -8,5 +8,5 @@ parser.add_argument('-i', '--input', required=True, help='BLAST results director
 parser.add_argument('-o', '--outdir', default='matrix', help='Output directory')
 args = parser.parse_args()
 
-manager = MatrixManager(args.outdir, args.genome_list, args.input)
+manager = MatrixManager(args.input, args.outdir, args.genome_list)
 manager.make_matrix()

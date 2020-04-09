@@ -3,30 +3,20 @@ import subprocess
 import os
 
 class MatrixManager:
-    # constructor
-    def __init__(self, output_folder, list_file, input_folder):
+    def __init__(self, input_folder, output_folder, list_file):
+        self.input_folder = input_folder
+        self.output_folder = output_folder
         if not os.path.exists(output_folder):
             os.makedirs(output_folder) 
-        self.output_folder = output_folder
         self.genome_list = self.__get_list(list_file)
-        self.input_folder = input_folder
 
-    # get list
     def __get_list(self, list_file):
         fp = open(list_file, 'r')
         list = []
         for line in fp:
             tokens = line.strip().split('\t')
-            if len(tokens) >= 6:
-                id = tokens[0]
-                gene_id = tokens[1]
-                species = tokens[2]
-                faa_file = tokens[3]
-                list_file = tokens[4]
-                database = tokens[5]
-                
-                genome = {'id':id, 'gene_id':gene_id, 'species':species, 'faa_file':faa_file, 'list_file': list_file, 'database': database}
-                list.append(genome)
+            if len(tokens) >= 2:
+                list.append({'id':tokens[0], 'faa_file':tokens[1]})
         fp.close()
         return list
 
