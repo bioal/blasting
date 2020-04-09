@@ -1,9 +1,7 @@
 from classes.FtpManager import FtpManager
 import os
 
-# genome file downloader
 class GenomeDownloader:
-    # constructor
     def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
@@ -11,11 +9,11 @@ class GenomeDownloader:
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
-        self.hash = self.__get_hash(species_list)
+        self.id_hash = self.__get_id_hash(species_list)
         self.taxid_hash = self.__get_taxid_hash(species_list)
         self.species_hash = self.__get_species_hash(species_list)
 
-    def __get_hash(self, species_list):
+    def __get_id_hash(self, species_list):
         hash = {}
         fp = open(species_list, 'r')
         line = fp.readline()
@@ -86,9 +84,9 @@ class GenomeDownloader:
         fp.close()
 
         result_fp = open(self.downloaded_genomes, 'w')
-        for id in self.hash:
+        for id in self.id_hash:
             if file_obtained.get(id) is None:
-                print('Genome not obtained for: ' + self.hash[id])
+                print('Genome not obtained for: ' + self.id_hash[id])
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
@@ -102,7 +100,7 @@ class GenomeDownloader:
         files = ftp.list(path)
 
         faa = None
-        file_name = None
+        gcf_file_path = None
         for file in files:
             if file.endswith('faa.gz'):
                 faa = file
@@ -112,5 +110,6 @@ class GenomeDownloader:
             faa_file = self.output_folder + '/' + file_name
             if not debug:
                 ftp.download_gz(faa, faa_file)
-            file_name = file_name.replace('faa.gz', 'faa')
-        return self.output_folder + '/' + file_name
+            gcf_file_name = file_name.replace('faa.gz', 'faa')
+            gcf_file_path = self.output_folder + '/' + gcf_file_name
+        return gcf_file_path
