@@ -10,7 +10,7 @@ parser.add_argument('-o', '--outfile', help='Output file')
 args = parser.parse_args()
 
 gcf_files = {}
-genome_file_list = 'genome_file.tsv'
+genome_file_list = 'genome_list.tsv'
 fp = open(genome_file_list, 'r')
 for line in fp:
     fields = line.strip().split('\t')
