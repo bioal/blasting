@@ -29,7 +29,7 @@ class MatrixManager:
         fp5 = open(self.output_folder + '/matrix5.txt', 'w')
 
         human_genome = self.genome_list[0]
-        human_fp = open(human_genome['list_file'], 'r')
+        human_fp = open('genes/1', 'r')
         for line in human_fp:
             print(line.strip())
             tokens = line.strip().split('\t')
