@@ -128,7 +128,7 @@ class MatrixManager:
     # searches number
     def __search_list(self, genome, did):
         result = {'number': 'n/a', 'title': 'n/a'}
-        fp = open(genome['list_file'], 'r')
+        fp = open('genes/' + genome['id'], 'r')
         for line in fp:
             tokens = line.strip().split('\t')
             if len(tokens) >= 2:
