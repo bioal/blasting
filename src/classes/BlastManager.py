@@ -11,8 +11,8 @@ class BlastManager:
         self.genome_list = self.__read_genome_list(genome_list)
         self.semaphore = Semaphore(int(num))
         self.command = command
-        self.err_dir = 'blast_err'
-        self.log_dir = 'blast_log'
+        self.err_dir = output_folder + '_err'
+        self.log_dir = output_folder + '_log'
         if not os.path.exists(self.err_dir):
             os.makedirs(self.err_dir)
         if not os.path.exists(self.log_dir):
