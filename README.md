@@ -45,6 +45,9 @@ Python3 should be installed.
     # This will create ~/work/orthology/data/blast_log/*
     # This will create ~/work/orthology/data/blast_err/*
 
+    ~/github/hop/src/4_make_matrix.py -i blast -o matrix genome_list.tsv
+    # This will create ~/work/orthology/data/matrix/*
+
 ### In the case of UniProt
 
     ~/github/hop/src/1_download_proteome.py ~/github/hop/species_list.tsv
