@@ -11,8 +11,10 @@ Python3 should be installed.
     0_get_species_list.py [-o OUT_FILE]
 
     1_download_genomes.py [-o OUT_DIR] SPECIES_LIST
+    1_download_proteomes.py [-o OUT_DIR] SPECIES_LIST
 
     2_process_genomes.py [-p path/to/makeblastdb] GENOME_LIST
+    2_process_proteomes.py [-p path/to/makeblastdb] PROTEOME_LIST
 
     3_blast_search.py -n CPU_CORES [-p path/to/blastp] [-o OUT_DIR] GENOME_LIST
 
