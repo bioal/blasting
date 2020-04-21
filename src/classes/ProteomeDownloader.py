@@ -1,11 +1,11 @@
 from classes.FtpManager import FtpManager
 import os
 
-class GenomeDownloader:
+class ProteomeDownloader:
     def __init__(self, output_folder, species_list):
-        self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
-        self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
-        self.downloaded_genomes = 'genome_list.tsv';
+        self.ftp_server = 'ftp.uniprot.org'
+        self.summary_file_source = '/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/README'
+        self.downloaded_proteomes = 'proteome_list.tsv';
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
@@ -59,21 +59,21 @@ class GenomeDownloader:
         summary_file = self.summary_file_source[index + 1:]
         ftp = FtpManager(self.ftp_server)
         ftp.download(self.summary_file_source, summary_file)
-        self.__download_genomes(summary_file, debug)
+        self.__download_proteomes(summary_file, debug)
 
-    def __download_genomes(self, summary_file, debug):
+    def __download_proteomes(self, summary_file, debug):
         file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
         while line:
             line = line.strip()
             tokens = line.split('\t')
-            if not line.startswith('#') and len(tokens) >= 8:
+            if line.startswith('UP000') and len(tokens) >= 8:
                 gcf_id = tokens[0]
-                taxid = tokens[5]
-                species_taxid = tokens[6]
+                taxid = tokens[1]
+                species_taxid = tokens[1]
                 species = tokens[7]
-                url = tokens[19]
+                url = 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/' + gcf_id + '_' + taxid + '.fasta.gz'
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
@@ -83,10 +83,10 @@ class GenomeDownloader:
             line = fp.readline()
         fp.close()
 
-        result_fp = open(self.downloaded_genomes, 'w')
+        result_fp = open(self.downloaded_proteomes, 'w')
         for id in self.id_hash:
             if file_obtained.get(id) is None:
-                print('Genome not obtained for: ' + self.id_hash[id])
+                print('Proteome not obtained for: ' + self.id_hash[id])
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
