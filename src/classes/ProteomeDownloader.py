@@ -73,7 +73,8 @@ class ProteomeDownloader:
                 taxid = tokens[1]
                 species_taxid = tokens[1]
                 species = tokens[7]
-                url = 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/' + gcf_id + '_' + taxid + '.fasta.gz'
+                url = 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/' + gcf_id + '_' + taxid + '.fasta.gz'
+                print(url)
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
@@ -102,7 +103,7 @@ class ProteomeDownloader:
         faa = None
         gcf_file_path = None
         for file in files:
-            if file.endswith('faa.gz'):
+            if file.endswith('fasta.gz'):
                 faa = file
         if faa is not None:
             index = faa.rfind('/')
@@ -110,6 +111,6 @@ class ProteomeDownloader:
             faa_file = self.output_folder + '/' + file_name
             if not debug:
                 ftp.download_gz(faa, faa_file)
-            gcf_file_name = file_name.replace('faa.gz', 'faa')
+            gcf_file_name = file_name.replace('fasta.gz', 'fasta')
             gcf_file_path = self.output_folder + '/' + gcf_file_name
         return gcf_file_path
