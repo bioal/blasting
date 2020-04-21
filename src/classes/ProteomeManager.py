@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-class DataManager:
+class ProteomeManager:
     def __init__(self, proteome_file_list, command):
         self.proteins_dir = 'proteins'
         self.db_dir = 'db'
