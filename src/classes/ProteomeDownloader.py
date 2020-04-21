@@ -74,7 +74,6 @@ class ProteomeDownloader:
                 species_taxid = tokens[1]
                 species = tokens[7]
                 url = 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/' + gcf_id + '_' + taxid + '.fasta.gz'
-                print(url)
                 id = self.species_hash.get(species) or \
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
