@@ -20,6 +20,7 @@ Python3 should be installed.
 
 ### In the case of UniProt
     1_download_proteomes.py [-o OUT_DIR] SPECIES_LIST
+    
     2_process_proteomes.py [-p path/to/makeblastdb] PROTEOME_LIST
 
 
