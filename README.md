@@ -58,6 +58,3 @@ Python3 should be installed.
     # This assumes makeblastdb is in the command path. Or, use -p option.
     # This will create ~/work/orthology/data/proteins/*
     # and ~/work/orthology/data/proteome_db/*
-
-    ~/github/hop/src/4_make_matrix.py -i proteome_blast -o proteome_matrix proteome_list.tsv
-    # This will create ~/work/orthology/data/proteome_matrix/*
