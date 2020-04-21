@@ -1,4 +1,4 @@
-# HOP
+# hOP
 
 ## Dependencies
 Python3 should be installed.
