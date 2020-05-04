@@ -2,10 +2,10 @@
 import argparse
 from classes.RDFManager import RDFManager
 
-parser = argparse.ArgumentParser(description='Make RDF for genome list')
-parser.add_argument('genome_summary', help='Genome summary file')
+parser = argparse.ArgumentParser(description='Make RDF')
+parser.add_argument('summary_file', help='Summary file')
 # parser.add_argument('-p', '--program', default='makeblastdb', help='Path to makeblsastdb command (default: makeblastdb)')
 args = parser.parse_args()
 
-manager = RDFManager(args.genome_summary)
+manager = RDFManager(args.summary_file)
 manager.create_rdf()
