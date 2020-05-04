@@ -5,7 +5,7 @@ class RDFManager:
     def __init__(self, genome_file_list):
         self.summary_file = genome_file_list
 
-    def create_rdf(self):
+    def rdfize_genome(self):
         file_obtained = {}
         fp = open(self.summary_file, 'r', encoding='UTF-8')
         line = fp.readline()

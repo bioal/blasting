@@ -8,4 +8,4 @@ parser.add_argument('summary_file', help='Summary file')
 args = parser.parse_args()
 
 manager = RDFManager(args.summary_file)
-manager.create_rdf()
+manager.rdfize_genome()
