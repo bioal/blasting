@@ -1,196 +1,196 @@
-Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		NCBI organism name		
-1	Homo sapiens	Human	Mammals		UP000005640	9606				
-2	Pan troglodytes	Chimpanzee	Mammals	6.6	UP000002277	9598				
-3	Gorilla gorilla gorilla	Gorilla	Mammals	8.9	UP000001519	9595			9595	9593
-4	Pongo abelii	Orangutan	Mammals	15.8	UP000001595	9601				
-5	Nomascus leucogenys	Gibbon	Mammals	19.9	UP000001073	61853				
-6	Macaca mulatta	Macaca	Mammals	29.1	UP000006718	9544				
-7	Papio anubis	Baboon	Mammals	29.1	UP000028761	9555				
-8	Saimiri boliviensis	Squirrel Monkey	Mammals	43.1	UP000233220	39432		Saimiri boliviensis boliviensis	39432	27679
-9	Callithrix jacchus	Marmoset	Mammals	43.1	UP000008225	9483				
-10	Otolemur garnettii	Lemur	Mammals	75.9	UP000005225	30611				
-11	Mus musculus	Mouse	Mammals	90.9	UP000000589	10090				
-12	Cricetulus griseus	Hamster	Mammals	90.9	UP000001075	10029				
-13	Rattus norvegicus	Rat	Mammals	90.9	UP000002494	10116				
-14	Cavia porcellus	Guinea Pig	Mammals	90.9	UP000005447	10141				
-15	Oryctolagus cuniculus	Rabbit	Mammals	90.9	UP000001811	9986				
-16	Canis lupus familiaris	Dog	Mammals	97.5	UP000002254	9615				9612
-17	Ailuropoda melanoleuca	Panda	Mammals	97.5	UP000008912	9646				
-18	Equus caballus	Horse	Mammals	97.5	UP000002281	9796				
-19	Sus scrofa	Pig	Mammals	97.5	UP000008227	9823				
-20	Bos taurus	Cow	Mammals	97.5	UP000009136	9913				
-21	Trichechus manatus latirostris	Manatee	Mammals	105	UP000248480	127582				9778
-22	Loxodonta africana	Elephant	Mammals	105	UP000007646	9785				
-23	Monodelphis domestica	Opossum	Mammals	163.7	UP000002280	13616				
-24	Sarcophilus harrisii	Tasmanian Devil	Mammals	163.7	UP000007648	9305				
-25	Ornithorhynchus anatinus	Platypus	Mammals	179.2	UP000002279	9258				
-26	Gallus gallus	Chicken	Other vertebrates	320.5	UP000000539	9031				
-27	Taeniopygia guttata	Finch	Other vertebrates	320.5	UP000007754	59729				
-28	Anolis carolinensis	American Anole	Other vertebrates	320.5	UP000001646	28377				
-29	Chelonia mydas	Turtle	Other vertebrates	320.5		8469				
-30	Xenopus (Silurana) tropicalis	Frog	Other vertebrates	355.7	UP000008143	8364		Xenopus tropicalis		
-31	Danio rerio	Zebrafish	Other vertebrates	429.6	UP000000437	7955				
-32	Oreochromis niloticus	Tilapia	Other vertebrates	429.6	UP000005207	8128				
-33	Oryzias latipes	Medaka	Other vertebrates	429.6	UP000001038	8090				
-34	Tetraodon nigroviridis	Pufferfish	Lancelets/tunicates	429.6	UP000007303	99883				
-35	Branchiostoma floridae	Lancet	Lancelets/tunicates	733	UP000001554	7739				
-36	Ciona intestinalis	Ciona	Lancelets/tunicates	733	UP000008144	7719				
-37	Oikopleura dioica	Sea-squirt	Lancelets/tunicates			34765				
-38	Strongylocentrotus purpuratus	Sea Urchin	Echinoderms/hemichordata	747.8	UP000007110	7668				
-39	Crassostrea gigas	Oyster	Echinoderms/hemichordata	847	UP000005408	29159				
-40	Saccoglossus kowalevskii	Acorn Worm	Echinoderms/hemichordata	747.8		10224				
-41	Capitella teleta	Capitella Worm	Echinoderms/hemichordata	847	UP000014760	283909				
-42	Acyrthosiphon pisum	Pea Aphid	Arthropods	847	UP000007819	7029				
-43	Pediculus humanus corporis	Louse	Arthropods	847	UP000009046	121224				
-44	Ixodes scapularis	Tick	Arthropods	847	UP000001555	6945				
-45	Daphnia pulex	Flea	Arthropods	847	UP000000305	6669				
-46	Drosophila melanogaster	Drosophila	Arthropods	847	UP000000803	7227				
-47	Tribolium castaneum	Red flour beetle	Arthropods	847	UP000007266	7070				
-48	Apis mellifera	Bee	Arthropods	847	UP000005203	7460				
-49	Bombus terrestris	Bumblebee	Arthropods	847		30195				
-50	Anopheles gambiae str. PEST	Malaria Mosquito	Arthropods	847	UP000007062	7165			180454	
-51	Bombyx mori	Silkworm	Arthropods	847		7091				
-52	Aedes aegypti	Yellow Fever Mosquito	Arthropods	847	UP000008820	7159				
-53	Culex quinquefasciatus	Lymphatic Filariasis Mosquito	Arthropods	847	UP000002320	7176				
-54	Nasonia vitripennis	Wasp	Arthropods	847	UP000002358	7425				
-55	Caenorhabditis elegans	C.elegans	Nematodes	847	UP000001940	6239				
-56	Schistosoma mansoni	Schistosoma Trematode	Nematodes	847	UP000008854	6183				
-57	Brugia malayi	Brugia Nematode	Nematodes	847	UP000006672	6279				
-58	Clonorchis sinensis	Liver Fluke	Nematodes	847		79923				
-59	Loa loa	Loa Loa Nematode	Nematodes	847	UP000095285	7209				
-60	Trichinella spiralis	Trichinella Nematode	Nematodes	847	UP000054776	6334				
-61	Nematostella vectensis	Sea Anemone	Cnidaria	936	UP000001593	45351				
-62	Hydra magnipapillata	Hydra	Cnidaria	936		360150		Grosmannia penicillata		
-63	Trichoplax adhaerens	Trichoplax	Sponge/Placozoa		UP000009022	10228				
-64	Amphimedon queenslandica	Sponge	Sponge/Placozoa	936	UP000007879	400682				
-65	Salpingoeca sp.atcc50818	Salpingoeca Choanoflagellate	Choanoflagellates		UP000007799	946362		Salpingoeca rosetta		
-66	Capsaspora owczarzaki	Capsaspora	Choanoflagellates	990.8	UP000008743	595528		Capsaspora owczarzaki ATCC 30864		192875
-67	Monosiga brevicollis mx1	Monosiga Choanoflagellate	Choanoflagellates		UP000001357	81824		Monosiga brevicollis MX1	431895	
-68	Batrachochytrium dendrobatidis jam81	Batrachochytrium dendrobatidis	Fungi	1302.5	UP000007241	684364		Batrachochytrium dendrobatidis JAM81	684364	109871
-69	Rhizopus delemar	Rhizopus delemar	Fungi	1302.5	UP000009138	246409			936053	936053
-70	Eremothecium cymbalariae DBVPG#7215	Eremothecium cymbalariae	Fungi	1302.5	UP000006790	931890				45285
-71	Ashbya gossypii ATCC 10895	Ashbya gossypii	Fungi	1302.5	UP000000591	284811		Eremothecium gossypii ATCC 10895	284811	33169
-72	Torulaspora delbrueckii	Torulaspora delbrueckii	Fungi	1302.5	UP000005627	1076872			4950	4950
-73	Encephalitozoon cuniculi GB-M1	Encephalitozoon cuniculi	Fungi	1302.5	UP000000819	284813				6035
-74	Podospora anserina S mat+	Podospora anserina	Fungi		UP000001197	515849				5145
-75	Verticillium albo-atrum VaMs.102	Verticillium albo-atrum	Fungi		UP000008698	526221		Verticillium alfalfae VaMs.102	526221	1051613
-76	Candida albicans	Candida albicans	Fungi	1302.5	UP000000559	237561			5476	5476
-77	Neurospora crassa OR74A	Neurospora crassa	Fungi	1302.5	UP000001805	367110				5141
-78	Sordaria macrospora	Sordaria macrospora	Fungi	1302.5	UP000001881	771870		Sordaria macrospora k-hell	771870	5147
-79	Zygosaccharomyces rouxii CBS 732	Zygosaccharomyces rouxii	Fungi	1302.5	UP000008536	559307		Zygosaccharomyces rouxii	4956	4956
-80	Rhodosporidium toruloides np11	Rhodosporidium toruloides	Fungi	1302.5	UP000199069	5286		Rhodotorula toruloides NP11	1130832	
-81	Myceliophthora thermophila ATCC 42464	Myceliophthora thermophila	Fungi	1302.5	UP000007322	573729		Thermothelomyces thermophilus ATCC 42464	573729	78579
-82	Naumovozyma castellii CBS 4309	Naumovozyma castellii	Fungi	1302.5	UP000001640	1064592				27288
-83	Vanderwaltozyma polyspora DSM 70294	Vanderwaltozyma polyspora	Fungi	1302.5	UP000000267	436907				36033
-84	Talaromyces stipitatus ATCC 10500	Talaromyces stipitatus	Fungi	1302.5	UP000001745	441959				28564
-85	Pneumocystis jirovecii	Pneumocystis jirovecii	Fungi	1302.5	UP000053447	1408657	UP000010422		42068	42068
-86	Botryotinia fuckeliana	Botryotinia fuckeliana	Fungi	1302.5	UP000012045	1290391	UP000008177	Botryotinia fuckeliana totivirus 1	425009	425009
-87	Puccinia graminis f. sp. tritici	Puccinia graminis	Fungi	1302.5	UP000008783	418459			56615	5297
-88	Thielavia terrestris NRRL 8126	Thielavia terrestris	Fungi	1302.5	UP000008181	578455				35720
-89	Nosema ceranae BRL01	Nosema ceranae	Fungi	1302.5	UP000009082	40302				40302
-90	Melampsora larici-populina 98ag31	Melampsora larici-populina	Fungi	1302.5	UP000001072	747676		Melampsora larici-populina 98AG31		203908
-91	Gibberella zeae PH-1 (Fusarium)	Gibberella zeae	Fungi		UP000070720	229533		NOT_FOUND		
-92	Chaetomium globosum CBS 148.51	Chaetomium globosum	Fungi	1302.5	UP000001056	306901				38033
-93	Magnaporthe oryzae 70-15	Magnaporthe oryzae	Fungi	1302.5	UP000009058	242507		Magnaporthe oryzae virus 1	271257	271257
-94	Tuber melanosporum	Tuber melanosporum	Fungi	1302.5		39416				39416
-95	Schizosaccharomyces pombe	Schizosaccharomyces pombe	Fungi	1302.5		4896				
-96	Sclerotinia sclerotiorum 1980 UF-70	Sclerotinia sclerotiorum	Fungi	1302.5		665079				5180
-97	Schizophyllum commune H4-8	Schizophyllum commune	Fungi	1302.5		578458				5334
-98	Neosartorya fischeri NRRL 181	Neosartorya fischeri	Fungi	1302.5				Aspergillus fischeri NRRL 181	331117	36630
-99	Phaeosphaeria nodorum SN15	Phaeosphaeria nodorum	Fungi	1302.5		13684		Parastagonospora nodorum SN15	321614	13684
-100	Postia placenta	Postia placenta	Fungi	1302.5		104341		Postia placenta Mad-698-R	561896	104341
-101	Ustilago maydis	Ustilago maydis	Fungi	1302.5		5270				
-102	Enterocytozoon bieneusi h348	Enterocytozoon bieneusi	Fungi	1302.5		481877		Enterocytozoon bieneusi H348		31281
-103	Malassezia globosa	Malassezia globosa	Fungi	1302.5		76773				
-104	Pyrenophora teres f. teres 0-1	Pyrenophora teres	Fungi	1302.5		45151				53485
-105	Aspergillus nidulans FGSC A4	Aspergillus nidulans	Fungi	1302.5		227321				162425
-106	Moniliophthora perniciosa FA553	Moniliophthora perniciosa	Fungi	1302.5		554373				153609
-107	Laccaria bicolor s238n-h82	Laccaria bicolor	Fungi	1302.5		486041		Laccaria bicolor S238N-H82		29883
-108	Cryptococcus neoformans jec21	Cryptococcus neoformans	Fungi	1302.5		5207		Cryptococcus neoformans AD hybrid	192011	192011
-109	Ajellomyces dermatitidis SLH14081	Ajellomyces dermatitidis	Fungi	1302.5				Blastomyces dermatitidis ATCC 18187	946394	5039
-110	Uncinocarpus reesii 1704	Uncinocarpus reesii	Fungi	1302.5		336963				33188
-111	Nectria haematococca mpVI 77-13-4	Nectria haematococca	Fungi	1302.5		660122		[Nectria] haematococca mpVI 77-13-4		140110
-112	Arthroderma gypseum CBS 118893	Arthroderma gypseum	Fungi	1302.5				Nannizzia gypsea CBS 118893	535722	63402
-113	Trichophyton rubrum CBS 118892	Trichophyton rubrum	Fungi	1302.5		559305				5551
-114	Paracoccidioides brasiliensis Pb01	Paracoccidioides brasiliensis	Fungi	1302.5		121759		Paracoccidioides brasiliensis Pb03	482561	121759
-115	Clavispora lusitaniae ATCC 42720	Clavispora lusitaniae	Fungi	1302.5		306902				36911
-116	Coccidioides posadasii C735 delta SOWgp	Coccidioides posadasii	Fungi	1302.5		222929				199306
-117	Komagataella pastoris GS115	Komagataella pastoris	Fungi	1302.5				Komagataella phaffii GS115	644223	460519
-118	Meyerozyma guilliermondii ATCC 6260	Meyerozyma guilliermondii	Fungi	1302.5		294746				4929
-119	Tetrapisispora phaffii CBS 4417	Tetrapisispora phaffii	Fungi	1302.5		1071381				113608
-120	Lachancea thermotolerans CBS 6340	Lachancea thermotolerans	Fungi	1302.5		559295				381046
-121	Scheffersomyces stipitis CBS 6054	Scheffersomyces stipitis	Fungi	1302.5		322104				4924
-122	Yarrowia lipolytica	Yarrowia lipolytica	Fungi	1302.5		4952				
-123	Saccharomyces cerevisiae s288c	Saccharomyces cerevisiae	Fungi	1302.5		559292		Saccharomyces cerevisiae S288C		4932
-124	Debaryomyces hansenii CBS767	Debaryomyces hansenii	Fungi	1302.5		284592				4959
-125	Polysphondylium pallidum pn500	Polysphondylium pallidum	Amoebozoa	1652				Polysphondylium violaceum	133409	133409
-126	Entamoeba dispar SAW760	Entamoeba dispar	Amoebozoa	1652		370354				46681
-127	Acanthamoeba castellanii str.neff	Acanthamoeba castellanii	Amoebozoa			1257118		Acanthamoeba castellanii str. Neff		5755
-128	Entamoeba histolytica hm-1:imss	Entamoeba histolytica	Amoebozoa	1652		294381		Entamoeba histolytica HM-1:IMSS		5759
-129	Dictyostelium discoideum ax4	Dictyostelium discoideum	Amoebozoa	1652		352472		Dictyostelium discoideum AX4		44689
-130	Medicago truncatula	Clover	Plantae	1513.9		3880				
-131	Vitis vinifera	Grape	Plantae	1513.9		29760				
-132	Glycine max	Soybean	Plantae	1513.9		3847				
-133	Brachypodium distachyon	Grass	Plantae	1513.9		15368				
-134	Zea mays	Maize	Plantae	1513.9		4577				
-135	Populus trichocarpa	Poplar	Plantae	1513.9		3694				
-136	Oryza sativa japonica group	Rice	Plantae	1513.9		39947		Oryza sativa Japonica Group		4530
-137	Ricinus communis	Ricinus	Plantae	1513.9		3988				
-138	Sorghum bicolor	Sorghum	Plantae	1513.9		4558				
-139	Arabidopsis thaliana	Tobacco	Plantae	1513.9		3702				
-140	Selaginella moellendorffii	Selaginella	Plantae	1513.9		88036				
-141	Physcomitrella patens subsp.patens	Moss	Plantae			3218		Physcomitrella patens		
-142	Chlamydomonas reinhardtii	Chlamydomonas	Plantae	1513.9		3055				
-143	Volvox carteri	Volvox	Plantae	1513.9		3067				
-144	Coccomyxa subellipsoidea c-169	Coccomyxa subellipsoidea	Plantae	1513.9		574566		Coccomyxa subellipsoidea C-169		248742
-145	Ostreococcus tauri	Ostreococcus alga	Plantae	1513.9		70448				
-146	Micromonas pusilla ccmp1545	Micromonas	Plantae	1513.9		564608		Micromonas pusilla CCMP1545		38833
-147	Chlorella variabilis	Chlorella	Plantae	1513.9		554065				
-148	Naegleria gruberi	Naegleria gruberi	Other protists	2041		5762				
-149	Ichthyophthirius multifiliis	Ichthyophthirius multifiliis	Other protists	1724.7		5932				
-150	Hemiselmis andersenii	Hemiselmis andersenii	Other protists			464988				
-151	Ectocarpus siliculosus	Ectocarpus siliculosus	Other protists	1724.7		2880				
-152	Oxytricha trifallax	Oxytricha trifallax	Other protists	1724.7		1172189				
-153	Bigelowiella natans	Bigelowiella natans	Other protists	1724.7		227086				
-154	Guillardia theta ccmp2712	Guillardia theta	Other protists	1724.7		905079		Guillardia theta CCMP2712		55529
-155	Aureococcus anophagefferens	Aureococcus anophagefferens	Other protists	1724.7		44056				
-156	Blastocystis hominis	Blastocystis hominis	Other protists	1724.7		12968				
-157	Neospora caninum liverpool	Neospora caninum	Other protists	1724.7		572307		Neospora caninum Liverpool		29176
-158	Babesia bovis	Babesia bovis	Other protists	1724.7		5865				
-159	Theileria parva	Theileria parva	Other protists	1724.7		5875				
-160	Phaeodactylum tricornutum	Phaeodactylum tricornutum	Other protists	1724.7		556484		Phaeodactylum tricornutum CCAP 1055/1		2850
-161	Thalassiosira oceanica	Thalassiosira oceanica	Other protists	1724.7		159749				
-162	Cyanidioschyzon merolae	Cyanidioschyzon merolae	Other protists	1513.9		45157				
-163	Cryptomonas paramecium	Cryptomonas paramecium	Other protists			2898				
-164	Galdieria sulphuraria	Galdieria sulphuraria	Other protists	1513.9		130081				
-165	Phytophthora infestans	Phytophthora infestans	Other protists	1724.7		4787				
-166	Leishmania major	Leishmania major	Other protists	1768.6		40284		Leishmania arabica		
-167	Giardia lamblia	Giardia lamblia	Other protists	2041		5741		Giardia lamblia P15		5741
-168	Tetrahymena thermophila	Tetrahymena thermophila	Other protists	1724.7		312017		Tetrahymena thermophila SB210		5911
-169	Perkinsus marinus	Perkinsus marinus	Other protists	1724.7		423536		Perkinsus marinus ATCC 50983		31276
-170	Cryptosporidium parvum	Cryptosporidium parvum	Other protists	1724.7		5807				
-171	Toxoplasma gondii me49	Toxoplasma gondii	Other protists	1724.7		508771		Toxoplasma gondii ME49		5811
-172	Plasmodium falciparum 3d7	Plasmodium falciparum	Other protists	1724.7		36329		Plasmodium falciparum 3D7		5833
-173	Nematocida parisii	Nematocida parisii	Other protists	1302.5		881290		Nematocida parisii ERTm1		586133
-174	Paramecium tetraurelia	Paramecium tetraurelia	Other protists	1724.7		5888				
-175	Trichomonas vaginalis	Trichomonas vaginalis	Other protists	2041		5722				
-176	Trypanosoma cruzi	Trypanosoma cruzi	Other protists	1768.6		5693				
-177	Paulinella chromatophora	Paulinella chromatophora	Other protists	1724.7				NOT_FOUND		
-178	Stylophora pistillata					50429				
-179	Sphaeroforma arctica					667725		Sphaeroforma arctica JP610		72019
-180	Fonticula alba					691883				
-181	Chlorella sorokiniana					3076				
-182	Leishmania braziliensis					5660				
-183	Trypanosoma brucei					5693		Trypanosoma cruzi		
-184	Bodo saltans					75058				
-185	Stentor coeruleus					5963				
-186	Reticulomyxa filosa					46433				
-187	Cyclospora cayetanensis					88456				
-188	Thalassiosira pseudonana					35128		Thalassiosira pseudonana CCMP1335	296543	35128
-189	Aureococcus anophagefferens					44056				
-190	Nanochloropsis gaditana					72520		Nannochloropsis gaditana		
-191	Lotharella oceanica					641309				
-192	Perkinsus marinus									
-193	Vitrella brassicaformis					1169540		Vitrella brassicaformis CCMP3155		1169539
-194	Phaeodactylum tricornutum					556484		Phaeodactylum tricornutum CCAP 1055/1		2850
-195	Stylonychia lemnae					5949				
+Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		Species Tax ID 	Genome Tax ID	NCBI organism name		
+1	Homo sapiens	Human	Mammals		UP000005640	9606		9606				
+2	Pan troglodytes	Chimpanzee	Mammals	6.6	UP000002277	9598		9598				
+3	Gorilla gorilla gorilla	Gorilla	Mammals	8.9	UP000001519	9595		9595			9595	9593
+4	Pongo abelii	Orangutan	Mammals	15.8	UP000001595	9601		9601				
+5	Nomascus leucogenys	Gibbon	Mammals	19.9	UP000001073	61853		61853				
+6	Macaca mulatta	Macaca	Mammals	29.1	UP000006718	9544		9544				
+7	Papio anubis	Baboon	Mammals	29.1	UP000028761	9555		9555				
+8	Saimiri boliviensis	Squirrel Monkey	Mammals	43.1	UP000233220	39432		39432		Saimiri boliviensis boliviensis	39432	27679
+9	Callithrix jacchus	Marmoset	Mammals	43.1	UP000008225	9483		9483				
+10	Otolemur garnettii	Lemur	Mammals	75.9	UP000005225	30611		30611				
+11	Mus musculus	Mouse	Mammals	90.9	UP000000589	10090		10090				
+12	Cricetulus griseus	Hamster	Mammals	90.9	UP000001075	10029		10029				
+13	Rattus norvegicus	Rat	Mammals	90.9	UP000002494	10116		10116				
+14	Cavia porcellus	Guinea Pig	Mammals	90.9	UP000005447	10141		10141				
+15	Oryctolagus cuniculus	Rabbit	Mammals	90.9	UP000001811	9986		9986				
+16	Canis lupus familiaris	Dog	Mammals	97.5	UP000002254	9615		9615				9612
+17	Ailuropoda melanoleuca	Panda	Mammals	97.5	UP000008912	9646		9646				
+18	Equus caballus	Horse	Mammals	97.5	UP000002281	9796		9796				
+19	Sus scrofa	Pig	Mammals	97.5	UP000008227	9823		9823				
+20	Bos taurus	Cow	Mammals	97.5	UP000009136	9913		9913				
+21	Trichechus manatus latirostris	Manatee	Mammals	105	UP000248480	127582		127582				9778
+22	Loxodonta africana	Elephant	Mammals	105	UP000007646	9785		9785				
+23	Monodelphis domestica	Opossum	Mammals	163.7	UP000002280	13616		13616				
+24	Sarcophilus harrisii	Tasmanian Devil	Mammals	163.7	UP000007648	9305		9305				
+25	Ornithorhynchus anatinus	Platypus	Mammals	179.2	UP000002279	9258		9258				
+26	Gallus gallus	Chicken	Other vertebrates	320.5	UP000000539	9031		9031				
+27	Taeniopygia guttata	Finch	Other vertebrates	320.5	UP000007754	59729		59729				
+28	Anolis carolinensis	American Anole	Other vertebrates	320.5	UP000001646	28377		28377				
+29	Chelonia mydas	Turtle	Other vertebrates	320.5	UP000031443	8469		8469				
+30	Xenopus (Silurana) tropicalis	Frog	Other vertebrates	355.7	UP000008143	8364		8364		Xenopus tropicalis		
+31	Danio rerio	Zebrafish	Other vertebrates	429.6	UP000000437	7955		7955				
+32	Oreochromis niloticus	Tilapia	Other vertebrates	429.6	UP000005207	8128		8128				
+33	Oryzias latipes	Medaka	Other vertebrates	429.6	UP000001038	8090		8090				
+34	Tetraodon nigroviridis	Pufferfish	Lancelets/tunicates	429.6	UP000007303	99883		99883				
+35	Branchiostoma floridae	Lancet	Lancelets/tunicates	733	UP000001554	7739		7739				
+36	Ciona intestinalis	Ciona	Lancelets/tunicates	733	UP000008144	7719		7719				
+37	Oikopleura dioica	Sea-squirt	Lancelets/tunicates		UP000001307	34765		34765				
+38	Strongylocentrotus purpuratus	Sea Urchin	Echinoderms/hemichordata	747.8	UP000007110	7668		7668				
+39	Crassostrea gigas	Oyster	Echinoderms/hemichordata	847		29159		29159				
+40	Saccoglossus kowalevskii	Acorn Worm	Echinoderms/hemichordata	747.8		10224		10224				
+41	Capitella teleta	Capitella Worm	Echinoderms/hemichordata	847	UP000014760	283909		283909				
+42	Acyrthosiphon pisum	Pea Aphid	Arthropods	847	UP000007819	7029		7029				
+43	Pediculus humanus corporis	Louse	Arthropods	847	UP000009046	121224		121224				
+44	Ixodes scapularis	Tick	Arthropods	847	UP000001555	6945		6945				
+45	Daphnia pulex	Flea	Arthropods	847	UP000000305	6669		6669				
+46	Drosophila melanogaster	Drosophila	Arthropods	847	UP000000803	7227		7227				
+47	Tribolium castaneum	Red flour beetle	Arthropods	847	UP000007266	7070		7070				
+48	Apis mellifera	Bee	Arthropods	847	UP000005203	7460		7460				
+49	Bombus terrestris	Bumblebee	Arthropods	847		30195		30195				
+50	Anopheles gambiae str. PEST	Malaria Mosquito	Arthropods	847	UP000007062	7165		7165			180454	
+51	Bombyx mori	Silkworm	Arthropods	847	UP000005204	7091		7091				
+52	Aedes aegypti	Yellow Fever Mosquito	Arthropods	847	UP000008820	7159		7159				
+53	Culex quinquefasciatus	Lymphatic Filariasis Mosquito	Arthropods	847	UP000002320	7176		7176				
+54	Nasonia vitripennis	Wasp	Arthropods	847	UP000002358	7425		7425				
+55	Caenorhabditis elegans	C.elegans	Nematodes	847	UP000001940	6239		6239				
+56	Schistosoma mansoni	Schistosoma Trematode	Nematodes	847	UP000008854	6183		6183				
+57	Brugia malayi	Brugia Nematode	Nematodes	847	UP000006672	6279		6279				
+58	Clonorchis sinensis	Liver Fluke	Nematodes	847	UP000286415	79923		79923				
+59	Loa loa	Loa Loa Nematode	Nematodes	847	UP000095285	7209		7209				
+60	Trichinella spiralis	Trichinella Nematode	Nematodes	847	UP000054776	6334		6334				
+61	Nematostella vectensis	Sea Anemone	Cnidaria	936	UP000001593	45351		45351				
+62	Hydra magnipapillata	Hydra	Cnidaria	936		360150		360150		Grosmannia penicillata		
+63	Trichoplax adhaerens	Trichoplax	Sponge/Placozoa		UP000009022	10228		10228				
+64	Amphimedon queenslandica	Sponge	Sponge/Placozoa	936	UP000007879	400682		400682				
+65	Salpingoeca sp.atcc50818	Salpingoeca Choanoflagellate	Choanoflagellates		UP000007799	946362		946362		Salpingoeca rosetta		
+66	Capsaspora owczarzaki	Capsaspora	Choanoflagellates	990.8	UP000008743	595528		595528		Capsaspora owczarzaki ATCC 30864		192875
+67	Monosiga brevicollis mx1	Monosiga Choanoflagellate	Choanoflagellates		UP000001357	81824		81824		Monosiga brevicollis MX1	431895	
+68	Batrachochytrium dendrobatidis jam81	Batrachochytrium dendrobatidis	Fungi	1302.5	UP000007241	684364		684364		Batrachochytrium dendrobatidis JAM81	684364	109871
+69	Rhizopus delemar	Rhizopus delemar	Fungi	1302.5	UP000009138	246409		246409			936053	936053
+70	Eremothecium cymbalariae DBVPG#7215	Eremothecium cymbalariae	Fungi	1302.5	UP000006790	931890		931890				45285
+71	Ashbya gossypii ATCC 10895	Ashbya gossypii	Fungi	1302.5	UP000000591	284811		284811		Eremothecium gossypii ATCC 10895	284811	33169
+72	Torulaspora delbrueckii	Torulaspora delbrueckii	Fungi	1302.5	UP000005627	1076872		1076872			4950	4950
+73	Encephalitozoon cuniculi GB-M1	Encephalitozoon cuniculi	Fungi	1302.5	UP000000819	284813		284813				6035
+74	Podospora anserina S mat+	Podospora anserina	Fungi		UP000001197	515849		515849				5145
+75	Verticillium albo-atrum VaMs.102	Verticillium albo-atrum	Fungi		UP000008698	526221		526221		Verticillium alfalfae VaMs.102	526221	1051613
+76	Candida albicans	Candida albicans	Fungi	1302.5	UP000000559	237561		237561			5476	5476
+77	Neurospora crassa OR74A	Neurospora crassa	Fungi	1302.5	UP000001805	367110		367110				5141
+78	Sordaria macrospora	Sordaria macrospora	Fungi	1302.5	UP000001881	771870		771870		Sordaria macrospora k-hell	771870	5147
+79	Zygosaccharomyces rouxii CBS 732	Zygosaccharomyces rouxii	Fungi	1302.5	UP000008536	559307		559307		Zygosaccharomyces rouxii	4956	4956
+80	Rhodosporidium toruloides np11	Rhodosporidium toruloides	Fungi	1302.5	UP000199069	5286		5286		Rhodotorula toruloides NP11	1130832	
+81	Myceliophthora thermophila ATCC 42464	Myceliophthora thermophila	Fungi	1302.5	UP000007322	573729		573729		Thermothelomyces thermophilus ATCC 42464	573729	78579
+82	Naumovozyma castellii CBS 4309	Naumovozyma castellii	Fungi	1302.5	UP000001640	1064592		1064592				27288
+83	Vanderwaltozyma polyspora DSM 70294	Vanderwaltozyma polyspora	Fungi	1302.5	UP000000267	436907		436907				36033
+84	Talaromyces stipitatus ATCC 10500	Talaromyces stipitatus	Fungi	1302.5	UP000001745	441959		441959				28564
+85	Pneumocystis jirovecii	Pneumocystis jirovecii	Fungi	1302.5	UP000053447	1408657	UP000010422	1408657			42068	42068
+86	Botryotinia fuckeliana	Botryotinia fuckeliana	Fungi	1302.5	UP000012045	1290391	UP000008177	1290391		Botryotinia fuckeliana totivirus 1	425009	425009
+87	Puccinia graminis f. sp. tritici	Puccinia graminis	Fungi	1302.5	UP000008783	418459		418459			56615	5297
+88	Thielavia terrestris NRRL 8126	Thielavia terrestris	Fungi	1302.5	UP000008181	578455		578455				35720
+89	Nosema ceranae BRL01	Nosema ceranae	Fungi	1302.5	UP000009082	40302		40302				40302
+90	Melampsora larici-populina 98ag31	Melampsora larici-populina	Fungi	1302.5	UP000001072	747676		747676		Melampsora larici-populina 98AG31		203908
+91	Gibberella zeae PH-1 (Fusarium)	Gibberella zeae	Fungi		UP000070720	229533		229533		NOT_FOUND		
+92	Chaetomium globosum CBS 148.51	Chaetomium globosum	Fungi	1302.5	UP000001056	306901		306901				38033
+93	Magnaporthe oryzae 70-15	Magnaporthe oryzae	Fungi	1302.5	UP000009058	242507		242507		Magnaporthe oryzae virus 1	271257	271257
+94	Tuber melanosporum	Tuber melanosporum	Fungi	1302.5	UP000006911	39416		39416				39416
+95	Schizosaccharomyces pombe	Schizosaccharomyces pombe	Fungi	1302.5	UP000002485	4896		4896				
+96	Sclerotinia sclerotiorum 1980 UF-70	Sclerotinia sclerotiorum	Fungi	1302.5	UP000001312	665079		665079				5180
+97	Schizophyllum commune H4-8	Schizophyllum commune	Fungi	1302.5	UP000007431	578458		578458				5334
+98	Neosartorya fischeri NRRL 181	Neosartorya fischeri	Fungi	1302.5	UP000006702					Aspergillus fischeri NRRL 181	331117	36630
+99	Phaeosphaeria nodorum SN15	Phaeosphaeria nodorum	Fungi	1302.5	UP000001055	13684		13684		Parastagonospora nodorum SN15	321614	13684
+100	Postia placenta	Postia placenta	Fungi	1302.5	UP000001743	104341		104341		Postia placenta Mad-698-R	561896	104341
+101	Ustilago maydis	Ustilago maydis	Fungi	1302.5	UP000000561	5270		5270				
+102	Enterocytozoon bieneusi h348	Enterocytozoon bieneusi	Fungi	1302.5	UP000001742	481877		481877		Enterocytozoon bieneusi H348		31281
+103	Malassezia globosa	Malassezia globosa	Fungi	1302.5	UP000008837	76773		76773				
+104	Pyrenophora teres f. teres 0-1	Pyrenophora teres	Fungi	1302.5	UP000001067	45151		45151				53485
+105	Aspergillus nidulans FGSC A4	Aspergillus nidulans	Fungi	1302.5	UP000000560	227321		227321				162425
+106	Moniliophthora perniciosa FA553	Moniliophthora perniciosa	Fungi	1302.5	UP000000741	554373		554373				153609
+107	Laccaria bicolor s238n-h82	Laccaria bicolor	Fungi	1302.5	UP000001194	486041		486041		Laccaria bicolor S238N-H82		29883
+108	Cryptococcus neoformans jec21	Cryptococcus neoformans	Fungi	1302.5	UP000002149	5207		5207		Cryptococcus neoformans AD hybrid	192011	192011
+109	Ajellomyces dermatitidis SLH14081	Ajellomyces dermatitidis	Fungi	1302.5	UP000002039					Blastomyces dermatitidis ATCC 18187	946394	5039
+110	Uncinocarpus reesii 1704	Uncinocarpus reesii	Fungi	1302.5	UP000002058	336963		336963				33188
+111	Nectria haematococca mpVI 77-13-4	Nectria haematococca	Fungi	1302.5	UP000005206	660122		660122		[Nectria] haematococca mpVI 77-13-4		140110
+112	Arthroderma gypseum CBS 118893	Arthroderma gypseum	Fungi	1302.5	UP000002669					Nannizzia gypsea CBS 118893	535722	63402
+113	Trichophyton rubrum CBS 118892	Trichophyton rubrum	Fungi	1302.5	UP000008864	559305		559305				5551
+114	Paracoccidioides brasiliensis Pb01	Paracoccidioides brasiliensis	Fungi	1302.5	UP000002059	121759		121759		Paracoccidioides brasiliensis Pb03	482561	121759
+115	Clavispora lusitaniae ATCC 42720	Clavispora lusitaniae	Fungi	1302.5	UP000007703	306902		306902				36911
+116	Coccidioides posadasii C735 delta SOWgp	Coccidioides posadasii	Fungi	1302.5	UP000009084	222929		222929				199306
+117	Komagataella pastoris GS115	Komagataella pastoris	Fungi	1302.5	UP000094565					Komagataella phaffii GS115	644223	460519
+118	Meyerozyma guilliermondii ATCC 6260	Meyerozyma guilliermondii	Fungi	1302.5	UP000001997	294746		294746				4929
+119	Tetrapisispora phaffii CBS 4417	Tetrapisispora phaffii	Fungi	1302.5	UP000005666	1071381		1071381				113608
+120	Lachancea thermotolerans CBS 6340	Lachancea thermotolerans	Fungi	1302.5	UP000002036	559295		559295				381046
+121	Scheffersomyces stipitis CBS 6054	Scheffersomyces stipitis	Fungi	1302.5	UP000002258	322104		322104				4924
+122	Yarrowia lipolytica	Yarrowia lipolytica	Fungi	1302.5	UP000256601	4952		4952				
+123	Saccharomyces cerevisiae s288c	Saccharomyces cerevisiae	Fungi	1302.5	UP000002311	559292		559292		Saccharomyces cerevisiae S288C		4932
+124	Debaryomyces hansenii CBS767	Debaryomyces hansenii	Fungi	1302.5	UP000000599	284592		284592				4959
+125	Polysphondylium pallidum pn500	Polysphondylium pallidum	Amoebozoa	1652	UP000001396					Polysphondylium violaceum	133409	133409
+126	Entamoeba dispar SAW760	Entamoeba dispar	Amoebozoa	1652	a	370354		370354				46681
+127	Acanthamoeba castellanii str.neff	Acanthamoeba castellanii	Amoebozoa		UP000011083	1257118		1257118		Acanthamoeba castellanii str. Neff		5755
+128	Entamoeba histolytica hm-1:imss	Entamoeba histolytica	Amoebozoa	1652	UP000001926	294381		294381		Entamoeba histolytica HM-1:IMSS		5759
+129	Dictyostelium discoideum ax4	Dictyostelium discoideum	Amoebozoa	1652	up000002195	352472		352472		Dictyostelium discoideum AX4		44689
+130	Medicago truncatula	Clover	Plantae	1513.9	UP000002051	3880		3880				
+131	Vitis vinifera	Grape	Plantae	1513.9	UP000009183	29760		29760				
+132	Glycine max	Soybean	Plantae	1513.9	UP000008827	3847		3847				
+133	Brachypodium distachyon	Grass	Plantae	1513.9	UP000008810	15368		15368				
+134	Zea mays	Maize	Plantae	1513.9	UP000007305	4577		4577				
+135	Populus trichocarpa	Poplar	Plantae	1513.9	UP000006729	3694		3694				
+136	Oryza sativa japonica group	Rice	Plantae	1513.9	UP000059680	39947		39947		Oryza sativa Japonica Group		4530
+137	Ricinus communis	Ricinus	Plantae	1513.9	UP000008311	3988		3988				
+138	Sorghum bicolor	Sorghum	Plantae	1513.9	UP000000768	4558		4558				
+139	Arabidopsis thaliana	Tobacco	Plantae	1513.9	UP000006548	3702		3702				
+140	Selaginella moellendorffii	Selaginella	Plantae	1513.9	UP000001514	88036		88036				
+141	Physcomitrella patens subsp.patens	Moss	Plantae		UP000006727	3218		3218		Physcomitrella patens		
+142	Chlamydomonas reinhardtii	Chlamydomonas	Plantae	1513.9	UP000006906	3055		3055				
+143	Volvox carteri	Volvox	Plantae	1513.9	UP000001058	3067		3067				
+144	Coccomyxa subellipsoidea c-169	Coccomyxa subellipsoidea	Plantae	1513.9	UP000007264	574566		574566		Coccomyxa subellipsoidea C-169		248742
+145	Ostreococcus tauri	Ostreococcus alga	Plantae	1513.9	UP000009170	70448		70448				
+146	Micromonas pusilla ccmp1545	Micromonas	Plantae	1513.9	UP000001876	564608		564608		Micromonas pusilla CCMP1545		38833
+147	Chlorella variabilis	Chlorella	Plantae	1513.9	UP000008141	554065		554065				
+148	Naegleria gruberi	Naegleria gruberi	Other protists	2041	UP000006671	5762		5762				
+149	Ichthyophthirius multifiliis	Ichthyophthirius multifiliis	Other protists	1724.7	UP000008983	5932		5932				
+150	Hemiselmis andersenii	Hemiselmis andersenii	Other protists		UP000243127	464988		464988				
+151	Ectocarpus siliculosus	Ectocarpus siliculosus	Other protists	1724.7	UP000002630	2880		2880				
+152	Oxytricha trifallax	Oxytricha trifallax	Other protists	1724.7	UP000006077	1172189		1172189				
+153	Bigelowiella natans	Bigelowiella natans	Other protists	1724.7	UP000243425	227086		227086				
+154	Guillardia theta ccmp2712	Guillardia theta	Other protists	1724.7	UP000011087	905079		905079		Guillardia theta CCMP2712		55529
+155	Aureococcus anophagefferens	Aureococcus anophagefferens	Other protists	1724.7	UP000002729	44056		44056				
+156	Blastocystis hominis	Blastocystis hominis	Other protists	1724.7	UP000008312	12968		12968				
+157	Neospora caninum liverpool	Neospora caninum	Other protists	1724.7	UP000007494	572307		572307		Neospora caninum Liverpool		29176
+158	Babesia bovis	Babesia bovis	Other protists	1724.7	UP000002173	5865		5865				
+159	Theileria parva	Theileria parva	Other protists	1724.7	UP000001949	5875		5875				
+160	Phaeodactylum tricornutum	Phaeodactylum tricornutum	Other protists	1724.7	UP000000759	556484		556484		Phaeodactylum tricornutum CCAP 1055/1		2850
+161	Thalassiosira oceanica	Thalassiosira oceanica	Other protists	1724.7	UP000266841	159749		159749				
+162	Cyanidioschyzon merolae	Cyanidioschyzon merolae	Other protists	1513.9	UP000007014	45157		45157				
+163	Cryptomonas paramecium	Cryptomonas paramecium	Other protists		UP000243423	2898		2898				
+164	Galdieria sulphuraria	Galdieria sulphuraria	Other protists	1513.9	UP000030680	130081		130081				
+165	Phytophthora infestans	Phytophthora infestans	Other protists	1724.7	UP000006643	4787		4787				
+166	Leishmania major	Leishmania major	Other protists	1768.6	UP000000542	40284		40284		Leishmania arabica		
+167	Giardia lamblia	Giardia lamblia	Other protists	2041	UP000008974	5741		5741		Giardia lamblia P15		5741
+168	Tetrahymena thermophila	Tetrahymena thermophila	Other protists	1724.7	UP000009168	312017		312017		Tetrahymena thermophila SB210		5911
+169	Perkinsus marinus	Perkinsus marinus	Other protists	1724.7	UP000007800	423536		423536		Perkinsus marinus ATCC 50983		31276
+170	Cryptosporidium parvum	Cryptosporidium parvum	Other protists	1724.7	UP000006726	5807		5807				
+171	Toxoplasma gondii me49	Toxoplasma gondii	Other protists	1724.7	UP000001529	508771		508771		Toxoplasma gondii ME49		5811
+172	Plasmodium falciparum 3d7	Plasmodium falciparum	Other protists	1724.7	UP000001450	36329		36329		Plasmodium falciparum 3D7		5833
+173	Nematocida parisii	Nematocida parisii	Other protists	1302.5	UP000002872	881290		881290		Nematocida parisii ERTm1		586133
+174	Paramecium tetraurelia	Paramecium tetraurelia	Other protists	1724.7	UP000000600	5888		5888				
+175	Trichomonas vaginalis	Trichomonas vaginalis	Other protists	2041	UP000001542	5722		5722				
+176	Trypanosoma cruzi	Trypanosoma cruzi	Other protists	1768.6	UP000002296	5693		5693				
+177	Paulinella chromatophora	Paulinella chromatophora	Other protists	1724.7	UP000243051					NOT_FOUND		
+178	Stylophora pistillata				UP000225706	50429		50429				
+179	Sphaeroforma arctica				UP000054560	667725		667725		Sphaeroforma arctica JP610		72019
+180	Fonticula alba				UP000030693	691883		691883				
+181	Chlorella sorokiniana				UP000239899	3076		3076				
+182	Leishmania braziliensis				UP000007258	5660		5660				
+183	Trypanosoma brucei				UP000008524	5693		5693		Trypanosoma cruzi		
+184	Bodo saltans				UP000051952	75058		75058				
+185	Stentor coeruleus				UP000187209	5963		5963				
+186	Reticulomyxa filosa				UP000023152	46433		46433				
+187	Cyclospora cayetanensis				UP000095192	88456		88456				
+188	Thalassiosira pseudonana				UP000001449	35128		35128		Thalassiosira pseudonana CCMP1335	296543	35128
+189	Aureococcus anophagefferens	dup										
+190	Nanochloropsis gaditana				UP000019335	72520		72520		Nannochloropsis gaditana		
+191	Lotharella oceanica				UP000243670	641309		641309				
+192	Perkinsus marinus	dup										
+193	Vitrella brassicaformis				UP000041254	1169540		1169540		Vitrella brassicaformis CCMP3155		1169539
+194	Phaeodactylum tricornutum				UP000000759	556484		556484		Phaeodactylum tricornutum CCAP 1055/1		2850
+195	Stylonychia lemnae				UP000039865	5949		5949				
