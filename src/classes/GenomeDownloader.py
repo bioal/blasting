@@ -1,4 +1,5 @@
 from classes.FtpManager import FtpManager
+# from classes.CurlManager import CurlManager
 import os
 
 class GenomeDownloader:
@@ -58,6 +59,7 @@ class GenomeDownloader:
         index = self.summary_file_source.rfind('/')
         summary_file = self.summary_file_source[index + 1:]
         ftp = FtpManager(self.ftp_server)
+        # ftp = CurlManager(self.ftp_server)
         ftp.download(self.summary_file_source, summary_file)
         self.__download_genomes(summary_file, debug)
 
@@ -97,6 +99,7 @@ class GenomeDownloader:
         path = server[index:]
         server = server[0:index]
         ftp = FtpManager(server)
+        # ftp = CurlManager(server)
         files = ftp.list(path)
 
         faa = None
