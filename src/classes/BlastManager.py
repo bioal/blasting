@@ -53,8 +53,10 @@ class BlastManager:
                 self.command,
                 '-query', genome1['fasta_file'],
                 '-db', 'db/' + genome2['id'],
-                '-max_target_seqs', '1',
-                '-outfmt', '6',
+                # '-max_target_seqs', '1',
+                '-evalue', '0.001',
+                # '-outfmt', '6',
+                '-outfmt', '7',
                 '-out', self.output_folder + '/' + result_name
             ]
             log_fp = open(log_file, 'w')
