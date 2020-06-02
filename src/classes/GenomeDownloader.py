@@ -6,7 +6,7 @@ class GenomeDownloader:
     def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
-        self.downloaded_genomes = 'genome_list.tsv';
+        self.downloaded_files = 'genome_list.tsv';
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
@@ -61,9 +61,9 @@ class GenomeDownloader:
         ftp = FtpManager(self.ftp_server)
         # ftp = CurlManager(self.ftp_server)
         ftp.download(self.summary_file_source, summary_file)
-        self.__download_genomes(summary_file, debug)
+        self.__download_files(summary_file, debug)
 
-    def __download_genomes(self, summary_file, debug):
+    def __download_files(self, summary_file, debug):
         file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
@@ -85,10 +85,10 @@ class GenomeDownloader:
             line = fp.readline()
         fp.close()
 
-        result_fp = open(self.downloaded_genomes, 'w')
+        result_fp = open(self.downloaded_files, 'w')
         for id in self.id_hash:
             if file_obtained.get(id) is None:
-                print('Genome not obtained for: ' + self.id_hash[id])
+                print('File not obtained for: ' + self.id_hash[id])
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()

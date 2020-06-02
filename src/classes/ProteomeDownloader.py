@@ -6,7 +6,7 @@ class ProteomeDownloader:
     def __init__(self, output_folder, species_list):
         self.ftp_server = 'ftp.uniprot.org'
         self.summary_file_source = '/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/README'
-        self.downloaded_proteomes = 'proteome_list.tsv';
+        self.downloaded_files = 'proteome_list.tsv';
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         self.output_folder = output_folder
@@ -61,9 +61,9 @@ class ProteomeDownloader:
         ftp = FtpManager(self.ftp_server)
         # ftp = CurlManager(self.ftp_server)
         ftp.download(self.summary_file_source, summary_file)
-        self.__download_proteomes(summary_file, debug)
+        self.__download_files(summary_file, debug)
 
-    def __download_proteomes(self, summary_file, debug):
+    def __download_files(self, summary_file, debug):
         file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
@@ -85,10 +85,10 @@ class ProteomeDownloader:
             line = fp.readline()
         fp.close()
 
-        result_fp = open(self.downloaded_proteomes, 'w')
+        result_fp = open(self.downloaded_files, 'w')
         for id in self.id_hash:
             if file_obtained.get(id) is None:
-                print('Proteome not obtained for: ' + self.id_hash[id])
+                print('File not obtained for: ' + self.id_hash[id])
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
