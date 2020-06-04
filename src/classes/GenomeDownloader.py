@@ -1,9 +1,10 @@
 from classes.FtpManager import FtpManager
+from threading import Thread, Semaphore
 # from classes.CurlManager import CurlManager
 import os
 
 class GenomeDownloader:
-    def __init__(self, output_folder, species_list):
+    def __init__(self, output_folder, species_list, num):
         self.ftp_server = 'ftp.ncbi.nlm.nih.gov'
         self.summary_file_source = '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt'
         self.downloaded_files = 'genome_list.tsv';
@@ -13,6 +14,7 @@ class GenomeDownloader:
         self.id_hash = self.__get_id_hash(species_list)
         self.taxid_hash = self.__get_taxid_hash(species_list)
         self.species_hash = self.__get_species_hash(species_list)
+        self.semaphore = Semaphore(int(num))
 
     def __get_id_hash(self, species_list):
         hash = {}
@@ -80,8 +82,8 @@ class GenomeDownloader:
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
                 if id is not None and file_obtained.get(id) is None:
-                    gcf_file = self.__download_gcf_file(url, debug)
-                    file_obtained[id] = gcf_file
+                    thread = Thread(target=self.__process_download, args=(url, debug, file_obtained))
+                    thread.start()
             line = fp.readline()
         fp.close()
 
@@ -92,6 +94,11 @@ class GenomeDownloader:
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
+
+    def __process_download(self, url, debug, file_obtained):
+        with self.semaphore:
+            gcf_file = self.__download_gcf_file(url, debug)
+            file_obtained[id] = gcf_file
     
     def __download_gcf_file(self, url, debug):
         server = url.replace('ftp://', '')
