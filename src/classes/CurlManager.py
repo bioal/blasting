@@ -83,6 +83,11 @@ class CurlManager:
     def download_gz(self, path, output_file):
         unzip_file = output_file.replace('.gz', '')
         if self.__check_file(path, unzip_file):
+            if os.path.exists(output_file):
+                os.remove(output_file)
+            if os.path.exists(unzip_file):
+                os.remove(unzip_file)
+
             self.download(path, output_file)
 
             in_fp = gzip.open(output_file, 'rb')
