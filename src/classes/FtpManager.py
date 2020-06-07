@@ -29,16 +29,6 @@ class FtpManager:
             fp.close()
         else:
             print('Skip... ' + path)
-    
-    # download binary
-    def download_binary(self, path, output_file):
-        if self.__check_file(path, output_file):
-            print('Downloading... ' + path)
-            fp = open(output_file, 'wb')
-            self.ftp.retrbinary('RETR ' + path, fp.write)
-            fp.close()
-        else:
-            print('Skip... ' + path)
 
     # download gz
     def download_gz(self, path, output_file):
