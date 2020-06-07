@@ -1,5 +1,5 @@
 from classes.FtpManager import FtpManager
-# from classes.CurlManager import CurlManager
+from classes.CurlManager import CurlManager
 import os
 from threading import Thread, Semaphore
 
@@ -97,16 +97,16 @@ class ProteomeDownloader:
 
     def __process_download(self, url, debug, file_obtained):
         with self.semaphore:
-            gcf_file = self.__download_gcf_file(url, debug)
+            gcf_file = self.__download_file(url, debug)
             file_obtained[id] = gcf_file
     
-    def __download_gcf_file(self, url, debug):
+    def __download_file(self, url, debug):
         server = url.replace('ftp://', '')
         index = server.find('/')
         path = server[index:]
         server = server[0:index]
-        ftp = FtpManager(server)
-        # ftp = CurlManager(server)
+        # ftp = FtpManager(server)
+        ftp = CurlManager(server)
         files = ftp.list(path)
 
         faa = None
