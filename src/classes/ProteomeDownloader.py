@@ -63,6 +63,15 @@ class ProteomeDownloader:
         ftp = FtpManager(self.ftp_server)
         # ftp = CurlManager(self.ftp_server)
         ftp.download(self.summary_file_source, summary_file)
+        log_dir = './log'
+        err_dir = './err'
+        if not(self.output_folder == '.'):
+            log_dir = self.output_folder + '_log'
+            err_dir = self.output_folder + '_err'
+        if not(os.path.exists(log_dir)):
+            os.makedirs(log_dir)
+        if not(os.path.exists(err_dir)):
+            os.makedirs(err_dir)
         self.__download_files(summary_file, debug)
 
     def __download_files(self, summary_file, debug):
