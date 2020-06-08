@@ -107,19 +107,8 @@ class ProteomeDownloader:
         server = server[0:index]
         # ftp = FtpManager(server)
         ftp = CurlManager(server)
-        files = ftp.list(path)
-
-        faa = None
-        gcf_file_path = None
-        for file in files:
-            if file.endswith('fasta.gz'):
-                faa = file
-        if faa is not None:
-            index = faa.rfind('/')
-            file_name = faa[index + 1:]
-            faa_file = self.output_folder + '/' + file_name
-            if not debug:
-                ftp.download_gz(faa, faa_file)
-            gcf_file_name = file_name.replace('fasta.gz', 'fasta')
-            gcf_file_path = self.output_folder + '/' + gcf_file_name
-        return gcf_file_path
+        index = path.rfind('/')
+        file_name = path[index + 1:]
+        if not debug:
+            ftp.download_gz(path, self.output_folder + '/' + file_name)
+        return self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta')
