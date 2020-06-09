@@ -92,7 +92,7 @@ class ProteomeDownloader:
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
                 if id is not None and file_obtained.get(id) is None:
-                    thread = Thread(target=self.__process_download, args=(url, debug, file_obtained))
+                    thread = Thread(target=self.__download_file_with_semaphore, args=(url, debug, file_obtained))
                     thread.start()
             line = fp.readline()
         fp.close()
@@ -105,10 +105,9 @@ class ProteomeDownloader:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
 
-    def __process_download(self, url, debug, file_obtained):
+    def __download_file_with_semaphore(self, url, debug, file_obtained):
         with self.semaphore:
-            gcf_file = self.__download_file(url, debug)
-            file_obtained[id] = gcf_file
+            file_obtained[id] = self.__download_file(url, debug)
     
     def __download_file(self, url, debug):
         server = url.replace('ftp://', '')
