@@ -31,21 +31,8 @@ class CurlManager:
 
     # call curl
     def __call_curl(self, path, output_file):
-        dir = self.__get_dir(output_file)
-        file = self.__get_file(output_file)
-
-        log_dir = './log'
-        err_dir = './err'
-        if not(dir == '.'):
-            log_dir = dir + '_log'
-            err_dir = dir + '_err'
-        log_file = log_dir + '/' + file + '.log'
-        err_file = err_dir + '/' + file + '.log'
-
-        if not(os.path.exists(log_dir)):
-            os.makedirs(log_dir)
-        if not(os.path.exists(err_dir)):
-            os.makedirs(err_dir)
+        log_file = output_file + '.log'
+        err_file = output_file + '.err'
 
         command = [
             'curl',
