@@ -14,6 +14,7 @@ class ProteomeDownloader:
         self.id_hash = self.__get_id_hash(species_list)
         self.taxid_hash = self.__get_taxid_hash(species_list)
         self.species_hash = self.__get_species_hash(species_list)
+        self.cores = num
         self.semaphore = Semaphore(int(num))
 
     def __get_id_hash(self, species_list):
@@ -114,8 +115,10 @@ class ProteomeDownloader:
         index = server.find('/')
         path = server[index:]
         server = server[0:index]
-        # ftp = FtpManager(server)
-        ftp = CurlManager(server)
+        if self.cores == 1:
+            ftp = FtpManager(server)
+        else:
+            ftp = CurlManager(server)
         index = path.rfind('/')
         file_name = path[index + 1:]
         if not debug:
