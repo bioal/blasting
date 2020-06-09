@@ -50,22 +50,6 @@ class CurlManager:
         err_fp.write(ret.stderr.decode())
         err_fp.close()
 
-    # get dir
-    def __get_dir(self, path):
-        dir = '.'
-        pos = path.rfind('/')
-        if pos >= 0:
-            dir = path[0: pos]
-        return dir
-
-    # get file
-    def __get_file(self, path):
-        file = path
-        pos = path.rfind('/')
-        if pos >= 0:
-            file = path[pos + 1:]
-        return file
-
     
     # download gz
     def download_gz(self, path, output_file):
