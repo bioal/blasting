@@ -1,3 +1,4 @@
+import sys
 import os
 import datetime
 import gzip
@@ -22,11 +23,11 @@ class CurlManager:
     # downloads file 
     def download(self, path, output_file):
         if self.__check_file(path, output_file):
-            print('Downloading... ' + path)
+            print('Downloading... ' + path, file=sys.stderr)
 
             self.__call_curl(path, output_file)
         else:
-            print('Skip... ' + path)
+            print('Skip... ' + path, file=sys.stderr)
 
     # call curl
     def __call_curl(self, path, output_file):
@@ -99,7 +100,7 @@ class CurlManager:
 
             # os.remove(output_file)
         else:
-            print('Skip... ' + path)
+            print('Skip... ' + path, file=sys.stderr)
 
 
     # list
