@@ -12,5 +12,8 @@ server = path[0:pos]
 path = path[pos:]
 
 checker = FtpChecker(server)
-checker.check_file(path)
+if checker.check_file(path):
+    print('true')
+else:
+    print('false')
 checker.close()
