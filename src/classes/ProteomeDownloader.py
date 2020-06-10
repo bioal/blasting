@@ -68,6 +68,7 @@ class ProteomeDownloader:
         self.__download_files(summary_file, debug)
 
     def __download_files(self, summary_file, debug):
+        print('Downloading... files', file=sys.stderr, flush=True)
         file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
@@ -85,7 +86,7 @@ class ProteomeDownloader:
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
                 if id is not None and file_obtained.get(id) is None:
-                    thread = Thread(target=self.__download_file_with_semaphore, args=(url, debug, file_obtained, id))
+                    thread = Thread(name=gcf_id, target=self.__download_file, args=(url, debug, file_obtained, id))
                     threads.append(thread)
                     thread.start()
             line = fp.readline()
@@ -93,34 +94,32 @@ class ProteomeDownloader:
         
         for t in threads:
             t.join()
-        
+
+        print('Downloading files done.', file=sys.stderr, flush=True)
         result_fp = open(self.downloaded_files, 'w')
         err_fp = open(self.downloaded_files + '.err', 'w')
         for id in self.id_hash:
             if file_obtained.get(id) is None:
-                # print('File not obtained for: ' + self.id_hash[id], file=err_fp)
                 print(self.id_hash[id], file=err_fp)
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
         err_fp.close()
-
-    def __download_file_with_semaphore(self, url, debug, file_obtained, id):
-        with self.semaphore:
-            file_obtained[id] = self.__download_file(url, debug, id)
+        print('Created', self.downloaded_files, file=sys.stderr, flush=True)
     
-    def __download_file(self, url, debug, id):
-        server = url.replace('ftp://', '')
-        index = server.find('/')
-        path = server[index:]
-        server = server[0:index]
-        if self.cores == 1:
-            ftp = FtpManager(server)
-        else:
-            ftp = CurlManager(server)
-        index = path.rfind('/')
-        file_name = path[index + 1:]
-        print(id + '\t' + self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta'))
-        if not debug:
-            ftp.download_gz(path, self.output_folder + '/' + file_name)
-        return self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta')
+    def __download_file(self, url, debug, file_obtained, id):
+        with self.semaphore:
+            server = url.replace('ftp://', '')
+            index = server.find('/')
+            path = server[index:]
+            server = server[0:index]
+            if self.cores == 1:
+                ftp = FtpManager(server)
+            else:
+                ftp = CurlManager(server)
+            index = path.rfind('/')
+            file_name = path[index + 1:]
+            print(id + '\t' + self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta'), flush=True)
+            if not debug:
+                ftp.download_gz(path, self.output_folder + '/' + file_name)
+            file_obtained[id] = self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta')
