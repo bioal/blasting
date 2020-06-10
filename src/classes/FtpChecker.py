@@ -11,13 +11,17 @@ class FtpChecker:
     def check_file(self, path):
         remote_size = self.ftp.size(path)
         remote_info = self.ftp.voidcmd('MDTM ' + path)
-        remote_stamp = parser.parse(remote_info[4:].strip())
-        print(path, remote_size, remote_stamp, sep='\t', file=sys.stderr, flush=True)
+        remote_date = parser.parse(remote_info[4:].strip())
+        print(path, remote_size, remote_date, sep='\t', file=sys.stderr, flush=True)
         local_name = os.path.basename(path)
-        local_size = os.path.getsize(local_name)
-        local_stamp = os.stat(local_name).st_mtime
-        local_date = datetime.datetime.fromtimestamp(local_stamp)
-        print(local_name, local_size, local_date)
+        if os.path.exists(local_name):
+            local_size = os.path.getsize(local_name)
+            local_stamp = os.stat(local_name).st_mtime
+            local_date = datetime.datetime.fromtimestamp(local_stamp)
+            print(local_name, local_size, local_date)
+            if local_size == remote_size and local_date > remote_date:
+                return True
+        return False
 
     def sendcmd(self, path):
         ret = self.ftp.sendcmd(path)
