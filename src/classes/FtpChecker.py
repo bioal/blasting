@@ -2,32 +2,38 @@ import os
 import datetime
 import sys
 import ftplib
-from dateutil import parser
+import dateutil.parser
 
 class FtpChecker:
     def __init__(self, server):
         self.ftp = ftplib.FTP(server, 'anonymous', '')
 
-    def check_file(self, path):
+    def check_up_to_date(self, path):
         remote_size = self.ftp.size(path)
-        remote_info = self.ftp.voidcmd('MDTM ' + path)
-        remote_date = parser.parse(remote_info[4:].strip())
-        print(path, remote_size, remote_date, sep='\t', file=sys.stderr, flush=True)
+        remote_date = self.__get_remote_datetime(path)
+        remote_utime = remote_date.timestamp()
+        # print(path, remote_size, remote_date, remote_utime, sep='\t', flush=True)
         local_name = os.path.basename(path)
         if os.path.exists(local_name):
             local_size = os.path.getsize(local_name)
-            local_stamp = os.stat(local_name).st_mtime
-            local_date = datetime.datetime.fromtimestamp(local_stamp)
-            print(local_name, local_size, local_date)
-            if local_size == remote_size and local_date > remote_date:
+            local_utime = os.path.getmtime(local_name)
+            local_datetime = datetime.datetime.fromtimestamp(local_utime)
+            # print(local_name, local_size, local_datetime, local_utime)
+            # os.utime(local_name, (remote_utime, remote_utime))
+            if local_size == remote_size and local_datetime >= remote_date:
                 return True
         return False
 
-    def sendcmd(self, path):
-        ret = self.ftp.sendcmd(path)
-        print(ret)
+    def __get_remote_datetime(self, path):
+        info = self.ftp.voidcmd(f'MDTM {path}')
+        return dateutil.parser.parse(info[4:])
 
-    def nlst(self, path):
+    def list(self, path):
+        # outputs list to stdout
+        # returns status
+        self.ftp.retrlines(f'LIST {path}')
+
+    def ls(self, path):
         print(self.ftp.nlst(path))
 
     def close(self):
