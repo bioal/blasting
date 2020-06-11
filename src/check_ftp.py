@@ -16,7 +16,7 @@ print(f'path: {path}')
 
 checker = FtpChecker(server)
 
-if checker.up_to_date(path):
+if checker.check_up_to_date(path):
     print('status: up to date')
 else:
     print('status: obsolete')
