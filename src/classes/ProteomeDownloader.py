@@ -62,8 +62,8 @@ class ProteomeDownloader:
     def download(self, debug):
         index = self.summary_file_source.rfind('/')
         summary_file = self.summary_file_source[index + 1:]
-        ftp = FtpManager(self.ftp_server)
-        # ftp = CurlManager(self.ftp_server)
+        # ftp = FtpManager(self.ftp_server)
+        ftp = CurlManager(self.ftp_server)
         ftp.download(self.summary_file_source, summary_file)
         self.__download_files(summary_file, debug)
 
@@ -113,10 +113,11 @@ class ProteomeDownloader:
             index = server.find('/')
             path = server[index:]
             server = server[0:index]
-            if self.cores == 1:
-                ftp = FtpManager(server)
-            else:
-                ftp = CurlManager(server)
+            # if self.cores == 1:
+            #     ftp = FtpManager(server)
+            # else:
+            #     ftp = CurlManager(server)
+            ftp = CurlManager(server)
             index = path.rfind('/')
             file_name = path[index + 1:]
             print(id + '\t' + self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta'), flush=True)
