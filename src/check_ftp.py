@@ -11,9 +11,14 @@ pos = path.find('/')
 server = path[0:pos]
 path = path[pos:]
 
+print(f'server: {server}')
+print(f'path: {path}')
+
 checker = FtpChecker(server)
-if checker.check_file(path):
-    print('true')
+
+if checker.up_to_date(path):
+    print('status: up to date')
 else:
-    print('false')
+    print('status: obsolete')
+
 checker.close()
