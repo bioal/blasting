@@ -5,6 +5,7 @@ import gzip
 import subprocess
 from ftplib import FTP
 from dateutil import parser
+from classes.FtpChecker import FtpChecker
 
 class CurlManager:
     ftps = {}
@@ -19,7 +20,7 @@ class CurlManager:
             CurlManager.ftps[server] = self.ftp
 
     def download(self, path, output_file):
-        if self.__check_file(path, output_file):
+        if not os.path.exists(output_file) or os.path.getsize(output_file) == 0:
             command = ['curl', '-o', output_file, self.server + path]
 
             log_file = output_file + '.log'
@@ -38,7 +39,6 @@ class CurlManager:
 
     def download_gz(self, path, output_file):
         unzip_file = output_file.replace('.gz', '')
-        # if self.__check_file(path, unzip_file):
         if not os.path.exists(unzip_file) or os.path.getsize(unzip_file) == 0:
             if os.path.exists(output_file):
                 os.remove(output_file)
@@ -53,21 +53,11 @@ class CurlManager:
             in_fp.close()
             out_fp.close()
 
-    def list(self, path):
-        files = self.ftp.nlst(path)
-        return files
-
-    def __check_file(self, path, output_file):
-        remote_info = self.ftp.voidcmd('MDTM ' + path)
-        remote_time = parser.parse(remote_info[4:].strip())
-
-        download_flag = True
-        if os.path.exists(output_file):
-            timestamp = datetime.datetime.fromtimestamp(os.stat(output_file).st_mtime)
-            if os.path.getsize(output_file) > 0 and timestamp >= remote_time:
-                download_flag = False
-
-        return download_flag
+    def __is_up_to_date(self, path):
+        checker = FtpChecker(self.server)
+        flag = checker.check_up_to_date(path)
+        checker.close()
+        return flag
 
     def __login(self):
         ftp = FTP(self.server)
