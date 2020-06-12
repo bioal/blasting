@@ -5,7 +5,7 @@ import gzip
 import subprocess
 from ftplib import FTP
 from dateutil import parser
-from classes.FtpChecker import FtpChecker
+from classes.FtpCli import FtpCli
 
 class CurlManager:
     ftps = {}
@@ -54,9 +54,9 @@ class CurlManager:
             out_fp.close()
 
     def __is_up_to_date(self, path):
-        checker = FtpChecker(self.server)
-        flag = checker.check_up_to_date(path)
-        checker.close()
+        cli = FtpCli(self.server)
+        flag = cli.check_up_to_date(path)
+        cli.close()
         return flag
 
     def __login(self):
