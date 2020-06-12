@@ -10,23 +10,22 @@ class FtpCli:
         self.ftp = ftplib.FTP(server, 'anonymous', '')
 
     def is_up_to_date(self, path, local_name):
-        remote_size = self.ftp.size(path)
-        remote_date = self.__get_remote_datetime(path)
-        remote_utime = remote_date.timestamp()
         if not os.path.exists(local_name):
             return False
         local_size = os.path.getsize(local_name)
         local_utime = os.path.getmtime(local_name)
         local_datetime = datetime.datetime.fromtimestamp(local_utime)
-        flg = True
+        remote_size = self.ftp.size(path)
+        remote_date = self.__get_remote_datetime(path)
+        if local_size == remote_size and local_datetime == remote_date:
+            return True
+        print(f'{local_name} ', file=sys.stderr, flush=True, end='')
         if not local_size == remote_size:
-            flg = False
-            print(f'{local_name} size {local_size} != remote {remote_size}', file=sys.stderr, flush=True)
+            print(f'size {local_size} != remote {remote_size} ', file=sys.stderr, flush=True, end='')
         if not local_datetime == remote_date:
-            flg = False
-            print(f'{local_datetime} != remote {remote_date}', file=sys.stderr, flush=True)
-        # print(f'{local_name} is up to date', file=sys.stderr, flush=True)
-        return flg
+            print(f'{local_datetime} != remote {remote_date}', file=sys.stderr, flush=True, end='')
+        print()
+        return False
 
     def get(self, remote_path, outfile):
         remote_size = self.ftp.size(remote_path)
