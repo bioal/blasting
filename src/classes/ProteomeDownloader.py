@@ -14,7 +14,6 @@ class ProteomeDownloader:
         self.id_hash = self.__get_id_hash(species_list)
         self.taxid_hash = self.__get_taxid_hash(species_list)
         self.species_hash = self.__get_species_hash(species_list)
-        self.cores = num
         self.semaphore = Semaphore(int(num))
 
     def __get_id_hash(self, species_list):
@@ -114,9 +113,10 @@ class ProteomeDownloader:
             server = server[0:index]
             index = path.rfind('/')
             file_name = path[index + 1:]
+            outfile = self.output_folder + '/' + file_name
             if not debug:
                 ftp = FtpCli(server)
-                if not ftp.is_up_to_date(path, self.output_folder + '/' + file_name):
-                    ftp.get(path, self.output_folder + '/' + file_name)
+                if not ftp.is_up_to_date(path, outfile):
+                    ftp.get(path, outfile)
                 ftp.close()
-            file_obtained[id] = self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta')
+            file_obtained[id] = outfile.replace('fasta.gz', 'fasta')
