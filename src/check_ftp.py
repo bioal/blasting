@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-from classes.FtpChecker import FtpChecker
+from classes.FtpCli import FtpCli
 
 parser = argparse.ArgumentParser(description='submit FTP command')
 parser.add_argument('path', help='file path on the server')
@@ -14,11 +14,11 @@ path = path[pos:]
 print(f'server: {server}')
 print(f'path: {path}')
 
-checker = FtpChecker(server)
+cli = FtpCli(server)
 
-if checker.check_up_to_date(path):
+if cli.check_up_to_date(path):
     print('status: up to date')
 else:
     print('status: obsolete')
 
-checker.close()
+cli.close()
