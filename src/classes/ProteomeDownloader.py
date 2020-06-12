@@ -1,8 +1,7 @@
-import sys
-from classes.FtpManager import FtpManager
-from classes.CurlManager import CurlManager
 import os
+import sys
 from threading import Thread, Semaphore
+from classes.FtpCli import FtpCli
 
 class ProteomeDownloader:
     def __init__(self, output_folder, species_list, num):
@@ -62,13 +61,13 @@ class ProteomeDownloader:
     def download(self, debug):
         index = self.summary_file_source.rfind('/')
         summary_file = self.summary_file_source[index + 1:]
-        # ftp = FtpManager(self.ftp_server)
-        ftp = CurlManager(self.ftp_server)
-        ftp.download(self.summary_file_source, summary_file)
+        ftp = FtpCli(self.ftp_server)
+        if not ftp.is_up_to_date(self.summary_file_source, summary_file):
+            ftp.get(self.summary_file_source, summary_file)
+        ftp.close()
         self.__download_files(summary_file, debug)
 
     def __download_files(self, summary_file, debug):
-        print('Downloading... files', file=sys.stderr, flush=True)
         file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
@@ -95,7 +94,7 @@ class ProteomeDownloader:
         for t in threads:
             t.join()
 
-        print('Downloading files done.', file=sys.stderr, flush=True)
+        print('Downloading done.', file=sys.stderr, flush=True)
         result_fp = open(self.downloaded_files, 'w')
         err_fp = open(self.downloaded_files + '.err', 'w')
         for id in self.id_hash:
@@ -113,14 +112,11 @@ class ProteomeDownloader:
             index = server.find('/')
             path = server[index:]
             server = server[0:index]
-            # if self.cores == 1:
-            #     ftp = FtpManager(server)
-            # else:
-            #     ftp = CurlManager(server)
-            ftp = CurlManager(server)
             index = path.rfind('/')
             file_name = path[index + 1:]
-            print(id + '\t' + self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta'), flush=True)
             if not debug:
-                ftp.download_gz(path, self.output_folder + '/' + file_name)
+                ftp = FtpCli(server)
+                if not ftp.is_up_to_date(path, self.output_folder + '/' + file_name):
+                    ftp.get(path, self.output_folder + '/' + file_name)
+                ftp.close()
             file_obtained[id] = self.output_folder + '/' + file_name.replace('fasta.gz', 'fasta')
