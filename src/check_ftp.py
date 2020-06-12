@@ -16,9 +16,6 @@ print(f'path: {path}')
 
 cli = FtpCli(server)
 
-if cli.check_up_to_date(path):
-    print('status: up to date')
-else:
-    print('status: obsolete')
+cli.list(path)
 
 cli.close()
