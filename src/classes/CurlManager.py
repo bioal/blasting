@@ -53,12 +53,6 @@ class CurlManager:
             in_fp.close()
             out_fp.close()
 
-    def __is_up_to_date(self, path):
-        cli = FtpCli(self.server)
-        flag = cli.check_up_to_date(path)
-        cli.close()
-        return flag
-
     def __login(self):
         ftp = FTP(self.server)
         ftp.login('anonymous', '')
