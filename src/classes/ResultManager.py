@@ -3,6 +3,7 @@ import sys
 import re
 import time
 import subprocess
+from collections import defaultdict
 
 class ResultManager:
     def __init__(self, input_folder, output_folder, list_file):
@@ -11,6 +12,9 @@ class ResultManager:
         if not os.path.exists(output_folder):
             os.makedirs(output_folder) 
         self.genome_list = self.__get_list(list_file)
+        self.gene_index = defaultdict(int)
+        self.bbh = defaultdict(lambda: defaultdict(int))
+        self.human_genes = {}
 
     def __get_list(self, list_file):
         fp = open(list_file, 'r')
@@ -50,9 +54,80 @@ class ResultManager:
     def calc_bbh(self):
         for genome in self.genome_list:
             if genome['id'] != '1':
-                self.make_matrix('1', genome['id'])
+                self.calc_bbh_pair('1', genome['id'])
+        self.make_matrix()
 
-    def make_matrix(self, human_id, other_id):
+    def make_matrix(self):
+        for genome in self.genome_list:
+            self.read_gene_index(genome['id'])
+            if genome['id'] != '1':
+                self.read_bbh('1', genome['id'])
+        # self.read_gene_index('1')
+        self.output_matrix()
+
+    def output_matrix(self):
+        genome_ids = []
+        print('1', end='')
+        for genome in self.genome_list:
+            if genome['id'] != '1':
+                genome_ids.append(genome['id'])
+                print('\t', genome['id'], sep='', end='')
+        print()
+        # print(genome_ids)
+        # print(self.human_genes)
+        for human_gene_index in self.human_genes:
+            print(human_gene_index, end='')
+            for genome_id in genome_ids:
+                # print('\t', self.bbh[human_gene_index][genome_id], sep='', end='')
+                if self.bbh[human_gene_index][genome_id]:
+                    print('\t1', sep='', end='')
+                else:
+                    print('\t0', sep='', end='')
+            print()
+
+    def read_bbh(self, human_id, other_id):
+        input_path = f'{self.output_folder}/{human_id}-{other_id}'
+        input_fp = open(input_path)
+        # print(input_path)
+        for line in input_fp:
+            fields = line.strip().split('\t')
+            if len(fields) != 4:
+                print('ERROR:', line.strip(), file=sys.stderr)
+                continue
+            human_gene = fields[0]
+            other_gene = fields[1]
+            human_gene_index = self.gene_index[human_gene]
+            other_gene_index = self.gene_index[other_gene]
+            # print(human_gene_index, other_gene_index)
+            self.bbh[human_gene_index][other_id] = other_gene_index
+        input_fp.close()
+
+    def read_gene_index(self, org_id):
+        input_fp = open(f'proteins/{org_id}')
+        for line in input_fp:
+            fields = line.strip().split('\t')
+            if len(fields) != 2:
+                print('ERROR:', line.strip(), file=sys.stderr)
+                continue
+            gene_index = fields[0]
+            gene_ids = fields[1].split('|')
+            if len(gene_ids) < 3:
+                print('ERROR:', line.strip(), file=sys.stderr)
+                continue
+            gene_id = gene_ids[1]
+            if self.gene_index[gene_id]:
+                print('ERROR:', org_id, gene_id, file=sys.stderr)
+                continue
+            self.gene_index[gene_id] = gene_index
+            # print(gene_id, gene_index, self.gene_index[gene_id])
+            if org_id == '1':
+                self.human_genes[gene_index] = gene_id
+        input_fp.close()
+
+    def calc_bbh_pair(self, human_id, other_id):
+        output_path = f'{self.output_folder}/{human_id}-{other_id}'
+        if os.path.exists(output_path):
+            return
         output_fp = open(f'{self.output_folder}/{human_id}-{other_id}', 'w')
         error_fp = open(f'{self.output_folder}/{human_id}-{other_id}.err', 'w')
 
