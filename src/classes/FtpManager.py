@@ -1,3 +1,4 @@
+import sys
 import os
 import datetime
 import gzip
@@ -22,29 +23,19 @@ class FtpManager:
     # downloads file 
     def download(self, path, output_file):
         if self.__check_file(path, output_file):
-            print('Downloading... ' + path)
+            print('Downloading... ' + path, file=sys.stderr)
             fp = open(output_file, 'w', encoding='UTF-8')
             txt_file = TxtFile(fp)
             self.ftp.retrlines('RETR ' + path, txt_file.write_line)
             fp.close()
         else:
-            print('Skip... ' + path)
-    
-    # download binary
-    def download_binary(self, path, output_file):
-        if self.__check_file(path, output_file):
-            print('Downloading... ' + path)
-            fp = open(output_file, 'wb')
-            self.ftp.retrbinary('RETR ' + path, fp.write)
-            fp.close()
-        else:
-            print('Skip... ' + path)
+            print('Skip... ' + path, file=sys.stderr)
 
     # download gz
     def download_gz(self, path, output_file):
         unzip_file = output_file.replace('.gz', '')
         if self.__check_file(path, unzip_file):
-            print('Downloading... ' + path)
+            print('Downloading... ' + path, file=sys.stderr)
             fp = open(output_file, 'wb')
             self.ftp.retrbinary('RETR ' + path, fp.write)
             fp.close()
@@ -58,7 +49,7 @@ class FtpManager:
 
             # os.remove(output_file)
         else:
-            print('Skip... ' + path)
+            print('Skip... ' + path, file=sys.stderr)
 
 
     # list

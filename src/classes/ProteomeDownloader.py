@@ -1,7 +1,7 @@
-from classes.FtpManager import FtpManager
-# from classes.CurlManager import CurlManager
 import os
+import sys
 from threading import Thread, Semaphore
+from classes.FtpCli import FtpCli
 
 class ProteomeDownloader:
     def __init__(self, output_folder, species_list, num):
@@ -60,15 +60,17 @@ class ProteomeDownloader:
     def download(self, debug):
         index = self.summary_file_source.rfind('/')
         summary_file = self.summary_file_source[index + 1:]
-        ftp = FtpManager(self.ftp_server)
-        # ftp = CurlManager(self.ftp_server)
-        ftp.download(self.summary_file_source, summary_file)
+        ftp = FtpCli(self.ftp_server)
+        if not ftp.is_up_to_date(self.summary_file_source, summary_file):
+            ftp.get(self.summary_file_source, summary_file)
+        ftp.close()
         self.__download_files(summary_file, debug)
 
     def __download_files(self, summary_file, debug):
         file_obtained = {}
         fp = open(summary_file, 'r', encoding='UTF-8')
         line = fp.readline()
+        threads = []
         while line:
             line = line.strip()
             tokens = line.split('\t')
@@ -82,44 +84,39 @@ class ProteomeDownloader:
                      self.taxid_hash.get(taxid) or \
                      self.taxid_hash.get(species_taxid)
                 if id is not None and file_obtained.get(id) is None:
-                    thread = Thread(target=self.__process_download, args=(url, debug, file_obtained))
+                    thread = Thread(name=gcf_id, target=self.__download_file, args=(url, debug, file_obtained, id))
+                    threads.append(thread)
                     thread.start()
             line = fp.readline()
         fp.close()
+        
+        for t in threads:
+            t.join()
 
+        print('Downloading done.', file=sys.stderr, flush=True)
         result_fp = open(self.downloaded_files, 'w')
+        err_fp = open(self.downloaded_files + '.err', 'w')
         for id in self.id_hash:
             if file_obtained.get(id) is None:
-                print('File not obtained for: ' + self.id_hash[id])
+                print(self.id_hash[id], file=err_fp)
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
-
-    def __process_download(self, url, debug, file_obtained):
-        with self.semaphore:
-            gcf_file = self.__download_gcf_file(url, debug)
-            file_obtained[id] = gcf_file
+        err_fp.close()
+        print('Created', self.downloaded_files, file=sys.stderr, flush=True)
     
-    def __download_gcf_file(self, url, debug):
-        server = url.replace('ftp://', '')
-        index = server.find('/')
-        path = server[index:]
-        server = server[0:index]
-        ftp = FtpManager(server)
-        # ftp = CurlManager(server)
-        files = ftp.list(path)
-
-        faa = None
-        gcf_file_path = None
-        for file in files:
-            if file.endswith('fasta.gz'):
-                faa = file
-        if faa is not None:
-            index = faa.rfind('/')
-            file_name = faa[index + 1:]
-            faa_file = self.output_folder + '/' + file_name
+    def __download_file(self, url, debug, file_obtained, id):
+        with self.semaphore:
+            server = url.replace('ftp://', '')
+            index = server.find('/')
+            path = server[index:]
+            server = server[0:index]
+            index = path.rfind('/')
+            file_name = path[index + 1:]
+            outfile = self.output_folder + '/' + file_name
             if not debug:
-                ftp.download_gz(faa, faa_file)
-            gcf_file_name = file_name.replace('fasta.gz', 'fasta')
-            gcf_file_path = self.output_folder + '/' + gcf_file_name
-        return gcf_file_path
+                ftp = FtpCli(server)
+                if not ftp.is_up_to_date(path, outfile):
+                    ftp.get(path, outfile)
+                ftp.close()
+            file_obtained[id] = outfile.replace('fasta.gz', 'fasta')
