@@ -37,8 +37,8 @@ class ImageManager:
         r = color_value // 0x10000
         g = (color_value // 0x100) % 0x100
         b = color_value % 0x100
-        rgb = str(r) + ' ' + str(g) + ' ' + str(b)
-        back = str(self.b_r) + ' ' + str(self.b_g) + ' ' + str(self.b_b)
+        rgb = str(r) + ' ' + str(g) + ' ' + str(b) + '\n'
+        back = str(self.b_r) + ' ' + str(self.b_g) + ' ' + str(self.b_b) + '\n'
 
         in_fp = open(self.matrix_file, 'r')
         out_fp = open(ppm_file, 'w')
@@ -57,9 +57,9 @@ class ImageManager:
                 for i in range(len(ids)):
                     value = int(tokens[i])
                     if value > 0:
-                        print(rgb * self.h_pixel, file=out_fp)
+                        out_fp.write(rgb * self.h_pixel)
                     else:
-                        print(back * self.h_pixel, file=out_fp)
+                        out_fp.write(back * self.h_pixel)
         in_fp.close()
         out_fp.close()
 
