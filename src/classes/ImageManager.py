@@ -17,10 +17,7 @@ class ImageManager:
         for line in fp:
             if width == 0:
                 headers = line[:-1].split('\t')
-                for header in headers:
-                    id = int(header)
-                    if id > width:
-                        width = id
+                width = len(headers)
             else:
                 height = height + 1
         fp.close()
@@ -40,6 +37,8 @@ class ImageManager:
         r = color_value // 0x10000
         g = (color_value // 0x100) % 0x100
         b = color_value % 0x100
+        rgb = str(r) + ' ' + str(g) + ' ' + str(b)
+        back = str(self.b_r) + ' ' + str(self.b_g) + ' ' + str(self.b_b)
 
         in_fp = open(self.matrix_file, 'r')
         out_fp = open(ppm_file, 'w')
@@ -48,7 +47,6 @@ class ImageManager:
         out_fp.write(str(size['width'] * self.h_pixel) + ' ' + str(size['height'] * self.v_pixel) + '\n')
         out_fp.write('255\n')
 
-        count = 0;
         ids = []
         for line in in_fp:
             tokens = line[:-1].split('\t')
@@ -56,26 +54,12 @@ class ImageManager:
                 for token in tokens:
                     ids.append(int(token))
             else:
-                current_id = 0
-                lines = []
                 for i in range(len(ids)):
-                    id = ids[i]
                     value = int(tokens[i])
-                    for gap in range(id - current_id - 1):
-                        for h in range(self.h_pixel):
-                            lines.append(str(self.b_r) + ' ' + str(self.b_g) + ' ' + str(self.b_b) + '\n')
-                    current_id = id
                     if value > 0:
-                        for h in range(self.h_pixel):
-                            lines.append(str(r) + ' ' + str(g) + ' ' + str(b) + '\n')
+                        print(rgb * self.h_pixel, file=out_fp)
                     else:
-                        for h in range(self.v_pixel):
-                            lines.append(str(self.b_r) + ' ' + str(self.b_g) + ' ' + str(self.b_b) + '\n')
-                    for v in range(self.v_pixel):
-                        out_fp.writelines(lines)
-            count = count + 1
-            if count % 100 == 0:
-                print(str(count) + ' Lines...')
+                        print(back * self.h_pixel, file=out_fp)
         in_fp.close()
         out_fp.close()
 
