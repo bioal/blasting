@@ -19,12 +19,11 @@ class FtpCli:
         remote_date = self.__get_remote_datetime(path)
         if local_size == remote_size and local_datetime == remote_date:
             return True
-        print(f'{local_name} ', file=sys.stderr, flush=True, end='')
+        print(f'difference in {local_name}', file=sys.stderr, flush=True)
         if not local_size == remote_size:
-            print(f'size {local_size} != remote {remote_size} ', file=sys.stderr, flush=True, end='')
+            print(f'    size (remote) {remote_size:,} != (local) {local_size:,}', file=sys.stderr, flush=True)
         if not local_datetime == remote_date:
-            print(f'{local_datetime} != remote {remote_date}', file=sys.stderr, flush=True, end='')
-        print()
+            print(f'    time stamp (remote) {remote_date} != (local) {local_datetime}', file=sys.stderr, flush=True)
         return False
 
     def get(self, remote_path, outfile):
