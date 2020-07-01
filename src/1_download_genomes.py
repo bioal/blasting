@@ -9,5 +9,6 @@ parser.add_argument('-o', '--outdir', default='genome', help='Output directory')
 parser.add_argument('-d', '--debug', action='store_true', help='For debug: do not download the genomes')
 args = parser.parse_args()
 
-downloader = GenomeDownloader(args.outdir, args.species_list, args.cores)
-downloader.download(args.debug)
+downloader = GenomeDownloader(args.outdir, args.cores)
+summary_file = downloader.download_summary_file('ftp.ncbi.nlm.nih.gov', '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt')
+downloader.download_files(summary_file, args.species_list, 'genome_list.tsv', args.debug)
