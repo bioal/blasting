@@ -1,4 +1,5 @@
 import subprocess
+import cairo
 
 class ImageManager:
     def __init__(self, matrix_file, color, h_pixel, v_pixel):
@@ -24,30 +25,26 @@ class ImageManager:
         size = {'width': width, 'height': height}
         return size 
 
-    
     def export(self, out_file):
-        ppm = out_file + '.ppm'
-        self.__export_ppm(ppm)
-        command = ['convert', ppm, out_file]
-        subprocess.run(command)
-
-    def __export_ppm(self, ppm_file):
         size = self.__get_size()
+        width = size['width'] * self.h_pixel
+        height = size['height'] * self.v_pixel
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        context = cairo.Context(surface)
+
         color_value = int(self.color, 16)
-        r = color_value // 0x10000
-        g = (color_value // 0x100) % 0x100
-        b = color_value % 0x100
-        rgb = str(r) + ' ' + str(g) + ' ' + str(b) + '\n'
-        back = str(self.b_r) + ' ' + str(self.b_g) + ' ' + str(self.b_b) + '\n'
+        r = (color_value // 0x10000) / 255.0
+        g = ((color_value // 0x100) % 0x100) / 255.0
+        b = (color_value % 0x100) / 255.0
+        print(r)
+        print(g)
+        print(b)
+        context.set_source_rgba(r, g, b, 1.0)
+        context.set_line_width(1.0)
 
         in_fp = open(self.matrix_file, 'r')
-        out_fp = open(ppm_file, 'w')
-
-        out_fp.write('P3\n')
-        out_fp.write(str(size['width'] * self.h_pixel) + ' ' + str(size['height'] * self.v_pixel) + '\n')
-        out_fp.write('255\n')
-
         ids = []
+        row = 0
         for line in in_fp:
             tokens = line[:-1].split('\t')
             if len(ids) == 0:
@@ -57,9 +54,10 @@ class ImageManager:
                 for i in range(len(ids)):
                     value = int(tokens[i])
                     if value > 0:
-                        out_fp.write(rgb * self.h_pixel)
-                    else:
-                        out_fp.write(back * self.h_pixel)
+                        col = i * self.h_pixel
+                        context.move_to(col, row)
+                        context.line_to(col + self.h_pixel, row)
+                row = row + 1
+                context.stroke()
         in_fp.close()
-        out_fp.close()
-
+        surface.write_to_png(out_file)
