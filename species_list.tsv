@@ -32,7 +32,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		Speci
 31	Danio rerio	Zebrafish	Other vertebrates	429.6	UP000000437	7955		7955				
 32	Oreochromis niloticus	Tilapia	Other vertebrates	429.6	UP000005207	8128		8128				
 33	Oryzias latipes	Medaka	Other vertebrates	429.6	UP000001038	8090		8090				
-34	Tetraodon nigroviridis	Pufferfish	Lancelets/tunicates	429.6	UP000007303	99883		99883				
+34	Tetraodon nigroviridis	Pufferfish	Other vertebrates	429.6	UP000007303	99883		99883				
 35	Branchiostoma floridae	Lancet	Lancelets/tunicates	733	UP000001554	7739		7739				
 36	Ciona intestinalis	Ciona	Lancelets/tunicates	733	UP000008144	7719		7719				
 37	Oikopleura dioica	Sea-squirt	Lancelets/tunicates		UP000001307	34765		34765				
@@ -96,7 +96,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		Speci
 95	Schizosaccharomyces pombe	Schizosaccharomyces pombe	Fungi	1302.5	UP000002485	4896		4896				
 96	Sclerotinia sclerotiorum 1980 UF-70	Sclerotinia sclerotiorum	Fungi	1302.5	UP000001312	665079		665079				5180
 97	Schizophyllum commune H4-8	Schizophyllum commune	Fungi	1302.5	UP000007431	578458		578458				5334
-98	Neosartorya fischeri NRRL 181	Neosartorya fischeri	Fungi	1302.5	UP000006702					Aspergillus fischeri NRRL 181	331117	36630
+98	Neosartorya fischeri NRRL 181	Neosartorya fischeri	Fungi	1302.5	UP000006702	331117	pan proteome	36630		Aspergillus fischeri NRRL 181	331117	36630
 99	Phaeosphaeria nodorum SN15	Phaeosphaeria nodorum	Fungi	1302.5	UP000001055	13684		13684		Parastagonospora nodorum SN15	321614	13684
 100	Postia placenta	Postia placenta	Fungi	1302.5	UP000001743	104341		104341		Postia placenta Mad-698-R	561896	104341
 101	Ustilago maydis	Ustilago maydis	Fungi	1302.5	UP000000561	5270		5270				
@@ -124,7 +124,7 @@ Original No	Scientific name	Common name		TimeTree(mya)	Proteome ID	Tax ID		Speci
 123	Saccharomyces cerevisiae s288c	Saccharomyces cerevisiae	Fungi	1302.5	UP000002311	559292		559292		Saccharomyces cerevisiae S288C		4932
 124	Debaryomyces hansenii CBS767	Debaryomyces hansenii	Fungi	1302.5	UP000000599	284592		284592				4959
 125	Polysphondylium pallidum pn500	Polysphondylium pallidum	Amoebozoa	1652	UP000001396					Polysphondylium violaceum	133409	133409
-126	Entamoeba dispar SAW760	Entamoeba dispar	Amoebozoa	1652	a	370354		370354				46681
+126	Entamoeba dispar SAW760	Entamoeba dispar	Amoebozoa	1652		370354		370354				46681
 127	Acanthamoeba castellanii str.neff	Acanthamoeba castellanii	Amoebozoa		UP000011083	1257118		1257118		Acanthamoeba castellanii str. Neff		5755
 128	Entamoeba histolytica hm-1:imss	Entamoeba histolytica	Amoebozoa	1652	UP000001926	294381		294381		Entamoeba histolytica HM-1:IMSS		5759
 129	Dictyostelium discoideum ax4	Dictyostelium discoideum	Amoebozoa	1652	up000002195	352472		352472		Dictyostelium discoideum AX4		44689
