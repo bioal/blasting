@@ -28,6 +28,15 @@ class BlastManager:
         fp.close()
         return list
 
+    def all_vs_all(self):
+        for genome1 in self.genome_list:
+            for genome2 in self.genome_list:
+                thread1 = Thread(target=self.__execute_blast, args=(genome1, genome2))
+                thread1.start()
+                if not genome1 == genome2:
+                    thread2 = Thread(target=self.__execute_blast, args=(genome2, genome1))
+                    thread2.start()
+
     def search(self):
         human_genome = None
         for genome in self.genome_list:
@@ -61,6 +70,7 @@ class BlastManager:
             ]
             log_fp = open(log_file, 'w')
             log_fp.write(' '.join(command) + '\n')
+            log_fp.flush()
             ret = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             log_fp.write(ret.stdout.decode())
             log_fp.close()
