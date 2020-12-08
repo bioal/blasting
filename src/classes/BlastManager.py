@@ -33,9 +33,7 @@ class BlastManager:
             for genome2 in self.genome_list:
                 thread1 = Thread(target=self.__execute_blast, args=(genome1, genome2))
                 thread1.start()
-                if not genome1 == genome2:
-                    thread2 = Thread(target=self.__execute_blast, args=(genome2, genome1))
-                    thread2.start()
+                print(genome1['id'] + '-' + genome2['id'], flush=True)
 
     def search(self):
         human_genome = None
