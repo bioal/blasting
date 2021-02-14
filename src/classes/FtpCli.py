@@ -57,13 +57,5 @@ class FtpCli:
         info = self.ftp.voidcmd(f'MDTM {path}')
         return dateutil.parser.parse(info[4:])
 
-    def list(self, path):
-        # outputs list to stdout
-        # returns status
-        self.ftp.retrlines(f'LIST {path}')
-
-    def ls(self, path):
-        print(self.ftp.nlst(path))
-
     def close(self):
         self.ftp.close()
