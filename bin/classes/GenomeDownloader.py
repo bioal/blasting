@@ -26,8 +26,7 @@ class GenomeDownloader:
     def download_files(self, summary_file, species_list, downloaded_files, debug):
         file_obtained = {}
         threads = []
-        species = SpeciesManager(species_list);
-        id_hash, taxid_hash, species_hash = species.get_hash()
+        species_man = SpeciesManager(species_list);
         fp = open(summary_file, 'r', encoding='UTF-8')
         for line in fp:
             line = line.strip()
@@ -38,9 +37,9 @@ class GenomeDownloader:
                 species_taxid = tokens[6]
                 species = tokens[7]
                 url = tokens[19]
-                id = species_hash.get(species) or \
-                     taxid_hash.get(taxid) or \
-                     taxid_hash.get(species_taxid)
+                id = species_man.species.get(species) or \
+                     species_man.taxids.get(taxid) or \
+                     species_man.taxids.get(species_taxid)
                 if id is not None and file_obtained.get(id) is None:
                     thread = Thread(name=gcf_id, target=self.__download_file, args=(url, debug, file_obtained, id))
                     threads.append(thread)
@@ -53,9 +52,9 @@ class GenomeDownloader:
         print('Downloading done.', file=sys.stderr, flush=True)
         result_fp = open(downloaded_files, 'w')
         err_fp = open(downloaded_files + '.err', 'w')
-        for id in id_hash:
+        for id in species_man.ids:
             if file_obtained.get(id) is None:
-                print(id_hash[id], file=err_fp)
+                print(species_man.ids[id], file=err_fp)
             else:
                 result_fp.write(id + '\t' + file_obtained[id] + '\n');
         result_fp.close()
