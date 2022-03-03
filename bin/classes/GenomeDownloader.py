@@ -49,14 +49,13 @@ class GenomeDownloader:
         for t in threads:
             t.join()
 
-        print('Downloading done.', file=sys.stderr, flush=True)
         result_fp = open(downloaded_files, 'w')
         err_fp = open(downloaded_files + '.err', 'w')
         for id in species_man.ids:
             if file_obtained.get(id) is None:
                 print(species_man.ids[id], file=err_fp)
             else:
-                result_fp.write(id + '\t' + file_obtained[id] + '\n');
+                print(id + '\t' + file_obtained[id], file=result_fp);
         result_fp.close()
         err_fp.close()
         print('Created', downloaded_files, file=sys.stderr, flush=True)
