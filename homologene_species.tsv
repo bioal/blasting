@@ -1,0 +1,22 @@
+No	Taxonomy ID	Scientific name	Common name			TimeTree (mya)	Genome ID	Genome release	Genome date	Annotation release	Annotation date	Input genes	Grouped genes	Groups
+1	9606	Homo sapiens	human	Mammals	M	0	GCF_000001405.26	GRCh38	2013/12/17	106	2014/2/3	19806	19129	18732
+2	9598	Pan troglodytes	chimpanzee	Mammals	M	6.6	GCF_000001515.5	Pan_troglodytes-2.1.4	2011/3/25	102	2012/10/27	22004	18730	18385
+3	9544	Macaca mulatta	Rhesus monkey	Mammals	M	29.1	GCF_000002255.3	Mmul_051212	2006/2/27	Build 1.2	2010/6/2	22231	16843	16517
+4	10090	Mus musculus	mouse	Mammals	M	90.9	GCF_000001635.22	GRCm38.p2	2013/3/7	104	2013/12/27	22627	21207	19033
+5	10116	Rattus norvegicus	rat	Mammals	M	90.9	GCF_000001895.4	Rnor_5.0	2012/3/16	104	2013/12/9	22892	20616	18871
+6	9615	Canis lupus familiaris	dog	Mammals	M	97.5	GCF_000002285.3	CanFam3.1	2011/11/2	103	2013/9/24	19872	18117	17434
+7	9913	Bos taurus	cow	Mammals	M	97.5	GCF_000003055.4	Bos_taurus_UMD_3.1	2009/12/1	103	2013/8/6	21025	18798	17530
+8	9031	Gallus gallus	chicken	Other vertebrates	V	320.5	GCF_000002315.3	Gallus_gallus-4.0	2011/11/22	102	2013/6/19	17133	14600	13352
+9	8364	Xenopus tropicalis	western clawed frog	Other vertebrates	V	355.7	GCF_000004195.2	Xtropicalis_v7	2012/12/19	101	2013/6/18	22156	18447	14412
+10	7955	Danio rerio	zebrafish	Other vertebrates	V	429.6	GCF_000002035.4	Zv9	2010/7/15	103	2013/8/1	27270	20897	14559
+11	7227	Drosophila melanogaster	fruit fly	Arthropods	A	847	GCF_000001215.2	Release 5	2007/10/22	Release 5.48	NA	13944	8438	7016
+12	7165	Anopheles gambiae	malaria mosquito	Arthropods	A	847	GCF_000005575.2	AgamP3	2006/10/16	AgamP3.3	NA	12600	8428	6957
+13	6239	Caenorhabditis elegans	nematode	Nematodes	N	847	GCF_000002985.4	WS195	2008/11/13	WS195	NA	20519	7575	4308
+14	4932	Saccharomyces cerevisiae	budding yeast	Fungi	F	1302.5	GCF_000146045.2	R64-1-1	2011/4/18	NA	NA	5903	4579	4113
+15	4896	Schizosaccharomyces pombe	fission yeast	Fungi	F	1302.5	GCF_000002945.1	ASM294v2	2007/11/9	NA	NA	5132	3018	2741
+16	28985	Kluyveromyces lactis	ascomycetes	Fungi	F	1302.5	GCF_000002515.2	ASM251v1	2004/7/2	NA	NA	5084	4283	4211
+17	33169	Eremothecium gossypii	ascomycetes	Fungi	F	1302.5	GCF_000091025.4	ASM9102v4	2010/10/18	NA	NA	4768	3874	3820
+18	318829	Magnaporthe oryzae	rice blast fungus	Fungi	F	1302.5	GCF_000002495.2	MG8	2011/10/14	NA	NA	12673	6598	6061
+19	5141	Neurospora crassa	ascomycetes	Fungi	F	1302.5	GCF_000182925.1	ASM18292v1	2007/9/10	NA	NA	9821	5807	5701
+20	3702	Arabidopsis thaliana	thale cress	Plantae	P	1513.9	GCF_000001735.3	TAIR10	2011/5/11	NA	NA	27393	19143	10463
+21	4530	Oryza sativa	rice	Plantae	P	1513.9	GCF_000005425.2	Build 4.0	2009/8/7	NA	NA	28521	16112	9787
