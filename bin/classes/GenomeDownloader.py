@@ -50,22 +50,28 @@ class GenomeDownloader:
             t.join()
 
         result_fp = open(downloaded_files, 'w')
-        err_fp = open(downloaded_files + '.err', 'w')
         count = 0
         count_fail = 0
         count_success = 0
         for id in species_man.ids:
             count += 1
             if file_obtained.get(id) is None:
+                err_fp = open(downloaded_files + '.err', 'a')
                 print(species_man.ids[id], file=err_fp)
+                err_fp.close()
                 count_fail += 1
             else:
                 print(id + '\t' + file_obtained[id], file=result_fp);
                 count_success += 1
         result_fp.close()
-        err_fp.close()
-        print(f'Trying {count} genomes, {count_success} successed, {count_fail} failed.')
-        print('Created', downloaded_files, file=sys.stderr, flush=True)
+        print(f'Tried {count} genomes, {count_success} succeeded, {count_fail} failed.')
+        if count:
+            message = 'Created'
+            if count_success:
+                message += ' ' + downloaded_files
+            if count_fail:
+                message += ' ' + downloaded_files + '.err'
+            print(message, file=sys.stderr, flush=True)
 
     def __download_file(self, url, debug, file_obtained, id):
         with self.semaphore:
