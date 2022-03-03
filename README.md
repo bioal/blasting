@@ -28,21 +28,21 @@ Python3 should be installed.
     mkdir work
     cd work
 
-    0_get_species_list.py -o species_list.tsv
     # This is not mandatory.
-    # This will create ./species_list.tsv (which is same as ~/github/hop/species_list.tsv)
+    0_get_species_list.py -o species_list.tsv
+    # This will create species_list.tsv
 
-    1_download_genomes.py ~/github/hop/species_list.tsv
+    1_download_genomes.py species_list.tsv
     # This will create ~/work/orthology/data/genome/*
     # and ~/work/orthology/data/genome_list.tsv
 
-    2_process_genomes.py genome_list.tsv
     # This assumes makeblastdb is in the command path. Or, use -p option.
+    2_process_genomes.py genome_list.tsv
     # This will create ~/work/orthology/data/genes/*
     # and ~/work/orthology/data/db/*
 
-    3_blast_search.py -n 40 genome_list.tsv
     # This assumes blastp is in the command path. Or, use -p option.
+    3_blast_search.py -n 40 genome_list.tsv
     # This will create ~/work/orthology/data/blast/*
     # This will create ~/work/orthology/data/blast_log/*
     # This will create ~/work/orthology/data/blast_err/*
