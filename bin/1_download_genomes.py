@@ -11,4 +11,4 @@ args = parser.parse_args()
 
 downloader = GenomeDownloader(args.outdir, args.cores)
 summary_file = downloader.download_summary_file('ftp.ncbi.nlm.nih.gov', '/genomes/ASSEMBLY_REPORTS/assembly_summary_refseq.txt', 'data/')
-downloader.download_files(summary_file, args.species_list, 'data/genome_list.tsv', args.debug)
+downloader.download_files(summary_file, args.species_list, 'data/list_succeeded', 'data/list_failed', args.debug)

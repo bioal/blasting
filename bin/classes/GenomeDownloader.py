@@ -23,7 +23,7 @@ class GenomeDownloader:
         
         return summary_file
 
-    def download_files(self, summary_file, species_list, downloaded_files, debug):
+    def download_files(self, summary_file, species_list, downloaded_files, err_file, debug):
         file_obtained = {}
         threads = []
         species_man = SpeciesManager(species_list);
@@ -56,7 +56,7 @@ class GenomeDownloader:
         for id in species_man.ids:
             count += 1
             if file_obtained.get(id) is None:
-                err_fp = open(downloaded_files + '.err', 'a')
+                err_fp = open(err_file, 'a')
                 print(species_man.ids[id], file=err_fp)
                 err_fp.close()
                 count_fail += 1
@@ -70,7 +70,7 @@ class GenomeDownloader:
             if count_success:
                 message += ' ' + downloaded_files
             if count_fail:
-                message += ' ' + downloaded_files + '.err'
+                message += ' ' + err_file
             print(message, file=sys.stderr, flush=True)
 
     def __download_file(self, url, debug, file_obtained, id):
