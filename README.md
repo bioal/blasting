@@ -28,35 +28,25 @@ Python3 should be installed.
     mkdir work
     cd work
 
-    # This is not mandatory.
-    0_get_species_list.py -o species_list.tsv
-    # This will create species_list.tsv
-
     1_download_genomes.py species_list.tsv
-    # This will create ~/work/orthology/data/genome/*
-    # and ~/work/orthology/data/genome_list.tsv
+    # This will create data/genome/*, data/genome_list.tsv
 
     # This assumes makeblastdb is in the command path. Or, use -p option.
     2_process_genomes.py genome_list.tsv
-    # This will create ~/work/orthology/data/genes/*
-    # and ~/work/orthology/data/db/*
+    # This will create data/genes/*, data/db/*
 
     # This assumes blastp is in the command path. Or, use -p option.
     3_blast_search.py -n 40 genome_list.tsv
-    # This will create ~/work/orthology/data/blast/*
-    # This will create ~/work/orthology/data/blast_log/*
-    # This will create ~/work/orthology/data/blast_err/*
+    # This will create data/blast/*, data/blast_log/*, data/blast_err/*
 
     4_make_matrix.py -i blast -o matrix genome_list.tsv
-    # This will create ~/work/orthology/data/matrix/*
+    # This will create data/matrix/*
 
 ### In the case of UniProt
 
     1_download_proteome.py ~/github/hop/species_list.tsv
-    # This will create ~/work/orthology/data/proteome/*
-    # and ~/work/orthology/data/proteome_list.tsv
+    # This will create data/proteome/*, data/proteome_list.tsv
 
-    2_process_proteome.py proteome_list.tsv
     # This assumes makeblastdb is in the command path. Or, use -p option.
-    # This will create ~/work/orthology/data/proteins/*
-    # and ~/work/orthology/data/proteome_db/*
+    2_process_proteome.py proteome_list.tsv
+    # This will create data/proteins/*, data/proteome_db/*
