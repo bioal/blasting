@@ -65,6 +65,7 @@ class GenomeDownloader:
     def __download_file(self, url, debug, file_obtained, id):
         with self.semaphore:
             server = url.replace('ftp://', '')
+            server = url.replace('https://', '')
             index = server.find('/')
             path = server[index:]
             server = server[0:index]
