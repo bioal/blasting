@@ -12,9 +12,9 @@ class GenomeDownloader:
         self.output_folder = output_folder
         self.semaphore = Semaphore(int(num))
 
-    def download_summary_file(self, ftp_server, summary_file_source):
+    def download_summary_file(self, ftp_server, summary_file_source, dir):
         index = summary_file_source.rfind('/')
-        summary_file = summary_file_source[index + 1:]
+        summary_file = dir + summary_file_source[index + 1:]
         
         ftp = FtpCli(ftp_server)
         if not ftp.is_up_to_date(summary_file_source, summary_file):
