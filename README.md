@@ -6,10 +6,9 @@ Python3 should be installed.
 
 [BLAST+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download) should be installed.
 - `blastp` command is necessary (preferably in the command path).
+- `install_blast.sh` will install `lib/blast/bin/blastp`
 
 ## Usage
-    0_get_species_list.py [-o OUT_FILE]
-
     1_download_genomes.py [-o OUT_DIR] SPECIES_LIST
 
     2_process_genomes.py [-p path/to/makeblastdb] GENOME_LIST
