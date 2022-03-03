@@ -11,14 +11,12 @@ class SpeciesManager:
             line = line.rstrip('\r\n')
             fields = line.split('\t')
             if not fields[0].isdigit:
+                # skip header line
                 continue
-            species_id = fields[0]
-            id_hash[species_id] = line
+            id_hash[fields[0]] = line
             if len(fields) >= 2:
-                species = fields[1]
-                species_hash[species] = species_id
+                species_hash[fields[1]] = fields[0]
             if len(fields) >= 7:
-                taxid = fields[6]
-                taxid_hash[taxid] = species_id
+                taxid_hash[fields[6]] = fields[0]
         fp.close()
         return id_hash, taxid_hash, species_hash
