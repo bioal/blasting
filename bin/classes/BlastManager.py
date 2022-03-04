@@ -4,7 +4,7 @@ import subprocess
 import os
 
 class BlastManager:
-    def __init__(self, command, num, genome_list, output_folder):
+    def __init__(self, command, num, genome_list, db_dir, output_folder):
         if not os.path.exists(output_folder):
             os.makedirs(output_folder) 
         self.output_folder = output_folder
