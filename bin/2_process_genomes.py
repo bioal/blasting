@@ -7,5 +7,5 @@ parser.add_argument('genome_list', help='List of downloaded genomes in tsv forma
 parser.add_argument('-p', '--program', default='makeblastdb', help='Path to makeblsastdb command (default: makeblastdb)')
 args = parser.parse_args()
 
-manager = DataManager(args.genome_list, args.program)
+manager = DataManager(args.genome_list, args.program, 'data/genes', 'data/db')
 manager.preprocess()
