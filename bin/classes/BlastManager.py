@@ -2,11 +2,13 @@ from threading import Thread, Semaphore
 import time
 import subprocess
 import os
+import sys
 
 class BlastManager:
     def __init__(self, command, num, genome_list, db_dir, output_folder):
         if not os.path.exists(output_folder):
             os.makedirs(output_folder) 
+        self.db_dir = db_dir
         self.output_folder = output_folder
         self.genome_list = self.__read_genome_list(genome_list)
         self.semaphore = Semaphore(int(num))
@@ -59,7 +61,7 @@ class BlastManager:
             command = [
                 self.command,
                 '-query', genome1['fasta_file'],
-                '-db', 'db/' + genome2['id'],
+                '-db', self.db_dir + '/' + genome2['id'],
                 # '-max_target_seqs', '1',
                 '-evalue', '0.001',
                 # '-outfmt', '6',
