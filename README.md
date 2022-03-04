@@ -20,9 +20,9 @@ Python3 should be installed.
     2_process_proteomes.py [-p path/to/makeblastdb] PROTEOME_LIST
 
 ### Run BLAST
-#### All against All
+#### All against all
 ```
-3_blast_pairs.py -n CPU_CORES [-p path/to/blastp] [-o OUT_DIR] GENOME_LIST
+3_blast_all_vs_all.py -n CPU_CORES [-p path/to/blastp] [-o OUT_DIR] GENOME_LIST
 ```
 
 #### For specific pairs
