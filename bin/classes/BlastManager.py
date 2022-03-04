@@ -68,12 +68,11 @@ class BlastManager:
                 '-outfmt', '7',
                 '-out', self.output_folder + '/' + result_name
             ]
-            log_fp = open(log_file, 'w')
-            log_fp.write(' '.join(command) + '\n')
-            log_fp.flush()
-            ret = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            log_fp.write(ret.stdout.decode())
-            log_fp.close()
-            err_fp = open(err_file, 'w')
-            err_fp.write(ret.stderr.decode())
-            err_fp.close()
+            with open(log_file, 'w') as log_fp:
+                print(' '.join(command), file=log_fp, flush=True)
+                ret = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                log_fp.write(ret.stdout.decode())
+                log_fp.flush()
+                with open(err_file, 'w') as err_fp:
+                    err_fp.write(ret.stderr.decode())
+                    err_fp.flush()
