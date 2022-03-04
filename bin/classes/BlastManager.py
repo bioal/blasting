@@ -5,16 +5,16 @@ import os
 import sys
 
 class BlastManager:
-    def __init__(self, command, num, genome_list, db_dir, output_folder):
-        if not os.path.exists(output_folder):
-            os.makedirs(output_folder) 
+    def __init__(self, command, num, genome_list, db_dir, out_dir):
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir) 
         self.db_dir = db_dir
-        self.output_folder = output_folder
+        self.out_dir = out_dir
         self.genome_list = self.__read_genome_list(genome_list)
         self.semaphore = Semaphore(int(num))
         self.command = command
-        self.err_dir = output_folder + '_err'
-        self.log_dir = output_folder + '_log'
+        self.err_dir = out_dir + '_err'
+        self.log_dir = out_dir + '_log'
         if not os.path.exists(self.err_dir):
             os.makedirs(self.err_dir)
         if not os.path.exists(self.log_dir):
@@ -53,21 +53,19 @@ class BlastManager:
 
     def __execute_blast(self, genome1, genome2):
         with self.semaphore:
-            result_name = genome1['id'] + '-' + genome2['id']
-            log_file = self.log_dir + '/' + result_name
-            err_file = self.err_dir + '/' + result_name
+            query_file = genome1['fasta_file']
+            db_file = self.db_dir + '/' + genome2['id']
+            out_file = self.out_dir + '/' + genome1['id'] + '-' + genome2['id']
+            log_file = self.log_dir + '/' + genome1['id'] + '-' + genome2['id']
+            err_file = self.err_dir + '/' + genome1['id'] + '-' + genome2['id']
             if os.path.exists(err_file):
                 print(f'Found {err_file}, skip', file=sys.stderr)
                 return
-            command = [
-                self.command,
-                '-query', genome1['fasta_file'],
-                '-db', self.db_dir + '/' + genome2['id'],
+            command = [ self.command, '-query', query_file, '-db', db_file, '-out', out_file,
                 # '-max_target_seqs', '1',
                 '-evalue', '0.001',
                 # '-outfmt', '6',
-                '-outfmt', '7',
-                '-out', self.output_folder + '/' + result_name
+                '-outfmt', '7'
             ]
             with open(log_file, 'w') as log_fp:
                 print(' '.join(command), file=log_fp, flush=True)
