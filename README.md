@@ -51,7 +51,7 @@ Python3 should be installed.
 
 ### In the case of UniProt proteomes
 
-    1_download_proteome.py ~/github/hop/species_list.tsv
+    1_download_proteome.py species_list.tsv
     # This will create data/proteome/*, data/proteome_list.tsv
 
     # This assumes makeblastdb is in the command path. Or, use -p option.
