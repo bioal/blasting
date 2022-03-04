@@ -57,6 +57,7 @@ class BlastManager:
             log_file = self.log_dir + '/' + result_name
             err_file = self.err_dir + '/' + result_name
             if os.path.exists(err_file):
+                print(f'Found {err_file}, skip', file=sys.stderr)
                 return
             command = [
                 self.command,
