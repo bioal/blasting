@@ -9,6 +9,7 @@ Python3 should be installed.
 - `install_blast.sh` will install `lib/blast/bin/blastp`
 
 ## Usage
+### Using NCBI genomes
     1_download_genomes.py [-o OUT_DIR] SPECIES_LIST
 
     2_process_genomes.py [-p path/to/makeblastdb] GENOME_LIST
@@ -17,13 +18,14 @@ Python3 should be installed.
 
     4_make_matrix.py -i INPUT_DIR -o OUT_DIR GENOME_LIST
 
-### In the case of UniProt
+### In the case of UniProt proteomes
     1_download_proteomes.py [-o OUT_DIR] SPECIES_LIST
     
     2_process_proteomes.py [-p path/to/makeblastdb] PROTEOME_LIST
 
 
-## Example
+## Examples
+### Using NCBI genomes
     mkdir work
     cd work
 
@@ -41,7 +43,7 @@ Python3 should be installed.
     4_make_matrix.py -i blast -o matrix genome_list.tsv
     # This will create data/matrix/*
 
-### In the case of UniProt
+### In the case of UniProt proteomes
 
     1_download_proteome.py ~/github/hop/species_list.tsv
     # This will create data/proteome/*, data/proteome_list.tsv
