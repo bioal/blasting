@@ -2,9 +2,9 @@ import subprocess
 import os
 
 class DataManager:
-    def __init__(self, genome_file_list, command):
-        self.genes_dir = 'genes'
-        self.db_dir = 'db'
+    def __init__(self, genome_file_list, command, genes_dir, db_dir):
+        self.genes_dir = genes_dir
+        self.db_dir = db_dir
         if not os.path.exists(self.genes_dir):
             os.makedirs(self.genes_dir)
         if not os.path.exists(self.db_dir):
