@@ -6,13 +6,13 @@ import sys
 
 class BlastManager:
     def __init__(self, command, num, genome_list, db_dir, out_dir):
+        self.command = command
+        self.semaphore = Semaphore(int(num))
+        self.genome_list = self.__read_genome_list(genome_list)
+        self.db_dir = db_dir
         if not os.path.exists(out_dir):
             os.makedirs(out_dir) 
-        self.db_dir = db_dir
         self.out_dir = out_dir
-        self.genome_list = self.__read_genome_list(genome_list)
-        self.semaphore = Semaphore(int(num))
-        self.command = command
 
     def __read_genome_list(self, genome_list):
         fp = open(genome_list, 'r')
