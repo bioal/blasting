@@ -47,6 +47,7 @@ class BlastManager:
 
     def __execute_blast(self, org1, org2):
         with self.semaphore:
+            start = time.time()
             query_file = org1['fasta_file']
             db_file = self.db_dir + '/' + org2['id']
             out_file = self.out_dir + '/' + org1['id'] + '-' + org2['id'] + '.out'
@@ -64,8 +65,10 @@ class BlastManager:
             with open(log_file, 'w') as log_fp:
                 print(' '.join(command), file=log_fp, flush=True)
                 ret = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                diff_time = (time.time() - start) / 3600
                 log_fp.write(ret.stdout.decode())
                 log_fp.flush()
                 with open(end_file, 'w') as end_fp:
                     end_fp.write(ret.stderr.decode())
+                    print(f'time: {diff_time:.4f} hours', file=end_fp, flush=True)
                     end_fp.flush()
