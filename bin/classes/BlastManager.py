@@ -13,12 +13,6 @@ class BlastManager:
         self.genome_list = self.__read_genome_list(genome_list)
         self.semaphore = Semaphore(int(num))
         self.command = command
-        self.err_dir = out_dir + '_err'
-        self.log_dir = out_dir + '_log'
-        if not os.path.exists(self.err_dir):
-            os.makedirs(self.err_dir)
-        if not os.path.exists(self.log_dir):
-            os.makedirs(self.log_dir)
 
     def __read_genome_list(self, genome_list):
         fp = open(genome_list, 'r')
@@ -55,9 +49,9 @@ class BlastManager:
         with self.semaphore:
             query_file = genome1['fasta_file']
             db_file = self.db_dir + '/' + genome2['id']
-            out_file = self.out_dir + '/' + genome1['id'] + '-' + genome2['id']
-            log_file = self.log_dir + '/' + genome1['id'] + '-' + genome2['id']
-            err_file = self.err_dir + '/' + genome1['id'] + '-' + genome2['id']
+            out_file = self.out_dir + '/' + genome1['id'] + '-' + genome2['id'] + '.out'
+            log_file = self.out_dir + '/' + genome1['id'] + '-' + genome2['id'] + '.start'
+            err_file = self.out_dir + '/' + genome1['id'] + '-' + genome2['id'] + '.end'
             if os.path.exists(err_file):
                 print(f'Found {err_file}, skip', file=sys.stderr)
                 return
