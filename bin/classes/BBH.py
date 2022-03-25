@@ -6,23 +6,23 @@ import subprocess
 from collections import defaultdict
 
 class BBH:
-    def __init__(self, input_dir, output_dir, list_file):
-        self.input_dir = input_dir
-        self.output_dir = output_dir
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir) 
-        self.genome_list = self.__get_list(list_file)
+    def __init__(self, blast_dir, out_dir, organism_list):
+        self.blast_dir = blast_dir
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
+        self.out_dir = out_dir
+        self.organisms = self.__read_organism_list(organism_list)
         self.gene_index = defaultdict(int)
         self.bbh = defaultdict(lambda: defaultdict(int))
         self.human_genes = {}
 
-    def __get_list(self, list_file):
-        fp = open(list_file, 'r')
+    def __read_organism_list(self, organism_list):
+        fp = open(organism_list, 'r')
         list = []
         for line in fp:
             tokens = line.strip().split('\t')
             if len(tokens) >= 2:
-                list.append({'id':tokens[0], 'faa_file':tokens[1]})
+                list.append({'id': tokens[0]})
         fp.close()
         return list
 
@@ -52,13 +52,13 @@ class BBH:
         return query_gene, target_gene, score
 
     def calc_bbh(self):
-        for genome in self.genome_list:
-            if genome['id'] != '1':
-                self.calc_bbh_pair('1', genome['id'])
+        for org1 in self.organisms:
+            for org2 in self.organisms:
+                self.calc_bbh_pair(org1['id'], org2['id'])
         self.make_matrix()
 
     def make_matrix(self):
-        for genome in self.genome_list:
+        for genome in self.organisms:
             self.read_gene_index(genome['id'])
             if genome['id'] != '1':
                 self.read_bbh('1', genome['id'])
@@ -68,7 +68,7 @@ class BBH:
     def output_matrix(self):
         genome_ids = []
         print('1', end='')
-        for genome in self.genome_list:
+        for genome in self.organisms:
             if genome['id'] != '1':
                 genome_ids.append(genome['id'])
                 print('\t', genome['id'], sep='', end='')
@@ -86,7 +86,7 @@ class BBH:
             print()
 
     def read_bbh(self, human_id, other_id):
-        input_path = f'{self.output_dir}/{human_id}-{other_id}.out'
+        input_path = f'{self.out_dir}/{human_id}-{other_id}.out'
         input_fp = open(input_path)
         # print(input_path)
         for line in input_fp:
@@ -125,17 +125,17 @@ class BBH:
         input_fp.close()
 
     def calc_bbh_pair(self, human_id, other_id):
-        output_path = f'{self.output_dir}/{human_id}-{other_id}.out'
+        output_path = f'{self.out_dir}/{human_id}-{other_id}.out'
         if os.path.exists(output_path):
             return
-        output_fp = open(f'{self.output_dir}/{human_id}-{other_id}.out', 'w')
-        error_fp = open(f'{self.output_dir}/{human_id}-{other_id}.err', 'w')
+        output_fp = open(f'{self.out_dir}/{human_id}-{other_id}.out', 'w')
+        error_fp = open(f'{self.out_dir}/{human_id}-{other_id}.err', 'w')
 
         hash = {}
         hash_rev = {}
         score_val = {}
 
-        input_fp = open(f'{self.input_dir}/{human_id}-{other_id}.out')
+        input_fp = open(f'{self.blast_dir}/{human_id}-{other_id}.out')
         for line in input_fp:
             parsed_line = self.parse_line(line.strip())
             if parsed_line is None:
@@ -151,7 +151,7 @@ class BBH:
             score_val[(query_gene, target_gene)] = score
         input_fp.close()
 
-        input_fp = open(f'{self.input_dir}/{other_id}-{human_id}.out')
+        input_fp = open(f'{self.blast_dir}/{other_id}-{human_id}.out')
         for line in input_fp:
             parsed_line = self.parse_line(line.strip())
             if parsed_line is None:
@@ -178,46 +178,11 @@ class BBH:
             rev = hash_rev[target]
             if query == rev:
                 print(query, target, score_val[(query, target)], score_val[(target, query)], sep='\t', file=output_fp)
-        
-        # human_genome = self.genome_list[0]
-        # print(human_genome['id'])
-        # human_fp = open('proteins/1', 'r')
-        # for line in human_fp:
-        #     print(line.strip())
-        #     tokens = line.strip().split('\t')
-        #     if len(tokens) >= 2:
-        #         number = tokens[0]
-        #         title = tokens[1]
-
-        #         for genome in self.genome_list:
-        #             result = self.__search_from_human(title, genome)
-        #             fp1.write(result['number'] + '\t')
-        #             fp2.write(result['score'] + '\t')
-
-        #             if result['number'] == 'n/a':
-        #                 result['score'] = 'n/a'
-        #             else:
-        #                 result = self.__search_from_other(result['title'], genome, human_genome)
-
-        #             fp3.write(result['number'] + '\t')
-        #             fp4.write(result['score'] + '\t')
-        #             if result['number'] == 'n/a':
-        #                 fp5.write('n/a' + '\t')
-        #             elif int(result['number']) == int(number):
-        #                 fp5.write(result['number'] + '\t')
-        #             else:
-        #                 fp5.write('NULL' + '\t')
-
-        #         fp1.write('\n')
-
-        # human_fp.close()
-        # fp1.close()
-       
 
     # search from human
     def __search_from_human(self, title, genome):
         result = {'number': 'n/a', 'score': 'n/a', 'title': 'n/a'}
-        path = self.input_dir + '/1-' + genome['id'] + '.txt'
+        path = self.blast_dir + '/1-' + genome['id'] + '.txt'
         if os.path.exists(path):
             result_fp = open(path, 'r')
             score = -1 
@@ -254,8 +219,8 @@ class BBH:
     # search from other 
     def __search_from_other(self, title, genome, human_genome):
         result = {'number': 'n/a', 'score': 'n/a', 'title': 'n/a'}
-        path = self.input_dir + '/' + genome['id'] + '-1.txt'
-        human_genome = self.genome_list[0]
+        path = self.blast_dir + '/' + genome['id'] + '-1.txt'
+        human_genome = self.organisms[0]
         if os.path.exists(path):
             result_fp = open(path, 'r')
             score = -1
