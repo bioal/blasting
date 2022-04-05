@@ -3,16 +3,12 @@ import os
 import argparse
 import subprocess
 from threading import Thread, Semaphore
-# from classes.ResultManager import ResultManager
 
 parser = argparse.ArgumentParser(description='Summarize BLAST search resutls.')
 parser.add_argument('organism_list', help='List of organisms in tsv format')
 parser.add_argument('-i', '--input', default='blast', help='BLAST results directory')
 parser.add_argument('-o', '--outdir', default='matrix', help='Output directory')
 args = parser.parse_args()
-
-# manager = ResultManager(args.input, args.outdir, args.organism_list)
-# manager.calc_bbh()
 
 sem = Semaphore(50)
 
@@ -37,7 +33,7 @@ for line in fp:
 fp.close
 
 if not os.path.exists(args.outdir):
-    os.makedirs(outdir)
+    os.makedirs(args.outdir)
 
 for i in range(0, len(list)):
     for j in range(i+1, len(list)):
