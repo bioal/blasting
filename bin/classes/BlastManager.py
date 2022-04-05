@@ -58,9 +58,12 @@ class BlastManager:
                 return
             command = [ self.command, '-query', query_file, '-db', db_file, '-out', out_file,
                 # '-max_target_seqs', '1',
-                '-evalue', '0.001',
+                '-evalue', '0.01',
+                # '-evalue', '0.001',
                 # '-outfmt', '6',
-                '-outfmt', '7'
+                # '-outfmt', '6 std qlen slen',
+                '-outfmt', '6 std qlen slen stitle',
+                # '-outfmt', '7'
             ]
             with open(log_file, 'w') as log_fp:
                 print(' '.join(command), file=log_fp, flush=True)
