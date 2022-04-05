@@ -7,7 +7,7 @@ from threading import Thread, Semaphore
 parser = argparse.ArgumentParser(description='Summarize BLAST search resutls.')
 parser.add_argument('organism_list', help='List of organisms in tsv format')
 parser.add_argument('-i', '--input', default='blast', help='BLAST results directory')
-parser.add_argument('-o', '--outdir', default='matrix', help='Output directory')
+parser.add_argument('-o', '--outdir', default='bbh', help='Output directory')
 args = parser.parse_args()
 
 sem = Semaphore(50)
