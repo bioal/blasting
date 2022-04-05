@@ -26,30 +26,20 @@ class BBH:
         fp.close()
         return list
 
-    def is_invalid_id(self, id):
-        if re.search(':', id):
-            return True
-        else:
-            return False
-
     def parse_line(self, line):
-        if line.startswith('#'):
-            return None
         fields = line.split('\t')
-        if len(fields) != 12:
+        if len(fields) != 12 or line.startswith('#'):
             return None
-        query_name = fields[0]
-        query_ids = query_name.split('|')
-        if len(query_ids) != 3:
-            return None
-        query_gene = query_ids[1]
-        target_gene = fields[1]
-        if self.is_invalid_id(query_gene):
+        query_gene = fields[0]
+        if '|' in fields[0]:
+            query_ids = fields[0].split('|')
+            if len(query_ids) != 3:
+                return None
+            query_gene = query_ids[1]
+        if ':' in query_gene or ':' in fields[1]:
+            print('ERROR:', line, file=sys.stderr)
             return False
-        if self.is_invalid_id(target_gene):
-            return False
-        score = fields[11]
-        return query_gene, target_gene, score
+        return query_gene, fields[1], fields[11]
 
     def calc_bbh(self):
         for org1 in self.organisms:
@@ -124,60 +114,54 @@ class BBH:
                 self.human_genes[gene_index] = gene_id
         input_fp.close()
 
-    def calc_bbh_pair(self, human_id, other_id):
-        output_path = f'{self.out_dir}/{human_id}-{other_id}.out'
+    def calc_bbh_pair(self, org1, org2):
+        output_path = f'{self.out_dir}/{org1}-{org2}.out'
         if os.path.exists(output_path):
             return
-        output_fp = open(f'{self.out_dir}/{human_id}-{other_id}.out', 'w')
-        error_fp = open(f'{self.out_dir}/{human_id}-{other_id}.err', 'w')
+        output_fp = open(f'{self.out_dir}/{org1}-{org2}.out', 'w')
+        error_fp = open(f'{self.out_dir}/{org1}-{org2}.err', 'w')
 
         hash = {}
         hash_rev = {}
         score_val = {}
 
-        input_fp = open(f'{self.blast_dir}/{human_id}-{other_id}.out')
+        input_fp = open(f'{self.blast_dir}/{org1}-{org2}.out')
         for line in input_fp:
             parsed_line = self.parse_line(line.strip())
-            if parsed_line is None:
-                continue
-            if parsed_line is False:
-                print('ERROR:', line.strip(), file=sys.stderr)
-                continue
-            query_gene, target_gene, score = parsed_line
-            
-            if hash.get(query_gene):
-                continue
-            hash[query_gene] = target_gene
-            score_val[(query_gene, target_gene)] = score
+            if parsed_line:
+                query_gene, target_gene, score = parsed_line
+                if hash.get(query_gene):
+                    hash[query_gene] = target_gene
+                    score_val[(query_gene, target_gene)] = score
         input_fp.close()
 
-        input_fp = open(f'{self.blast_dir}/{other_id}-{human_id}.out')
-        for line in input_fp:
-            parsed_line = self.parse_line(line.strip())
-            if parsed_line is None:
-                continue
-            if parsed_line is False:
-                print('ERROR:', line.strip(), file=sys.stderr)
-                continue
-            query_gene, target_gene, score = parsed_line
+        # input_fp = open(f'{self.blast_dir}/{org2}-{org1}.out')
+        # for line in input_fp:
+        #     parsed_line = self.parse_line(line.strip())
+        #     if parsed_line is None:
+        #         continue
+        #     if parsed_line is False:
+        #         print('ERROR:', line.strip(), file=sys.stderr)
+        #         continue
+        #     query_gene, target_gene, score = parsed_line
             
-            if hash.get(query_gene):
-                continue
-            hash_rev[query_gene] = target_gene
-            score_val[(query_gene, target_gene)] = score
-        input_fp.close()
+        #     if hash.get(query_gene):
+        #         continue
+        #     hash_rev[query_gene] = target_gene
+        #     score_val[(query_gene, target_gene)] = score
+        # input_fp.close()
 
-        for query in hash:
-            if not hash.get(query):
-                print(f'ERROR: no such query {query}', file=error_fp)
-                continue
-            target = hash[query]
-            if not hash_rev.get(target):
-                print(f'ERROR: no such target {target}', file=error_fp)
-                continue
-            rev = hash_rev[target]
-            if query == rev:
-                print(query, target, score_val[(query, target)], score_val[(target, query)], sep='\t', file=output_fp)
+        # for query in hash:
+        #     if not hash.get(query):
+        #         print(f'ERROR: no such query {query}', file=error_fp)
+        #         continue
+        #     target = hash[query]
+        #     if not hash_rev.get(target):
+        #         print(f'ERROR: no such target {target}', file=error_fp)
+        #         continue
+        #     rev = hash_rev[target]
+        #     if query == rev:
+        #         print(query, target, score_val[(query, target)], score_val[(target, query)], sep='\t', file=output_fp)
 
     # search from human
     def __search_from_human(self, title, genome):
