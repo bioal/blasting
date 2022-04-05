@@ -6,7 +6,7 @@ from threading import Thread, Semaphore
 
 parser = argparse.ArgumentParser(description='Convert input files in parallel')
 parser.add_argument('file', nargs='*', help='Input files')
-parser.add_argument('-n', '--cores', required=True, type=int, help='Number of CPU cores to be used for BLAST')
+parser.add_argument('-n', '--cores', required=True, type=int, help='Number of CPU cores to be used')
 args = parser.parse_args()
 
 semaphore = Semaphore(args.cores)
