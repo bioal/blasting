@@ -7,7 +7,7 @@ sem = Semaphore(50)
 
 def conversion(file):
     with sem:
-        subprocess.run(f'cat {file} | ../bin/extract_top1.pl > {file}.top1 2> {file}.top1.err', shell=True)
+        subprocess.run(f'cat {file} | ../bin/perl/extract_top1.pl > {file}.top1 2> {file}.top1.err', shell=True)
 
 [program, *files] = sys.argv
 for file in files:

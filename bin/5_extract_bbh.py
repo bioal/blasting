@@ -14,7 +14,7 @@ sem = Semaphore(50)
 
 def extract_bbh(id1, id2):
     with sem:
-        subprocess.run(f'./bin/extract_bbh.pl -i {args.input} {id1} {id2} > {args.outdir}/{id1}-{id2}.bbh 2> {args.outdir}/{id1}-{id2}.bbh.err', shell=True)
+        subprocess.run(f'./bin/perl/extract_bbh.pl -i {args.input} {id1} {id2} > {args.outdir}/{id1}-{id2}.bbh 2> {args.outdir}/{id1}-{id2}.bbh.err', shell=True)
 
 def isint(s):
     try:
