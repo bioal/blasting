@@ -21,7 +21,7 @@ if (defined $OPT{i}) {
     $DIR = $OPT{i} . "/";
 }
 
-my %TOP_HIT = ();
+my %HIT = ();
 open(FILE1, "${DIR}${ID1}-${ID2}.out.top") || die;
 while (<FILE1>) {
     chomp;
@@ -31,7 +31,7 @@ while (<FILE1>) {
     }
     my $id1 = $f[0];
     my $id2 = $f[1];
-    $TOP_HIT{$id1} = $id2;
+    $HIT{$id1}{$id2} = 1;
 }
 close(FILE1);
 
@@ -44,10 +44,8 @@ while (<FILE2>) {
     }
     my $id2 = $f[0];
     my $id1 = $f[1];
-    if ($TOP_HIT{$id1}) {
-        if ($TOP_HIT{$id1} eq $id2) {
-            print "$id1\t$id2\n"
-        }
+    if ($HIT{$id1}{$id2}) {
+        print "$id1\t$id2\n"
     } else {
         # print STDERR "WARNING: $id1 not found\n";
     }
