@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
-import sys
+import argparse
 import subprocess
 from threading import Thread, Semaphore
 
-sem = Semaphore(50)
+parser = argparse.ArgumentParser(description='Extract BLAST results in parallel')
+parser.add_argument('file', nargs='*', help='Input files')
+parser.add_argument('-n', '--cores', required=True, type=int, help='Number of CPU cores to be used')
+args = parser.parse_args()
 
-def conversion(file):
-    with sem:
-        subprocess.run(f'cat {file} | ../bin/perl/extract_top.pl > {file}.top 2> {file}.top.err', shell=True)
+semaphore = Semaphore(args.cores)
 
-[program, *files] = sys.argv
-for file in files:
-    thread1 = Thread(target=conversion, args=(file,))
-    thread1.start()
-    print('Queued ' + file, flush=True)
+def conversion(f):
+    with semaphore:
+        subprocess.run(f'cat {f} | ../bin/perl/extract_top.pl > {f}.top 2> {f}.top.err', shell=True)
+
+for f in args.file:
+    t = Thread(target=conversion, args=(f,))
+    t.start()
+    print('Queued ' + f, flush=True)
