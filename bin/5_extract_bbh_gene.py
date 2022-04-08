@@ -9,12 +9,13 @@ parser.add_argument('organism_list', help='List of organisms in tsv format')
 parser.add_argument('gene_refseq', help='List of organisms in tsv format')
 parser.add_argument('-i', '--input', default='blast', help='BLAST results directory')
 parser.add_argument('-o', '--outdir', default='bbh', help='Output directory')
+parser.add_argument('-n', '--cores', required=True, type=int, help='Number of CPU cores to be used')
 args = parser.parse_args()
 
-sem = Semaphore(50)
+semaphore = Semaphore(args.cores)
 
 def extract_bbh(id1, id2):
-    with sem:
+    with semaphore:
         subprocess.run(f'./bin/perl/extract_bbh_gene.pl -i {args.input} {id1} {id2} {args.gene_refseq} > {args.outdir}/{id1}-{id2}.bbh_gene 2> {args.outdir}/{id1}-{id2}.bbh_gene.err', shell=True)
 
 def isint(s):
