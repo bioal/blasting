@@ -96,4 +96,5 @@ sub refseq_gene {
     }
 
     print STDERR "skip $refseq_ver\n";
+    return;
 }
