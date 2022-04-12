@@ -23,7 +23,7 @@ class GenomeDownloader:
         
         return summary_file
 
-    def sync(self, genomes_found, success_file, err_file, debug):
+    def sync(self, genomes_found, success_file):
         fp = open(genomes_found, 'r', encoding='UTF-8')
         result_fp = open(success_file, 'w')
         for line in fp:
