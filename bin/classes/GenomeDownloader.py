@@ -23,6 +23,35 @@ class GenomeDownloader:
         
         return summary_file
 
+    def sync(self, genomes_found, success_file, err_file, debug):
+        fp = open(genomes_found, 'r', encoding='UTF-8')
+        result_fp = open(success_file, 'w')
+        for line in fp:
+            line = line.rstrip()
+            fields = line.split('\t')
+            id = fields[0]
+            url = fields[20]
+            server = url.replace('ftp://', '')
+            server = url.replace('https://', '')
+            index = server.find('/')
+            path = server[index:]
+            server = server[0:index]
+            index = path.rfind('/')
+            name = path[index + 1:]
+            if name.endswith('gz'):
+                gz_file_name = name
+                gz_file_path = path
+            else:
+                gz_file_name = name + '_protein.faa.gz'
+                gz_file_path = f'{path}/{gz_file_name}'
+            outfile = self.out_dir + '/' + gz_file_name
+            ftp = FtpCli(server)
+            ftp.sync(gz_file_path, outfile)
+            ftp.close()
+            print(id + '\t' + re.sub(r'.gz', '', outfile), file=result_fp, flush=True)
+        fp.close()
+        result_fp.close()
+
     def download_files(self, summary_file, species_list, success_file, err_file, debug):
         file_obtained = {}
         threads = []
