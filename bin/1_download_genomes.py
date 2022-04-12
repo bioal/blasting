@@ -29,7 +29,7 @@ fp_out = open(f'{args.outdir}/genomes_downloaded.tsv', 'w')
 for line in fp:
     line = line.rstrip()
     fields = line.split('\t')
-    id = fields[0]
+    no = fields[0]
     url = fields[20]
     server = url.replace('ftp://', '')
     server = url.replace('https://', '')
@@ -44,10 +44,10 @@ for line in fp:
     else:
         gz_file_name = name + '_protein.faa.gz'
         gz_file_path = f'{path}/{gz_file_name}'
-    outfile = out_dir + '/' + gz_file_name
     ftp = FtpCli(server)
-    ftp.sync(gz_file_path, outfile)
+    ftp.sync(gz_file_path, f'{out_dir}/{gz_file_name}')
     ftp.close()
-    print(id + '\t' + re.sub(r'.gz', '', outfile), file=fp_out, flush=True)
+    genome_file_name = re.sub(r'.gz', '', gz_file_name)
+    print(f'{no}\t{out_dir}/{genome_file_name}', file=fp_out, flush=True)
 fp.close()
 fp_out.close()
