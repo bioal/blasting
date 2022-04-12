@@ -18,6 +18,7 @@ class FtpCli:
         remote_size = self.ftp.size(path)
         remote_date = self.__get_remote_datetime(path)
         if local_size == remote_size and local_datetime == remote_date:
+            print(f'{local_name} is up to date', file=sys.stderr, flush=True)
             return True
         print(f'difference in {local_name}', file=sys.stderr, flush=True)
         if not local_size == remote_size:
@@ -25,6 +26,10 @@ class FtpCli:
         if not local_datetime == remote_date:
             print(f'    time stamp (remote) {remote_date} != (local) {local_datetime}', file=sys.stderr, flush=True)
         return False
+
+    def sync(self, remote_path, outfile):
+        if not self.is_up_to_date(remote_path, outfile):
+            self.get(remote_path, outfile)
 
     def get(self, remote_path, outfile):
         remote_size = self.ftp.size(remote_path)
