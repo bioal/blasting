@@ -30,8 +30,11 @@ close(LIST);
 open(ASSEMBLY_REPORTS, "$ASSEMBLY_REPORTS") || die "$!";
 while (<>) {
     chomp;
+    if (/^#/) {
+        next;
+    }
     my @f = split(/\t/, $_);
-    if (@f > 6) {
+    if (@f >= 7) {
         my $category = $f[4];
         my $taxid = $f[5];
         my $species_taxid = $f[6];
@@ -45,5 +48,4 @@ while (<>) {
         }
     }
 }
-
 close(ASSEMBLY_REPORTS);
