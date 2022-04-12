@@ -6,10 +6,10 @@ from classes.FtpCli import FtpCli
 from classes.SpeciesManager import SpeciesManager
 
 class GenomeDownloader:
-    def __init__(self, output_folder, num):
-        if not os.path.exists(output_folder):
-            os.makedirs(output_folder)
-        self.output_folder = output_folder
+    def __init__(self, out_dir, num):
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
+        self.out_dir = out_dir
         self.semaphore = Semaphore(int(num))
 
     def download_summary_file(self, ftp_server, summary_file_source, dir):
@@ -92,7 +92,7 @@ class GenomeDownloader:
             else:
                 gz_file_name = name + '_protein.faa.gz'
                 gz_file_path = f'{path}/{gz_file_name}'
-            outfile = self.output_folder + '/' + gz_file_name
+            outfile = self.out_dir + '/' + gz_file_name
             print(f'{id}\t{outfile}', flush=True)
             if not debug:
                 ftp = FtpCli(server)
