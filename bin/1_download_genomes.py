@@ -24,6 +24,15 @@ ftp.close()
 genomes_found = f'{args.outdir}/genomes_found.tsv'
 subprocess.run(f'./bin/perl/find_gcf_file.pl {args.organism_list} {summary_file} | sort -n > {genomes_found}', shell=True)
 
+def parse_url(url):
+    url = url.replace('ftp://', '').replace('https://', '')
+    i_dir = url.find('/')
+    i_base = url.rfind('/')
+    server = url[0:i_dir]
+    path = url[i_dir:]
+    name = url[i_base + 1:]
+    return server, path, name
+
 fp = open(genomes_found, 'r', encoding='UTF-8')
 fp_out = open(f'{args.outdir}/genomes_downloaded.tsv', 'w')
 for line in fp:
@@ -31,23 +40,17 @@ for line in fp:
     fields = line.split('\t')
     no = fields[0]
     url = fields[20]
-    server = url.replace('ftp://', '')
-    server = url.replace('https://', '')
-    index = server.find('/')
-    path = server[index:]
-    server = server[0:index]
-    index = path.rfind('/')
-    name = path[index + 1:]
-    if name.endswith('gz'):
-        gz_file_name = name
-        gz_file_path = path
+    url_server, url_path, url_name = parse_url(url)
+    if url.endswith('gz'):
+        gz_file_path = url_path
+        gz_file_name = url_name
     else:
-        gz_file_name = name + '_protein.faa.gz'
-        gz_file_path = f'{path}/{gz_file_name}'
-    ftp = FtpCli(server)
+        gz_file_path = f'{url_path}/{url_name}_protein.faa.gz'
+        gz_file_name = f'{url_name}_protein.faa.gz'
+    genome_file_name = re.sub(r'.gz', '', gz_file_name)
+    ftp = FtpCli(url_server)
     ftp.sync(gz_file_path, f'{out_dir}/{gz_file_name}')
     ftp.close()
-    genome_file_name = re.sub(r'.gz', '', gz_file_name)
     print(f'{no}\t{out_dir}/{genome_file_name}', file=fp_out, flush=True)
 fp.close()
 fp_out.close()
