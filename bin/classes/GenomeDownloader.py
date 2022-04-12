@@ -26,24 +26,24 @@ class GenomeDownloader:
     def download_files(self, summary_file, species_list, success_file, err_file, debug):
         file_obtained = {}
         threads = []
-        species_man = SpeciesManager(species_list);
+        sp = SpeciesManager(species_list);
         fp = open(summary_file, 'r', encoding='UTF-8')
         for line in fp:
-            line = line.strip()
-            tokens = line.split('\t')
-            if not line.startswith('#') and len(tokens) >= 8:
-                gcf_id = tokens[0]
-                taxid = tokens[5]
-                species_taxid = tokens[6]
-                species = tokens[7]
-                url = tokens[19]
-                id = species_man.species.get(species) or \
-                     species_man.taxids.get(taxid) or \
-                     species_man.taxids.get(species_taxid)
+            line = line.rstrip()
+            fields = line.split('\t')
+            if not line.startswith('#') and len(fields) >= 8:
+                gcf_id = fields[0]
+                taxid = fields[5]
+                species_taxid = fields[6]
+                species = fields[7]
+                url = fields[19]
+                id = sp.species.get(species) or \
+                     sp.taxids.get(taxid) or \
+                     sp.taxids.get(species_taxid)
                 if id is not None and file_obtained.get(id) is None:
-                    thread = Thread(name=gcf_id, target=self.__download_file, args=(url, debug, file_obtained, id))
-                    threads.append(thread)
-                    thread.start()
+                    t = Thread(name=gcf_id, target=self.__download_file, args=(url, debug, file_obtained, id))
+                    threads.append(t)
+                    t.start()
         fp.close()
 
         for t in threads:
@@ -54,10 +54,10 @@ class GenomeDownloader:
         count = 0
         count_fail = 0
         count_success = 0
-        for id in species_man.ids:
+        for id in sp.ids:
             count += 1
             if file_obtained.get(id) is None:
-                print(species_man.ids[id], file=err_fp)
+                print(sp.ids[id], file=err_fp)
                 count_fail += 1
             else:
                 print(id + '\t' + file_obtained[id], file=result_fp);
