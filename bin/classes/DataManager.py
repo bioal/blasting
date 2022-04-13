@@ -26,13 +26,10 @@ class DataManager:
 
     def preprocess(self):
         for genome in self.genome_list:
-            id = genome['id']
+            no = genome['id']
             fasta_file = genome['fasta_file']
-            genes_list = self.genes_dir + '/' + id
-            db = self.db_dir + '/' + id
-
-            self.__make_genes_list(fasta_file, genes_list)
-            self.__make_db(fasta_file, db)
+            self.__make_genes_list(fasta_file, f'{self.genes_dir}/{no}')
+            self.__make_db(fasta_file, f'{self.db_dir}/{no}')
 
     def __make_genes_list(self, fasta_file, genes_list):
         in_fp = open(fasta_file, 'r')
