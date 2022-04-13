@@ -6,8 +6,9 @@ parser = argparse.ArgumentParser(description='All aginst all BLAST for the speci
 parser.add_argument('organism_list', help='List of organisms in tsv format')
 parser.add_argument('-n', '--cores', required=True, type=int, help='Number of CPU cores to be used for BLAST')
 parser.add_argument('-p', '--program', default='blastp', help='Path to blastp command (default: blastp)')
+parser.add_argument('--dbdir', default='data/blastdb', help='blastdb directory')
 parser.add_argument('-o', '--outdir', default='blast.out', help='Output directory')
 args = parser.parse_args()
 
-manager = BlastManager(args.program, args.cores, args.organism_list, 'data/blastdb', args.outdir)
+manager = BlastManager(args.program, args.cores, args.organism_list, args.dbdir, args.outdir)
 manager.all_vs_all()
