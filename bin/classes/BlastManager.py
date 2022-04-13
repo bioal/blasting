@@ -8,7 +8,7 @@ class BlastManager:
     def __init__(self, command, num, organism_list, db_dir, out_dir):
         self.command = command
         self.semaphore = Semaphore(int(num))
-        self.organisms = self.__read_organism_list(organism_list)
+        self.organisms, self.get_fasta = self.__read_organism_list(organism_list)
         self.db_dir = db_dir
         if not os.path.exists(out_dir):
             os.makedirs(out_dir) 
@@ -17,12 +17,16 @@ class BlastManager:
     def __read_organism_list(self, organism_list):
         fp = open(organism_list, 'r')
         list = []
+        get_fasta = {}
         for line in fp:
             tokens = line.strip().split('\t')
             if len(tokens) >= 2:
-                list.append({'id':tokens[0], 'fasta_file':tokens[1]})
+                no = tokens[0]
+                file_path = tokens[1]
+                list.append({'id': no, 'fasta_file': file_path})
+                get_fasta[no] = file_path
         fp.close()
-        return list
+        return list, get_fasta
 
     def all_vs_all(self):
         for org1 in self.organisms:
@@ -30,6 +34,19 @@ class BlastManager:
                 thread1 = Thread(target=self.__execute_blast, args=(org1, org2))
                 thread1.start()
                 print('Queued ' + org1['id'] + '-' + org2['id'], flush=True)
+
+    def exec_pairs(self, pairs_file):
+        fp = open(pairs_file, 'r')
+        for line in fp:
+            fields = line.rstrip('\n').split('\t')
+            id1 = fields[0]
+            id2 = fields[1]
+            org1 = {'id': id1, 'fasta_file': self.get_fasta[id1]}
+            org2 = {'id': id2, 'fasta_file': self.get_fasta[id2]}
+            thread1 = Thread(target=self.__execute_blast, args=(org1, org2))
+            thread1.start()
+            print('Queued ' + org1['id'] + '-' + org2['id'], flush=True)
+        fp.close()
 
     def search(self):
         human_info = None
