@@ -48,20 +48,6 @@ class BlastManager:
             print('Queued ' + org1['id'] + '-' + org2['id'], flush=True)
         fp.close()
 
-    def search(self):
-        human_info = None
-        for org in self.organisms:
-            if int(org['id']) == 1:
-                human_info = org
-
-        for org in self.organisms:
-            thread1 = Thread(target=self.__execute_blast, args=(org, human_info))
-            thread1.start()
-
-            if not org == human_info:
-                thread2 = Thread(target=self.__execute_blast, args=(human_info, org))
-                thread2.start()
-
     def __execute_blast(self, org1, org2):
         with self.semaphore:
             start = time.time()
