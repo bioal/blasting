@@ -23,7 +23,7 @@ class BlastManager:
             if len(tokens) >= 2:
                 no = tokens[0]
                 file_path = tokens[1]
-                list.append({'id': no, 'fasta_file': file_path})
+                list.append({'id': no})
                 get_fasta[no] = file_path
         fp.close()
         return list, get_fasta
@@ -41,17 +41,15 @@ class BlastManager:
             fields = line.rstrip('\n').split('\t')
             id1 = fields[0]
             id2 = fields[1]
-            org1 = {'id': id1, 'fasta_file': self.get_fasta[id1]}
-            org2 = {'id': id2, 'fasta_file': self.get_fasta[id2]}
-            thread1 = Thread(target=self.__execute_blast, args=(org1, org2))
+            thread1 = Thread(target=self.__execute_blast, args=({'id': id1}, {'id': id2}))
             thread1.start()
-            print('Queued ' + org1['id'] + '-' + org2['id'], flush=True)
+            print(f'Queued {id1}-{id2}', flush=True)
         fp.close()
 
     def __execute_blast(self, org1, org2):
         with self.semaphore:
             start = time.time()
-            query_file = org1['fasta_file']
+            query_file = self.get_fasta[org1['id']]
             db_file = self.db_dir + '/' + org2['id']
             out_file = self.out_dir + '/' + org1['id'] + '-' + org2['id'] + '.out'
             log_file = self.out_dir + '/' + org1['id'] + '-' + org2['id'] + '.log'
