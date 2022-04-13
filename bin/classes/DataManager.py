@@ -29,12 +29,14 @@ class DataManager:
             no = genome['id']
             fasta_file = genome['fasta_file']
             self.__make_genes_list(fasta_file, f'{self.genes_dir}/{no}')
-            self.__make_db(fasta_file, f'{self.db_dir}/{no}')
+        for genome in self.genome_list:
+            no = genome['id']
+            fasta_file = genome['fasta_file']
+            subprocess.run(f'{self.command} -in {fasta_file} -out {self.db_dir}/{no} -dbtype prot -parse_seqids >> {self.db_dir}.log', shell=True)
 
     def __make_genes_list(self, fasta_file, genes_list):
         in_fp = open(fasta_file, 'r')
         out_fp = open(genes_list, 'w')
-
         count = 1
         for line in in_fp:
             if line.startswith('>'):
@@ -43,13 +45,3 @@ class DataManager:
                 count = count + 1;
         in_fp.close()
         out_fp.close()
-
-    def __make_db(self, fasta_file, db):
-        command = [
-            self.command,
-            '-in', fasta_file,
-            '-out', db,
-            '-dbtype', 'prot',
-            '-parse_seqids'
-        ]
-        subprocess.run(command)
