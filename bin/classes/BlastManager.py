@@ -23,7 +23,7 @@ class BlastManager:
             if len(tokens) >= 2:
                 no = tokens[0]
                 file_path = tokens[1]
-                list.append({'id': no})
+                list.append(no)
                 get_fasta[no] = file_path
         fp.close()
         return list, get_fasta
@@ -33,27 +33,27 @@ class BlastManager:
             for org2 in self.organisms:
                 thread1 = Thread(target=self.__execute_blast, args=(org1, org2))
                 thread1.start()
-                print('Queued ' + org1['id'] + '-' + org2['id'], flush=True)
+                print(f'Queued {org1}-{org2}', flush=True)
 
     def exec_pairs(self, pairs_file):
         fp = open(pairs_file, 'r')
         for line in fp:
             fields = line.rstrip('\n').split('\t')
-            id1 = fields[0]
-            id2 = fields[1]
-            thread1 = Thread(target=self.__execute_blast, args=({'id': id1}, {'id': id2}))
+            org1 = fields[0]
+            org2 = fields[1]
+            thread1 = Thread(target=self.__execute_blast, args=(org1, org2))
             thread1.start()
-            print(f'Queued {id1}-{id2}', flush=True)
+            print(f'Queued {org1}-{org2}', flush=True)
         fp.close()
 
     def __execute_blast(self, org1, org2):
         with self.semaphore:
             start = time.time()
-            query_file = self.get_fasta[org1['id']]
-            db_file = self.db_dir + '/' + org2['id']
-            out_file = self.out_dir + '/' + org1['id'] + '-' + org2['id'] + '.out'
-            log_file = self.out_dir + '/' + org1['id'] + '-' + org2['id'] + '.log'
-            end_file = self.out_dir + '/' + org1['id'] + '-' + org2['id'] + '.end'
+            query_file = self.get_fasta[org1]
+            db_file = f'{self.db_dir}/{org2}'
+            out_file = f'{self.out_dir}/{org1}-{org2}.out'
+            log_file = f'{self.out_dir}/{org1}-{org2}.log'
+            end_file = f'{self.out_dir}/{org1}-{org2}.end'
             if os.path.exists(end_file):
                 print(f'Found {end_file}, skip', file=sys.stderr)
                 return
