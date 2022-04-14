@@ -22,20 +22,17 @@ summary_file = args.outdir + '/' + file_name
 ftp.sync(ftp_dir + file_name, summary_file)
 ftp.close()
 
-genomes_found = f'{args.outdir}/genomes_found.tsv'
 found = find_gcf(args.organism_list, summary_file)
-with open(genomes_found, 'w') as fp:
+with open(f'{args.outdir}/genomes_found.tsv', 'w') as fp:
     for no in sorted(found.keys(), key=int):
         print(no, found[no], sep='\t', file=fp)
 
 def parse_url(url):
+    # return server, path, filename
     url = url.replace('ftp://', '').replace('https://', '')
-    i_dir = url.find('/')
-    i_base = url.rfind('/')
-    server = url[0:i_dir]
-    path = url[i_dir:]
-    name = url[i_base + 1:]
-    return server, path, name
+    dir_begin = url.find('/')
+    dir_end = url.rfind('/')
+    return url[0:dir_begin], url[dir_begin:], url[dir_end + 1:]
 
 fp_out = open(f'{args.outdir}/genomes_downloaded.tsv', 'w')
 for no in sorted(found.keys(), key=int):
