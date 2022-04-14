@@ -3,6 +3,7 @@ import os
 import argparse
 import subprocess
 from threading import Thread, Semaphore
+from functions import utils
 
 parser = argparse.ArgumentParser(description='Summarize BLAST search resutls.')
 parser.add_argument('organism_list', help='List of organisms in tsv format')
@@ -17,19 +18,11 @@ def extract_bbh(id1, id2):
     with semaphore:
         subprocess.run(f'./bin/perl/extract_bbh.pl -i {args.input} {id1} {id2} > {args.outdir}/{id1}-{id2}.bbh 2> {args.outdir}/{id1}-{id2}.bbh.err', shell=True)
 
-def isint(s):
-    try:
-        int(s, 10)
-    except ValueError:
-        return False
-    else:
-        return True
-
 list = []
 fp = open(args.organism_list)
 for line in fp:
     fields = line.rstrip().split('\t')
-    if isint(fields[0]):
+    if utils.isint(fields[0]):
         list.append(fields[0])
 fp.close
 
