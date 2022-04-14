@@ -37,13 +37,10 @@ def parse_url(url):
     name = url[i_base + 1:]
     return server, path, name
 
-fp = open(genomes_found, 'r', encoding='UTF-8')
 fp_out = open(f'{args.outdir}/genomes_downloaded.tsv', 'w')
-for line in fp:
-    line = line.rstrip()
-    fields = line.split('\t')
-    no = fields[0]
-    url = fields[20]
+for no in sorted(found.keys(), key=int):
+    fields = found[no].split('\t')
+    url = fields[19]
     url_server, url_path, url_name = parse_url(url)
     if url.endswith('gz'):
         gz_file_path = url_path
@@ -56,5 +53,4 @@ for line in fp:
     ftp.sync(gz_file_path, f'{out_dir}/{gz_file_name}')
     ftp.close()
     print(f'{no}\t{out_dir}/{genome_file_name}', file=fp_out, flush=True)
-fp.close()
 fp_out.close()
