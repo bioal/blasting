@@ -4,6 +4,7 @@ import re
 import argparse
 import subprocess
 from classes.FtpCli import FtpCli
+from functions.find_gcf_file import find_gcf
 
 parser = argparse.ArgumentParser(description='Download genomes from NCBI, according to the organism list in tsv format.')
 parser.add_argument('organism_list', help='Organism list in tsv format')
@@ -22,7 +23,10 @@ ftp.sync(ftp_dir + file_name, summary_file)
 ftp.close()
 
 genomes_found = f'{args.outdir}/genomes_found.tsv'
-subprocess.run(f'./bin/perl/find_gcf_file.pl {args.organism_list} {summary_file} | sort -n > {genomes_found}', shell=True)
+found = find_gcf(args.organism_list, summary_file)
+with open(genomes_found, 'w') as fp:
+    for no in sorted(found.keys(), key=int):
+        print(no, found[no], sep='\t', file=fp)
 
 def parse_url(url):
     url = url.replace('ftp://', '').replace('https://', '')
