@@ -13,6 +13,7 @@ def find_gcf(organism_list, assembly_reports):
             org[taxid] = no
     fp1.close()
 
+    out = ""
     fp2 = open(assembly_reports, 'r', encoding='UTF-8')
     for line in fp2:
         line = line.rstrip('\r\n')
@@ -26,10 +27,12 @@ def find_gcf(organism_list, assembly_reports):
             if category == "na":
                 continue
             if taxid in org:
-                print(org[taxid] + '\t' + line)
+                out += org[taxid] + '\t' + line + '\n'
             elif species_taxid in org:
-                print(org[species_taxid] + '\t' + line)
+                out += org[species_taxid] + '\t' + line + '\n'
     fp2.close()
+    
+    return out
 
 if __name__ == '__main__':
     import argparse
@@ -39,4 +42,5 @@ if __name__ == '__main__':
     parser.add_argument('assembly_reports', help='Assembly reports file')
     args = parser.parse_args()
     
-    find_gcf(args.organism_list, args.assembly_reports)
+    out = find_gcf(args.organism_list, args.assembly_reports)
+    print(out, end="")
