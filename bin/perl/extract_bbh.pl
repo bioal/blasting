@@ -22,11 +22,11 @@ if (defined $OPT{i}) {
 }
 
 my %HIT = ();
-open(FILE1, "${DIR}${ID1}-${ID2}.out.top") || die;
+open(FILE1, "${DIR}${ID1}-${ID2}.out.top_score") || die;
 while (<FILE1>) {
     chomp;
     my @f = split(/\t/, $_);
-    if (@f != 2) {
+    if (@f != 3) {
         die;
     }
     my $id1 = $f[0];
@@ -35,11 +35,11 @@ while (<FILE1>) {
 }
 close(FILE1);
 
-open(FILE2, "${DIR}${ID2}-${ID1}.out.top") || die;
+open(FILE2, "${DIR}${ID2}-${ID1}.out.top_score") || die;
 while (<FILE2>) {
     chomp;
     my @f = split(/\t/, $_);
-    if (@f != 2) {
+    if (@f != 3) {
         die;
     }
     my $id2 = $f[0];
