@@ -49,10 +49,15 @@ for (my $i=1; $i<@SPECIES; $i++) {
     read_bbh($SPECIES[$i], "$SPECIES[0]-$SPECIES[$i].bbh");
 }
 
+my $UNDEF_LINES = "";
 my @PROT = keys %ORTH;
+open(PIPE, "|sort -n") || die "$!";
 for my $prot (sort @PROT) {
     print_matrix($prot);
 }
+close(PIPE);
+
+print $UNDEF_LINES;
 
 ################################################################################
 ### Function ###################################################################
@@ -73,18 +78,23 @@ sub get_gene_id {
 sub print_matrix {
     my ($prot) = @_;
 
-    print get_gene_id($prot);
-    print "\t";
-    print "$prot";
+    my $geneid = get_gene_id($prot);
+    my $line = "$geneid\t$prot";
     for (my $i=1; $i<@SPECIES; $i++) {
         my @hit = keys %{$ORTH{$prot}{$SPECIES[$i]}};
         if (@hit) {
-            print "\t", join(",", @hit);
+            $line .= "\t". join(",", @hit);
         } else {
-            print "\t0";
+            $line .= "\t0";
         }
     }
-    print "\n";
+    $line .= "\n";
+
+    if ($geneid) {
+        print PIPE $line;
+    } else {
+        $UNDEF_LINES .= $line;
+    }
 }
 
 sub read_bbh {
