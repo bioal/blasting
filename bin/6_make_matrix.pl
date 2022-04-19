@@ -14,27 +14,27 @@ if (@ARGV != 1) {
     print STDERR $USAGE;
     exit 1;
 }
-my ($LIST) = @ARGV;
+my ($SPECIES_LIST) = @ARGV;
 
 my @SPECIES = ();
-open(LIST, "$LIST") || die "$!";
-while (<LIST>) {
+open(SPECIES_LIST, "$SPECIES_LIST") || die "$!";
+while (<SPECIES_LIST>) {
     chomp;
     my ($id, $taxid) = split("\t", $_);
     if ($id =~ /^\d+$/) {
         push @SPECIES, $id;
     }    
 }
-close(LIST);
+close(SPECIES_LIST);
 
 my %ORTH = ();
 for (my $i=1; $i<@SPECIES; $i++) {
     read_bbh($SPECIES[$i], "$SPECIES[0]-$SPECIES[$i].bbh");
 }
 
-my @GENE = keys %ORTH;
-for my $gene (sort @GENE) {
-    print_matrix($gene);
+my @PROT = keys %ORTH;
+for my $prot (sort @PROT) {
+    print_matrix($prot);
 }
 
 ################################################################################
@@ -42,13 +42,13 @@ for my $gene (sort @GENE) {
 ################################################################################
 
 sub print_matrix {
-    my ($geneid) = @_;
+    my ($prot) = @_;
 
-    print "$geneid";
+    print "$prot";
     for (my $i=1; $i<@SPECIES; $i++) {
-        my @gene = keys %{$ORTH{$geneid}{$SPECIES[$i]}};
-        if (@gene) {
-            print "\t", join(",", @gene);
+        my @hit = keys %{$ORTH{$prot}{$SPECIES[$i]}};
+        if (@hit) {
+            print "\t", join(",", @hit);
         } else {
             print "\t0";
         }
@@ -57,7 +57,7 @@ sub print_matrix {
 }
 
 sub read_bbh {
-    my ($id, $file) = @_;
+    my ($org, $file) = @_;
 
     open(FILE, "$file") || die "$!";
     while (<FILE>) {
@@ -66,8 +66,8 @@ sub read_bbh {
         if (@f != 2) {
             die;
         }
-        my ($geneid1, $geneid2) = @f;
-        $ORTH{$geneid1}{$id}{$geneid2} = 1;
+        my ($prot1, $prot2) = @f;
+        $ORTH{$prot1}{$org}{$prot2} = 1;
     }
     close(FILE);
 }
