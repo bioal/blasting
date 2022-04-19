@@ -4,17 +4,17 @@ use File::Basename;
 use Getopt::Std;
 my $PROGRAM = basename $0;
 my $USAGE=
-"Usage: $PROGRAM SPECIES_LIST
+"Usage: $PROGRAM SPECIES_LIST GENE_REFSEQ
 ";
 
 my %OPT;
 getopts('', \%OPT);
 
-if (@ARGV != 1) {
+if (@ARGV != 2) {
     print STDERR $USAGE;
     exit 1;
 }
-my ($SPECIES_LIST) = @ARGV;
+my ($SPECIES_LIST, $GENE_REFSEQ) = @ARGV;
 
 my @SPECIES = ();
 open(SPECIES_LIST, "$SPECIES_LIST") || die "$!";
@@ -26,6 +26,18 @@ while (<SPECIES_LIST>) {
     }    
 }
 close(SPECIES_LIST);
+
+my %GET_GENE_ID = ();
+open(GENE_REFSEQ, "$GENE_REFSEQ") || die "$!";
+while (<GENE_REFSEQ>) {
+    chomp;
+    my @f = split(/\t/, $_);
+    my $geneid = $f[0];
+    my $refseq_id = $f[1];
+    $refseq_id =~ s/\.\d+//;
+    $GET_GENE_ID{$refseq_id} = $geneid;
+}
+close(GENE_REFSEQ);
 
 my %ORTH = ();
 for (my $i=1; $i<@SPECIES; $i++) {
@@ -41,9 +53,23 @@ for my $prot (sort @PROT) {
 ### Function ###################################################################
 ################################################################################
 
+sub get_gene_id {
+    my ($refseq_id) = @_;
+
+    my $geneid = "0";
+    $refseq_id =~ s/\.\d+//;
+    if ($GET_GENE_ID{$refseq_id}) {
+        $geneid = $GET_GENE_ID{$refseq_id};
+    }
+
+    return $geneid;
+}
+
 sub print_matrix {
     my ($prot) = @_;
 
+    print get_gene_id($prot);
+    print "\t";
     print "$prot";
     for (my $i=1; $i<@SPECIES; $i++) {
         my @hit = keys %{$ORTH{$prot}{$SPECIES[$i]}};
