@@ -4,17 +4,26 @@ use File::Basename;
 use Getopt::Std;
 my $PROGRAM = basename $0;
 my $USAGE=
-"Usage: $PROGRAM
+"Usage: $PROGRAM ID
 ";
 
 my %OPT;
 getopts('', \%OPT);
 
+if (@ARGV != 1) {
+    print STDERR $USAGE;
+    exit 1;
+}
+my ($ID) = @ARGV;
+
 my %THRESHOLD = ();
 
-for (my $i=2; $i<=21; $i++) {
-    open_file("1-${i}.out.top_score");
+for (my $i=1; $i<=21; $i++) {
+    if ($i ne $ID) {
+        open_file("${ID}-${i}.out.top_score");
+    }
 }
+
 
 for my $key (keys(%THRESHOLD)) {
     print $key, "\t", $THRESHOLD{$key}, "\n";
