@@ -18,13 +18,18 @@ my ($SPECIES_LIST, $GENE_REFSEQ) = @ARGV;
 
 my @SPECIES = ();
 open(SPECIES_LIST, "$SPECIES_LIST") || die "$!";
+print "geneid";
 while (<SPECIES_LIST>) {
     chomp;
-    my ($id, $taxid) = split("\t", $_);
-    if ($id =~ /^\d+$/) {
+    my @f = split("\t", $_);
+    if ($f[0] =~ /^\d+$/) {
+        my $id = $f[0];
+        my $common_name = $f[3];
         push @SPECIES, $id;
+        print "\t$id $common_name";
     }    
 }
+print "\n";
 close(SPECIES_LIST);
 
 my %GET_GENE_ID = ();
