@@ -24,7 +24,6 @@ for (my $i=1; $i<=21; $i++) {
     }
 }
 
-
 for my $key (keys(%THRESHOLD)) {
     print $key, "\t", $THRESHOLD{$key}, "\n";
 }
