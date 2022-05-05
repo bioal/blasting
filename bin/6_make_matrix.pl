@@ -8,7 +8,7 @@ my $USAGE=
 ";
 
 my %OPT;
-getopts('', \%OPT);
+getopts('p', \%OPT);
 
 if (@ARGV != 2) {
     print STDERR $USAGE;
@@ -49,6 +49,21 @@ for (my $i=1; $i<@SPECIES; $i++) {
     read_bbh($SPECIES[$i], "$SPECIES[0]-$SPECIES[$i].bbh");
 }
 
+my %PARALOG = ();
+open(PARALOG, "1.paralogs") || die "$!";
+while (<PARALOG>) {
+    chomp;
+    my @f = split(/\t/, $_);
+    if (@f != 2) {
+        die;
+    }
+    my $query = $f[0];
+    my $paralogs = $f[1];
+    $PARALOG{$query} = $paralogs;
+}
+close(PARALOG);
+
+### Print matrix
 my $UNDEF_LINES = "";
 my @PROT = keys %ORTH;
 open(PIPE, "|sort -n") || die "$!";
@@ -80,6 +95,10 @@ sub print_matrix {
 
     my $geneid = get_gene_id($prot);
     my $line = "$geneid\t$prot";
+    if ($OPT{p}) {
+        my $paralogs = $PARALOG{$prot} || "";
+        $line .= "($paralogs)";
+    }
     for (my $i=1; $i<@SPECIES; $i++) {
         my @hit = keys %{$ORTH{$prot}{$SPECIES[$i]}};
         if (@hit) {
