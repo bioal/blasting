@@ -28,7 +28,16 @@ Python3 should be installed.
 #### For specific pairs
     3_blast_pair.py -n CPU_CORES [-p path/to/blastp] [-o OUT_DIR] GENOME_LIST
 
-    4_make_matrix.py -i INPUT_DIR -o OUT_DIR GENOME_LIST
+### Summarize results
+    cd blast.out
+    ../bin/4_extract_top_score.py *out -n 90
+    for i in {1..21}; do ../bin/perl/extract_threshold.pl $i > $i.threshold; done &
+    for i in {1..21}; do ../bin/perl/extract_paralogs.pl $i-$i.out $i.threshold > $i-$i.paralog_score & done
+    for i in {1..21}; do c $i-$i.paralog_score l ../bin/perl/summarize_paralog.pl > $i.paralogs & done
+    cd ..
+    5_extract_bbh_org.py input/genomes_downloaded.tsv -i blast.out -o blast.out -n 50
+    cd blast.out
+    ../bin/6_make_matrix.pl ../homologene_species.tsv ../input/gene_refseq.human > ../blast.out.mat &
 
 ## Examples
 ### Using NCBI genomes
