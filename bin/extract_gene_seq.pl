@@ -17,11 +17,12 @@ if (!@ARGV) {
 my ($GENE) = @ARGV;
 
 my $SPECIES_TABLE = $OPT{d} || die $USAGE;
-my %SEQ_FILE = ();
+my @SEQ_FILE = ();
 my %SEQ_REFSEQ = ();
 read_species_table($SPECIES_TABLE);
 
 my %REFSEQ = ();
+my %SEQ = ();
 STDOUT->autoflush;
 while (<STDIN>) {
     chomp;
@@ -37,12 +38,24 @@ while (<STDIN>) {
 }
 
 for my $seq (keys %SEQ_REFSEQ) {
-    # print "$seq\n";
     extract_gene_seq($seq);
-    # for my $refseq (keys %{$SEQ_REFSEQ{$seq}}) {
-        # print "$refseq\n";
-    # }
 }
+
+# for my $seq (keys %SEQ_REFSEQ) {
+#     for my $refseq (keys %{$SEQ_REFSEQ{$seq}}) {
+#         print $SEQ{$refseq};
+#     }
+# }
+
+for (my $i=1; $i<=21; $i++) {
+    if ($REFSEQ{$i}) {
+        for my $refseq (@{$REFSEQ{$i}}) {
+            print STDERR "$i $refseq\n";
+            print $SEQ{$refseq};
+        }
+    }
+}
+
 
 ################################################################################
 ### Function ###################################################################
@@ -52,19 +65,24 @@ sub extract_gene_seq {
     my ($seq) = @_;
 
     open(SEQ, "$seq") || die "$!";
-    my $flg = 0;
+    my $flg = "";
     while (<SEQ>) {
         chomp;
         if (/^>(\S+)/) {
             my $id = $1;
             if ($SEQ_REFSEQ{$seq}{$id}) {
-                $flg = 1;
+                $flg = $id;
             } else {
-                $flg = 0;
+                $flg = "";
             }
         }
         if ($flg) {
-            print $_, "\n";
+            # print $_, "\n";
+            if ($SEQ{$flg}) {
+                $SEQ{$flg} .= $_ . "\n";
+            } else {
+                $SEQ{$flg} = $_ . "\n";
+            }
         }
     }
     close(SEQ);    
@@ -81,7 +99,7 @@ sub read_species_table {
         }
         my $species_id = $f[0];
         my $seq_file = $f[1];
-        $SEQ_FILE{$species_id} = $seq_file;
+        $SEQ_FILE[$species_id] = $seq_file;
     }
     close(SPECIES_TABLE);
 }
@@ -89,10 +107,14 @@ sub read_species_table {
 sub save_refseq {
     my ($cell, $species_id) = @_;
 
-    my $seq_file = $SEQ_FILE{$species_id};
+    my $seq_file = $SEQ_FILE[$species_id];
     my @refseq = split(",", $cell);
     for my $refseq (@refseq) {
-        $REFSEQ{$refseq} = $seq_file;
+        if ($REFSEQ{$species_id}) {
+            push @{$REFSEQ{$species_id}}, $refseq;
+        } else {
+            $REFSEQ{$species_id} = [$refseq];
+        }
         $SEQ_REFSEQ{$seq_file}{$refseq} = 1;
     }
 }
