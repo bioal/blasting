@@ -34,7 +34,7 @@ cd blast.out
 4_extract_top_score.py *out -n 90
 for i in {1..21}; do ../bin/perl/extract_threshold.pl $i > $i.threshold; done &
 for i in {1..21}; do ../bin/perl/extract_paralogs.pl $i-$i.out $i.threshold > $i-$i.paralog_score & done
-for i in {1..21}; do c $i-$i.paralog_score l ../bin/perl/summarize_paralog.pl > $i.paralogs & done
+for i in {1..21}; do c $i-$i.paralog_score | ../bin/perl/summarize_paralog.pl > $i.paralogs & done
 cd ..
 ```
 
