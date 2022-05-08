@@ -49,7 +49,7 @@ for my $seq (keys %SEQ_REFSEQ) {
 
 for (my $i=1; $i<=21; $i++) {
     if ($REFSEQ{$i}) {
-        for my $refseq (@{$REFSEQ{$i}}) {
+        for my $refseq (keys %{$REFSEQ{$i}}) {
             print STDERR "$i $refseq\n";
             print $SEQ{$refseq};
         }
@@ -110,11 +110,7 @@ sub save_refseq {
     my $seq_file = $SEQ_FILE[$species_id];
     my @refseq = split(",", $cell);
     for my $refseq (@refseq) {
-        if ($REFSEQ{$species_id}) {
-            push @{$REFSEQ{$species_id}}, $refseq;
-        } else {
-            $REFSEQ{$species_id} = [$refseq];
-        }
+        $REFSEQ{$species_id}{$refseq} = 1;
         $SEQ_REFSEQ{$seq_file}{$refseq} = 1;
     }
 }
