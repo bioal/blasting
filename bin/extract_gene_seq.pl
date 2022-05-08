@@ -44,7 +44,7 @@ for my $seq (keys %SEQ_REFSEQ) {
 for (my $i=1; $i<=21; $i++) {
     if ($REFSEQ{$i}) {
         for my $refseq (keys %{$REFSEQ{$i}}) {
-            print STDERR "$i $refseq\n";
+            # print STDERR "$i $refseq\n";
             print $SEQ{$refseq};
         }
     }
