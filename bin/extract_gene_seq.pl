@@ -41,12 +41,6 @@ for my $seq (keys %SEQ_REFSEQ) {
     extract_gene_seq($seq);
 }
 
-# for my $seq (keys %SEQ_REFSEQ) {
-#     for my $refseq (keys %{$SEQ_REFSEQ{$seq}}) {
-#         print $SEQ{$refseq};
-#     }
-# }
-
 for (my $i=1; $i<=21; $i++) {
     if ($REFSEQ{$i}) {
         for my $refseq (keys %{$REFSEQ{$i}}) {
@@ -77,7 +71,6 @@ sub extract_gene_seq {
             }
         }
         if ($flg) {
-            # print $_, "\n";
             if ($SEQ{$flg}) {
                 $SEQ{$flg} .= $_ . "\n";
             } else {
