@@ -59,22 +59,22 @@ sub extract_gene_seq {
     my ($seq) = @_;
 
     open(SEQ, "$seq") || die "$!";
-    my $flg = "";
+    my $reading = "";
     while (<SEQ>) {
         chomp;
         if (/^>(\S+)/) {
             my $id = $1;
             if ($SEQ_REFSEQ{$seq}{$id}) {
-                $flg = $id;
+                $reading = $id;
             } else {
-                $flg = "";
+                $reading = "";
             }
         }
-        if ($flg) {
-            if ($SEQ{$flg}) {
-                $SEQ{$flg} .= $_ . "\n";
+        if ($reading) {
+            if ($SEQ{$reading}) {
+                $SEQ{$reading} .= $_ . "\n";
             } else {
-                $SEQ{$flg} = $_ . "\n";
+                $SEQ{$reading} = $_ . "\n";
             }
         }
     }
