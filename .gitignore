@@ -1,5 +1,2 @@
 /lib/
-/input*
-/data*/
-/blast*
 __pycache__/
