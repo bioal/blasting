@@ -16,7 +16,7 @@ Python3 should be installed.
 ```
 1_download_genomes.py [-o OUT_DIR] homologene_species.tsv
 ```
-default OUT_DIR is data
+* The default `OUT_DIR` is `data`.
 
 ```
 2_process_genomes.py [-p path/to/makeblastdb] data/genomes_downloaded.tsv
@@ -28,7 +28,7 @@ default OUT_DIR is data
 3_blast_all_vs_all.py [-p path/to/blastp] [-o OUT_DIR] -n 45 data/genomes_downloaded.tsv > blast.queue 2> blast.err &
 3_blast_time.sh [-o OUT_DIR] > blast.time
 ```
-default OUT_DIR is blast.out
+* The default `OUT_DIR` is `blast.out`.
 
 ### Summarize results
 
