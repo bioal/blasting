@@ -49,6 +49,7 @@ for my $seq1 (keys %SCORE_SUM) {
 
 for my $seq1 (keys %SCORE) {
     for my $seq2 (keys %{$SCORE{$seq1}}) {
+        print_seq_ids($seq1, $seq2);
         print_scores($seq1, $seq2, @{$SCORE{$seq1}{$seq2}});
     }
 }
@@ -60,16 +61,12 @@ for my $seq1 (keys %SCORE) {
 sub print_scores {
     my ($seq1, $seq2, @score) = @_;
     
-    my $n_score = @score;
-
-    print_seq_ids($seq1, $seq2);
     if ($OPT{v}) {
-        print "\t@score\t";
-        print "$n_score\t";
+        print "@score\t";
     }
-    if ($n_score == 1) {
+    if (@score == 1) {
         print $score[0];
-    } elsif ($n_score == 2) {
+    } elsif (@score == 2) {
         print(($score[0] + $score[1]) / 2);
     } else {
         die;
@@ -85,17 +82,17 @@ sub print_seq_ids {
     if ($org1 == 1 && $org2 == 1) {
         print "$org2\t";
         if ($OPT{v}) {
-            print "$seq1\t$seq2";
+            print "$seq1\t$seq2\t";
         }
     } elsif ($org1 == 1) {
         print "$org2\t";
         if ($OPT{v}) {
-            print "$seq1\t$seq2";
+            print "$seq1\t$seq2\t";
         }
     } elsif ($org2 == 1) {
         print "$org1\t";
         if ($OPT{v}) {
-            print "$seq2\t$seq1";
+            print "$seq2\t$seq1\t";
         }
     } else {
         die "$org1 $org2";
