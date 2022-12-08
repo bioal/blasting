@@ -61,22 +61,9 @@ sub print_scores {
     my ($seq1, $seq2, @score) = @_;
     
     my $n_score = @score;
-    my $org1 = $ORGANISM{$seq1};
-    my $org2 = $ORGANISM{$seq2};
-    my $org = 0;
-    if ($org1 == 1 && $org2 == 1) {
-        $org = 1;
-    } elsif ($org1 == 1) {
-        $org = $org2;
-    } elsif ($org2 == 1) {
-        $org = $org1;
-    } else {
-        die "$org1 $org2";
-    }
 
-    print $org, "\t";
+    print_seq_ids($seq1, $seq2);
     if ($OPT{v}) {
-        print_seq_ids($org1, $org2, $seq1, $seq2);
         print "\t@score\t";
         print "$n_score\t";
     }
@@ -91,9 +78,28 @@ sub print_scores {
 }
 
 sub print_seq_ids {
-    my ($org1, $org2, $seq1, $seq2) = @_;
+    my ($seq1, $seq2) = @_;
+    my $org1 = $ORGANISM{$seq1};
+    my $org2 = $ORGANISM{$seq2};
     
-    print "$org1\t$org2\t$seq1\t$seq2";
+    if ($org1 == 1 && $org2 == 1) {
+        print "$org2\t";
+        if ($OPT{v}) {
+            print "$seq1\t$seq2";
+        }
+    } elsif ($org1 == 1) {
+        print "$org2\t";
+        if ($OPT{v}) {
+            print "$seq1\t$seq2";
+        }
+    } elsif ($org2 == 1) {
+        print "$org1\t";
+        if ($OPT{v}) {
+            print "$seq2\t$seq1";
+        }
+    } else {
+        die "$org1 $org2";
+    }
 }
 
 sub score_sum {
