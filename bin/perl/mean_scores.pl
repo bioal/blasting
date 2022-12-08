@@ -10,8 +10,8 @@ my $USAGE=
 my %OPT;
 getopts('v', \%OPT);
 
-my %SCORE_SUM = ();
 my %SCORE = ();
+my %SCORES = ();
 my %ORGANISM = ();
 while (<>) {
     chomp;
@@ -38,19 +38,19 @@ while (<>) {
     }    
 }
 
-for my $seq1 (keys %SCORE_SUM) {
-    for my $seq2 (keys %{$SCORE_SUM{$seq1}}) {
+for my $seq1 (keys %SCORE) {
+    for my $seq2 (keys %{$SCORE{$seq1}}) {
         # print "$seq1\t$seq2\t";
-        # print $SCORE_SUM{$seq1}{$seq2};
+        # print $SCORE{$seq1}{$seq2};
         # print "\n";
-        save_score($seq1, $seq2, $SCORE_SUM{$seq1}{$seq2});
+        save_score($seq1, $seq2, $SCORE{$seq1}{$seq2});
     }
 }
 
-for my $seq1 (keys %SCORE) {
-    for my $seq2 (keys %{$SCORE{$seq1}}) {
+for my $seq1 (keys %SCORES) {
+    for my $seq2 (keys %{$SCORES{$seq1}}) {
         print_seq_ids($seq1, $seq2);
-        print_scores($seq1, $seq2, @{$SCORE{$seq1}{$seq2}});
+        print_scores($seq1, $seq2, @{$SCORES{$seq1}{$seq2}});
     }
 }
 
@@ -102,19 +102,19 @@ sub print_seq_ids {
 sub score_sum {
     my ($seq1, $seq2, $score) = @_;
 
-    # if ($SCORE_SUM{$seq1}{$seq2}) {
-    #     $SCORE_SUM{$seq1}{$seq2} += $score;
+    # if ($SCORE{$seq1}{$seq2}) {
+    #     $SCORE{$seq1}{$seq2} += $score;
     # } else {
-    #     $SCORE_SUM{$seq1}{$seq2} = $score;
+    #     $SCORE{$seq1}{$seq2} = $score;
     # }
 
-    if ($SCORE_SUM{$seq1}{$seq2}) {
-        if ($score > $SCORE_SUM{$seq1}{$seq2}) {
+    if ($SCORE{$seq1}{$seq2}) {
+        if ($score > $SCORE{$seq1}{$seq2}) {
             print STDERR "$score\n";
-            $SCORE_SUM{$seq1}{$seq2} = $score;
+            $SCORE{$seq1}{$seq2} = $score;
         }
     } else {
-        $SCORE_SUM{$seq1}{$seq2} = $score;
+        $SCORE{$seq1}{$seq2} = $score;
     }
 }
 
@@ -132,9 +132,9 @@ sub save_score {
 sub save_score_sub {
     my ($seq1, $seq2, $score) = @_;
     
-    if ($SCORE{$seq1}{$seq2}) {
-        push @{$SCORE{$seq1}{$seq2}}, $score;
+    if ($SCORES{$seq1}{$seq2}) {
+        push @{$SCORES{$seq1}{$seq2}}, $score;
     } else {
-        $SCORE{$seq1}{$seq2} = [$score];
+        $SCORES{$seq1}{$seq2} = [$score];
     }
 }
