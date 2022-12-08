@@ -49,41 +49,52 @@ for my $seq1 (keys %SCORE_SUM) {
 
 for my $seq1 (keys %SCORE) {
     for my $seq2 (keys %{$SCORE{$seq1}}) {
-        my @score = @{$SCORE{$seq1}{$seq2}};
-        my $n_score = @score;
-        my $org1 = $ORGANISM{$seq1};
-        my $org2 = $ORGANISM{$seq2};
-        my $org = 0;
-        if ($org1 == 1 && $org2 == 1) {
-            $org = 1;
-        } elsif ($org1 == 1) {
-            $org = $org2;
-        } elsif ($org2 == 1) {
-            $org = $org1;
-        } else {
-            die "$org1 $org2";
-        }
-        print $org, "\t";
-        if ($OPT{v}) {
-            print $org1, "\t";
-            print $org2, "\t";
-            print "$seq1\t$seq2\t@score\t";
-            print "$n_score\t";
-        }
-        if ($n_score == 1) {
-            print $score[0];
-        } elsif ($n_score == 2) {
-            print(($score[0] + $score[1]) / 2);
-        } else {
-            die;
-        }
-        print "\n";
+        print_scores($seq1, $seq2, @{$SCORE{$seq1}{$seq2}});
     }
 }
 
 ################################################################################
 ### Function ###################################################################
 ################################################################################
+
+sub print_scores {
+    my ($seq1, $seq2, @score) = @_;
+    
+    my $n_score = @score;
+    my $org1 = $ORGANISM{$seq1};
+    my $org2 = $ORGANISM{$seq2};
+    my $org = 0;
+    if ($org1 == 1 && $org2 == 1) {
+        $org = 1;
+    } elsif ($org1 == 1) {
+        $org = $org2;
+    } elsif ($org2 == 1) {
+        $org = $org1;
+    } else {
+        die "$org1 $org2";
+    }
+
+    print $org, "\t";
+    if ($OPT{v}) {
+        print_seq_ids($org1, $org2, $seq1, $seq2);
+        print "\t@score\t";
+        print "$n_score\t";
+    }
+    if ($n_score == 1) {
+        print $score[0];
+    } elsif ($n_score == 2) {
+        print(($score[0] + $score[1]) / 2);
+    } else {
+        die;
+    }
+    print "\n";
+}
+
+sub print_seq_ids {
+    my ($org1, $org2, $seq1, $seq2) = @_;
+    
+    print "$org1\t$org2\t$seq1\t$seq2";
+}
 
 sub score_sum {
     my ($seq1, $seq2, $score) = @_;
