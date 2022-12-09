@@ -4,11 +4,29 @@ use File::Basename;
 use Getopt::Std;
 my $PROGRAM = basename $0;
 my $USAGE=
-"Usage: $PROGRAM
+"Usage: $PROGRAM SYMBOL.out blast.out
+-v: verbose
+-t top_score_to_human
 ";
 
 my %OPT;
-getopts('v', \%OPT);
+getopts('vt:', \%OPT);
+
+my %TOP = ();
+my %TOP_SCORE = ();
+if ($OPT{t}) {
+    open(TOP, "$OPT{t}") || die "$!";
+    while (<TOP>) {
+        chomp;
+        my @f = split(/\t/, $_);
+        my $query = $f[0];
+        my $hit = $f[1];
+        my $score = $f[2];
+        $TOP{$query}{$hit} = 1;
+        $TOP_SCORE{$query} = $score;
+    }
+    close(TOP);
+}
 
 if (!@ARGV) {
     print STDERR $USAGE;
@@ -100,6 +118,8 @@ for my $seq1 (keys %SCORES) {
     for my $seq2 (keys %{$SCORES{$seq1}}) {
         my $org1 = $ORGANISM{$seq1};
         my $org2 = $ORGANISM{$seq2};
+        my @top_hit;
+        my $top_score = "";
         if ($org1 == 1 && $org2 == 1) {
             print PIPE "$org2\t";
             if ($OPT{v}) {
@@ -107,11 +127,23 @@ for my $seq1 (keys %SCORES) {
             }
         } elsif ($org1 == 1) {
             print PIPE "$org2\t";
+            @top_hit = keys %{$TOP{$seq2}};
+            if ($TOP_SCORE{$seq2}) {
+                $top_score = $TOP_SCORE{$seq2};
+            } else {
+                print STDERR "no top hit for $seq2\n";
+            }
             if ($OPT{v}) {
                 print PIPE "$seq1\t$seq2\t";
             }
         } elsif ($org2 == 1) {
             print PIPE "$org1\t";
+            @top_hit = keys %{$TOP{$seq1}};
+            if ($TOP_SCORE{$seq1}) {
+                $top_score = $TOP_SCORE{$seq1};
+            } else {
+                print STDERR "no top hit for $seq1\n";
+            }
             if ($OPT{v}) {
                 print PIPE "$seq2\t$seq1\t";
             }
@@ -119,7 +151,14 @@ for my $seq1 (keys %SCORES) {
             die "$org1 $org2";
         }
 
-        print_scores($seq1, $seq2, @{$SCORES{$seq1}{$seq2}});
+        my $mean_score = print_scores(@{$SCORES{$seq1}{$seq2}});
+
+        my $bbh = 0;
+        for my $hit (@top_hit) {
+            if ($SEED{$hit}) {
+                $bbh = 1;
+            }
+        }
 
         if ($OPT{v}) {
             my $descr = "";
@@ -134,6 +173,17 @@ for my $seq1 (keys %SCORES) {
             }
             print PIPE "\t", $descr;
         }
+
+        my $ratio = "";
+        if ($top_score) {
+            $ratio = sprintf("%.3f", $mean_score / $top_score);
+        }
+        print PIPE "\t$bbh";
+        if ($OPT{v}) {
+            print PIPE "\t$top_score";
+            print PIPE "\t$ratio";
+            print PIPE "\t@top_hit";
+        }
         print PIPE "\n";
     }
 }
@@ -144,15 +194,17 @@ close(PIPE);
 ################################################################################
 
 sub print_scores {
-    my ($seq1, $seq2, @score) = @_;
+    my (@score) = @_;
     
     if ($OPT{v}) {
         print PIPE "@score\t";
     }
     if (@score == 1) {
         print PIPE $score[0];
+        return $score[0]
     } elsif (@score == 2) {
         print PIPE ($score[0] + $score[1]) / 2;
+        return(($score[0] + $score[1]) / 2);
     } else {
         die;
     }
