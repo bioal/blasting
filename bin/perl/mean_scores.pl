@@ -14,16 +14,17 @@ if (!@ARGV) {
     print STDERR $USAGE;
     exit 1;
 }
-my ($FILE) = @ARGV;
-$FILE =~ s/\.out$//;
+my ($FILE, $ALL) = @ARGV;
+my $SYMBOL = $FILE;
+$SYMBOL =~ s/\.out$//;
 
 my %SEED = ();
-open(FILE, "/home/chiba/github/bioal/blasting/examples/13_genes.refseq.tsv") || die "$!";
-while (<FILE>) {
+open(REF, "/home/chiba/github/bioal/blasting/examples/13_genes.refseq.tsv") || die "$!";
+while (<REF>) {
     chomp;
     my @f = split(/\t/, $_);
     my $symbol = $f[2];
-    if ($symbol eq $FILE) {
+    if ($symbol eq $SYMBOL) {
         my $refseq_ids = $f[4];
         my @refseq_id = split(",", $refseq_ids);
         for my $refseq_id (@refseq_id) {
@@ -31,13 +32,29 @@ while (<FILE>) {
         }
     }
 }
-close(FILE);
+close(REF);
+
+my %DESCR = ();
+if ($ALL) {
+    open(ALL, "$ALL") || die "$!";
+    while (<ALL>) {
+        chomp;
+        my @f = split(/\t/, $_);
+        my $descr = $f[14];
+        if (/^1-1.out:(\S+)\s+(\S+)/) {
+        } elsif (/^1-(\d+).out:(\S+)\s+(\S+)/) {
+            my ($organism, $query, $target) = ($1, $2, $3);
+            $DESCR{$target} = $descr;
+        }
+    }
+    close(ALL);
+}
 
 my %SCORE = ();
 my %SCORES = ();
 my %ORGANISM = ();
-my %DESCR = ();
-while (<>) {
+open(FILE, "$FILE") || die "$!";
+while (<FILE>) {
     chomp;
     my @f = split(/\t/, $_);
     my $score = $f[11];
@@ -66,6 +83,7 @@ while (<>) {
         $ORGANISM{$target} = 1;
     }    
 }
+close(FILE);
 
 for my $seq1 (keys %SCORE) {
     for my $seq2 (keys %{$SCORE{$seq1}}) {
@@ -73,7 +91,11 @@ for my $seq1 (keys %SCORE) {
     }
 }
 
-open(PIPE, "|sort -t '\t' -k5,5nr -k1,1n") || die "$!";
+if ($OPT{v}) {
+    open(PIPE, "|sort -t '\t' -k5,5nr -k1,1n") || die "$!";
+} else {
+    open(PIPE, "|sort -t '\t' -k2,2nr -k1,1n") || die "$!";
+}
 for my $seq1 (keys %SCORES) {
     for my $seq2 (keys %{$SCORES{$seq1}}) {
         my $org1 = $ORGANISM{$seq1};
