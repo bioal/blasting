@@ -13,10 +13,12 @@ getopts('v', \%OPT);
 my %SCORE = ();
 my %SCORES = ();
 my %ORGANISM = ();
+my %DESCR = ();
 while (<>) {
     chomp;
     my @f = split(/\t/, $_);
     my $score = $f[11];
+    my $descr = $f[14];
     if (/^1-1.out:(\S+)\s+(\S+)/) {
         my ($query, $target) = ($1, $2);
         save_score($query, $target, $score);
@@ -27,6 +29,7 @@ while (<>) {
         save_score($query, $target, $score);
         $ORGANISM{$query} = 1;
         $ORGANISM{$target} = $organism;
+        $DESCR{$target} = $descr;
     } elsif (/^(\d+)-1.out:(\S+)\s+(\S+)/) {
         my ($organism, $query, $target) = ($1, $2, $3);
         save_score($query, $target, $score);
@@ -43,8 +46,40 @@ for my $seq1 (keys %SCORE) {
 
 for my $seq1 (keys %SCORES) {
     for my $seq2 (keys %{$SCORES{$seq1}}) {
-        print_seq_ids($seq1, $seq2);
+        my $org1 = $ORGANISM{$seq1};
+        my $org2 = $ORGANISM{$seq2};
+        my $descr = "";
+        if ($org1 == 1 && $org2 == 1) {
+            print "$org2\t";
+            if ($OPT{v}) {
+                print "$seq1\t$seq2\t";
+            }
+        } elsif ($org1 == 1) {
+            print "$org2\t";
+            if ($DESCR{$seq2}) {
+                $descr = $DESCR{$seq2};
+            }
+            if ($OPT{v}) {
+                print "$seq1\t$seq2\t";
+            }
+        } elsif ($org2 == 1) {
+            print "$org1\t";
+            if ($DESCR{$seq1}) {
+                $descr = $DESCR{$seq1};
+            }
+            if ($OPT{v}) {
+                print "$seq2\t$seq1\t";
+            }
+        } else {
+            die "$org1 $org2";
+        }
+
         print_scores($seq1, $seq2, @{$SCORES{$seq1}{$seq2}});
+
+        if ($OPT{v}) {
+            print "\t", $descr;
+        }
+        print "\n";
     }
 }
 
@@ -64,32 +99,6 @@ sub print_scores {
         print(($score[0] + $score[1]) / 2);
     } else {
         die;
-    }
-    print "\n";
-}
-
-sub print_seq_ids {
-    my ($seq1, $seq2) = @_;
-    my $org1 = $ORGANISM{$seq1};
-    my $org2 = $ORGANISM{$seq2};
-    
-    if ($org1 == 1 && $org2 == 1) {
-        print "$org2\t";
-        if ($OPT{v}) {
-            print "$seq1\t$seq2\t";
-        }
-    } elsif ($org1 == 1) {
-        print "$org2\t";
-        if ($OPT{v}) {
-            print "$seq1\t$seq2\t";
-        }
-    } elsif ($org2 == 1) {
-        print "$org1\t";
-        if ($OPT{v}) {
-            print "$seq2\t$seq1\t";
-        }
-    } else {
-        die "$org1 $org2";
     }
 }
 
