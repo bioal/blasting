@@ -44,31 +44,32 @@ for my $seq1 (keys %SCORE) {
     }
 }
 
+open(PIPE, "|sort -t '\t' -k1,1n -k5,5nr") || die "$!";
 for my $seq1 (keys %SCORES) {
     for my $seq2 (keys %{$SCORES{$seq1}}) {
         my $org1 = $ORGANISM{$seq1};
         my $org2 = $ORGANISM{$seq2};
         my $descr = "";
         if ($org1 == 1 && $org2 == 1) {
-            print "$org2\t";
+            print PIPE "$org2\t";
             if ($OPT{v}) {
-                print "$seq1\t$seq2\t";
+                print PIPE "$seq1\t$seq2\t";
             }
         } elsif ($org1 == 1) {
-            print "$org2\t";
+            print PIPE "$org2\t";
             if ($DESCR{$seq2}) {
                 $descr = $DESCR{$seq2};
             }
             if ($OPT{v}) {
-                print "$seq1\t$seq2\t";
+                print PIPE "$seq1\t$seq2\t";
             }
         } elsif ($org2 == 1) {
-            print "$org1\t";
+            print PIPE "$org1\t";
             if ($DESCR{$seq1}) {
                 $descr = $DESCR{$seq1};
             }
             if ($OPT{v}) {
-                print "$seq2\t$seq1\t";
+                print PIPE "$seq2\t$seq1\t";
             }
         } else {
             die "$org1 $org2";
@@ -77,11 +78,12 @@ for my $seq1 (keys %SCORES) {
         print_scores($seq1, $seq2, @{$SCORES{$seq1}{$seq2}});
 
         if ($OPT{v}) {
-            print "\t", $descr;
+            print PIPE "\t", $descr;
         }
-        print "\n";
+        print PIPE "\n";
     }
 }
+close(PIPE);
 
 ################################################################################
 ### Function ###################################################################
@@ -91,12 +93,12 @@ sub print_scores {
     my ($seq1, $seq2, @score) = @_;
     
     if ($OPT{v}) {
-        print "@score\t";
+        print PIPE "@score\t";
     }
     if (@score == 1) {
-        print $score[0];
+        print PIPE $score[0];
     } elsif (@score == 2) {
-        print(($score[0] + $score[1]) / 2);
+        print PIPE ($score[0] + $score[1]) / 2;
     } else {
         die;
     }
