@@ -10,6 +10,29 @@ my $USAGE=
 my %OPT;
 getopts('v', \%OPT);
 
+if (!@ARGV) {
+    print STDERR $USAGE;
+    exit 1;
+}
+my ($FILE) = @ARGV;
+$FILE =~ s/\.out$//;
+
+my %SEED = ();
+open(FILE, "/home/chiba/github/bioal/blasting/examples/13_genes.refseq.tsv") || die "$!";
+while (<FILE>) {
+    chomp;
+    my @f = split(/\t/, $_);
+    my $symbol = $f[2];
+    if ($symbol eq $FILE) {
+        my $refseq_ids = $f[4];
+        my @refseq_id = split(",", $refseq_ids);
+        for my $refseq_id (@refseq_id) {
+            $SEED{$refseq_id} = 1;
+        }
+    }
+}
+close(FILE);
+
 my %SCORE = ();
 my %SCORES = ();
 my %ORGANISM = ();
@@ -24,6 +47,12 @@ while (<>) {
         save_score($query, $target, $score);
         $ORGANISM{$query} = 1;
         $ORGANISM{$target} = 1;
+        if (!$SEED{$query}) {
+            $DESCR{$query} = $descr;
+        }
+        if (!$SEED{$target}) {
+            $DESCR{$target} = $descr;
+        }
     } elsif (/^1-(\d+).out:(\S+)\s+(\S+)/) {
         my ($organism, $query, $target) = ($1, $2, $3);
         save_score($query, $target, $score);
@@ -44,12 +73,11 @@ for my $seq1 (keys %SCORE) {
     }
 }
 
-open(PIPE, "|sort -t '\t' -k1,1n -k5,5nr") || die "$!";
+open(PIPE, "|sort -t '\t' -k5,5nr -k1,1n") || die "$!";
 for my $seq1 (keys %SCORES) {
     for my $seq2 (keys %{$SCORES{$seq1}}) {
         my $org1 = $ORGANISM{$seq1};
         my $org2 = $ORGANISM{$seq2};
-        my $descr = "";
         if ($org1 == 1 && $org2 == 1) {
             print PIPE "$org2\t";
             if ($OPT{v}) {
@@ -57,17 +85,11 @@ for my $seq1 (keys %SCORES) {
             }
         } elsif ($org1 == 1) {
             print PIPE "$org2\t";
-            if ($DESCR{$seq2}) {
-                $descr = $DESCR{$seq2};
-            }
             if ($OPT{v}) {
                 print PIPE "$seq1\t$seq2\t";
             }
         } elsif ($org2 == 1) {
             print PIPE "$org1\t";
-            if ($DESCR{$seq1}) {
-                $descr = $DESCR{$seq1};
-            }
             if ($OPT{v}) {
                 print PIPE "$seq2\t$seq1\t";
             }
@@ -78,6 +100,16 @@ for my $seq1 (keys %SCORES) {
         print_scores($seq1, $seq2, @{$SCORES{$seq1}{$seq2}});
 
         if ($OPT{v}) {
+            my $descr = "";
+            if ($DESCR{$seq1} && $DESCR{$seq2}) {
+                die;
+            }
+            if ($DESCR{$seq1}) {
+                $descr = $DESCR{$seq1};
+            }
+            if ($DESCR{$seq2}) {
+                $descr = $DESCR{$seq2};
+            }
             print PIPE "\t", $descr;
         }
         print PIPE "\n";
