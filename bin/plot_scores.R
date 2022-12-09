@@ -5,9 +5,11 @@ y = t$V2
 
 plot(x, y, xlab="", ylab="BLAST score"
      , xlim=c(1,21)
+     # , ylim=c(0,max(y))
      , xaxt = "n"
      )
-
+abline(v=1:21, lty=3, col="gray")
+abline(h=seq(100,1500,by=100), lty=2, col="gray")
 axis(side=1
      , las=2
      , at=c(
