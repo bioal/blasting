@@ -120,8 +120,12 @@ for my $seq1 (keys %SCORES) {
         my $org2 = $ORGANISM{$seq2};
         my @top_hit;
         my $top_score = "";
+        my $bbh = 0;
         if ($org1 == 1 && $org2 == 1) {
             print PIPE "$org2\t";
+            if ($SEED{$seq1} && $SEED{$seq2}) {
+                $bbh = 1;
+            }
             if ($OPT{v}) {
                 print PIPE "$seq1\t$seq2\t";
             }
@@ -131,7 +135,7 @@ for my $seq1 (keys %SCORES) {
             if ($TOP_SCORE{$seq2}) {
                 $top_score = $TOP_SCORE{$seq2};
             } else {
-                print STDERR "no top hit for $seq2\n";
+                print STDERR "no top hit for $org2 $seq2\n";
             }
             if ($OPT{v}) {
                 print PIPE "$seq1\t$seq2\t";
@@ -142,7 +146,7 @@ for my $seq1 (keys %SCORES) {
             if ($TOP_SCORE{$seq1}) {
                 $top_score = $TOP_SCORE{$seq1};
             } else {
-                print STDERR "no top hit for $seq1\n";
+                print STDERR "no top hit for $org1 $seq1\n";
             }
             if ($OPT{v}) {
                 print PIPE "$seq2\t$seq1\t";
@@ -153,7 +157,6 @@ for my $seq1 (keys %SCORES) {
 
         my $mean_score = print_scores(@{$SCORES{$seq1}{$seq2}});
 
-        my $bbh = 0;
         for my $hit (@top_hit) {
             if ($SEED{$hit}) {
                 $bbh = 1;
