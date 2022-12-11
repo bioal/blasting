@@ -127,7 +127,11 @@ for my $seq1 (keys %SCORES) {
                 $bbh = 1;
             }
             if ($OPT{v}) {
-                print PIPE "$seq1\t$seq2\t";
+                if ($SEED{$seq1}) {
+                    print PIPE "$seq1\t$seq2\t";
+                } else {
+                    print PIPE "$seq2\t$seq1\t";
+                }
             }
         } elsif ($org1 == 1) {
             print PIPE "$org2\t";
