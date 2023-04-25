@@ -34,8 +34,10 @@ if (!@ARGV) {
 }
 my ($FILE, $ALL) = @ARGV;
 my $SYMBOL = $FILE;
-if ($SYMBOL =~ s/(\w+)\.out$//) {
+if ($SYMBOL =~ /(\w+)\.out$/) {
     $SYMBOL = $1;
+} else {
+    die;
 }
 
 my %SEED = ();
