@@ -34,10 +34,12 @@ if (!@ARGV) {
 }
 my ($FILE, $ALL) = @ARGV;
 my $SYMBOL = $FILE;
-$SYMBOL =~ s/\.out$//;
+if ($SYMBOL =~ s/(\w+)\.out$//) {
+    $SYMBOL = $1;
+}
 
 my %SEED = ();
-open(REF, "/home/chiba/github/bioal/blasting/examples/13_genes.refseq.tsv") || die "$!";
+open(REF, "/home/chiba/github/bioal/blasting/examples/all_genes.refseq.tsv") || die "$!";
 while (<REF>) {
     chomp;
     my @f = split(/\t/, $_);
