@@ -23,7 +23,8 @@ file_paths = glob.glob('*.out')
 def run_command(file_path):
     # bashコマンドを実行
     file_name, file_ext = os.path.splitext(os.path.basename(file_path))
-    command = f'summarize_scores_with_descr.pl -v -t {top_score_path} -d {dbm_path} {file_path} > {os.path.join(args.outdir, file_name)}.scores.txt'
+    out_file_path = os.path.join(args.outdir, file_name)
+    command = f'summarize_scores_with_descr.pl -v -t {top_score_path} -d {dbm_path} {file_path} > {out_file_path}.scores.txt 2> {out_file_path}.scores.err'
     print(command)
     subprocess.run(['bash', '-c', command])
 
