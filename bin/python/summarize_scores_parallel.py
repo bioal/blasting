@@ -2,7 +2,7 @@
 import os
 import glob
 import subprocess
-import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 
 # 入力フォルダのパス
 output_path = './out'
@@ -22,5 +22,5 @@ def run_command(file_path):
     subprocess.run(['bash', '-c', command])
 
 # マルチスレッドでコマンドを実行
-with concurrent.futures.ThreadPoolExecutor(max_workers=96) as executor:
+with ThreadPoolExecutor(max_workers=96) as executor:
     executor.map(run_command, file_paths)
