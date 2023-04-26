@@ -57,9 +57,12 @@ while (<REF>) {
 }
 close(REF);
 
-my %DESCR = ();
+my %DBM = ();
+my %DESCR;
 if ($OPT{d}) {
-    dbmopen(%DESCR, $OPT{d}, 0644) || die;
+    dbmopen(%DBM, $OPT{d}, 0644) || die;
+    %DESCR = %DBM;
+    dbmclose(%DBM);
 } else {
     die $USAGE;
 }
