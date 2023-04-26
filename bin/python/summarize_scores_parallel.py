@@ -5,14 +5,13 @@ import subprocess
 import concurrent.futures
 
 # 入力フォルダのパス
-folder_path = './'
 output_path = './out'
 dbm_path = '/home/chiba/github/bioal/blasting/examples/gene_descr.dbm'
 
 top_score_path = '/mnt/share/chiba/orth/blasting.homologene.2022-04/top_score_to_human'
 
 # ファイルパスのリストを取得
-file_paths = glob.glob(os.path.join(folder_path, '*.out'))
+file_paths = glob.glob('*.out')
 
 # コマンドの実行関数
 def run_command(file_path):
