@@ -1,11 +1,12 @@
+#!/usr/bin/env python3
 import os
 import glob
 import subprocess
 import concurrent.futures
 
 # 入力フォルダのパス
-folder_path = './blast.out.all.d'
-output_path = './blast.out.all.d/summarized_scores_0426.d'
+folder_path = './'
+output_path = './out'
 dbm_path = '/home/chiba/github/bioal/blasting/examples/gene_descr.dbm'
 
 top_score_path = '/mnt/share/chiba/orth/blasting.homologene.2022-04/top_score_to_human'
@@ -17,7 +18,7 @@ file_paths = glob.glob(os.path.join(folder_path, '*.out'))
 def run_command(file_path):
     # bashコマンドを実行
     file_name, file_ext = os.path.splitext(os.path.basename(file_path))
-    command = f'./summarize_scores_with_descr.pl -v -t {top_score_path} -d {dbm_path} {file_path} > {os.path.join(output_path, file_name)}.scores.txt'
+    command = f'summarize_scores_with_descr.pl -v -t {top_score_path} -d {dbm_path} {file_path} > {os.path.join(output_path, file_name)}.scores.txt'
     print(command)
     subprocess.run(['bash', '-c', command])
 
