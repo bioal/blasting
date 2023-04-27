@@ -13,7 +13,7 @@ if not os.path.exists(args.outdir):
     os.makedirs(args.outdir)
 
 # 入力フォルダのパス
-dbm_path = '/home/chiba/github/bioal/blasting/examples/gene_descr.dbm'
+dbm_path = '/home/chiba/github/bioal/blasting/examples/seq_descr.dbm'
 top_score_path = '/mnt/share/chiba/orth/blasting.homologene.2022-04/top_score_to_human'
 
 # ファイルパスのリストを取得
