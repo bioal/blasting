@@ -169,7 +169,7 @@ for my $seq1 (keys %SCORES) {
         if ($OPT{v}) {
             my $descr = "";
             if ($DESCR{$seq1} && $DESCR{$seq2}) {
-                die;
+                die "Which is target seq? $seq1 $seq2";
             }
             if ($DESCR{$seq1}) {
                 $descr = $DESCR{$seq1};
