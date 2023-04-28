@@ -1,10 +1,10 @@
+#!/usr/bin/env python3
+import argparse
+import os
 from multiprocessing.pool import Pool
 from multiprocessing import Lock, Manager
-import os
-import csv
 
 def main():
-    import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('query_symbol_list', action='store', type=str)
     parser.add_argument('--out_dir', action='store', type=str)
