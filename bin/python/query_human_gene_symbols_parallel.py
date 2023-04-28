@@ -10,10 +10,37 @@ def main():
     parser.add_argument('--out_dir', action='store', type=str)
     parser.add_argument('--num_threads', action='store', type=int, default=48)
     args = parser.parse_args()
+    # Make out_dir
     os.makedirs(args.out_dir, exist_ok=True)
-    query_parallel(args.query_symbol_list, args.out_dir, args.num_threads)
+    # Read gene symbols
+    with open(args.query_symbol_list, 'r') as f:
+        symbol_list = f.read().strip().split('\n')
+    symbol_to_file = {}
+    for symbol in symbol_list:
+        symbol_to_file[symbol] = os.path.join(args.out_dir, f'{symbol}.out')
+    # Map from RefSeq protein ID to symbols
+    protein_to_symbols = {}
+    with open("/home/chiba/share/ncbi/gene/gene2refseq_tax9606", 'r') as f:
+        for line in f:
+            tokens = line.strip().split("\t")
+            protein = tokens[5]
+            symbol = tokens[15]
+            if protein != '-' and symbol in symbol_to_file:
+                if protein not in protein_to_symbols:
+                    protein_to_symbols[protein] = []
+                protein_to_symbols[protein].append(symbol)
+    # Execute in parallel
+    manager = Manager()
+    lock = manager.Lock()
+    with Pool(processes=args.num_threads) as pool:
+        for src_num in range(1, 22):
+            pool.apply_async(query, args=(src_num, 1, protein_to_symbols, symbol_to_file, lock))
+        for dst_num in range(2, 22):
+            pool.apply_async(query, args=(1, dst_num, protein_to_symbols, symbol_to_file, lock))
+        pool.close()
+        pool.join()
 
-def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock, target_dir):
+def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
     file_name = f"{src_num}-{dst_num}.out"
     print(f"Reading {file_name}...")
     flush_interval = 1e8
@@ -46,34 +73,6 @@ def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock, target_dir
                     buffered_count = 0
     flush()
     print(f"Completed {file_name}!")
-
-def query_parallel(symbol_list_path, target_dir, num_threads):
-    with open(symbol_list_path, 'r') as f:
-        symbol_list = f.read().strip().split('\n')
-    manager = Manager()
-    symbol_to_file = {}
-    for symbol in symbol_list:
-        symbol_to_file[symbol] = os.path.join(target_dir, symbol + '.out')
-    protein_to_symbols = {}
-    with open("/home/chiba/share/ncbi/gene/gene2refseq_tax9606", 'r') as f:
-        for line in f:
-            tokens = line.strip().split("\t")
-            protein = tokens[5]
-            symbol = tokens[15]
-            if protein != '-' and symbol in symbol_to_file:
-                if protein not in protein_to_symbols:
-                    protein_to_symbols[protein] = []
-                protein_to_symbols[protein].append(symbol)
-
-    print("start pool")
-    lock = manager.Lock()
-    with Pool(processes=num_threads) as pool:
-        for src_num in range(1, 22):
-            pool.apply_async(query, args=(src_num, 1, protein_to_symbols, symbol_to_file, lock, target_dir))
-        for dst_num in range(2, 22):
-            pool.apply_async(query, args=(1, dst_num, protein_to_symbols, symbol_to_file, lock, target_dir))
-        pool.close()
-        pool.join()
 
 if __name__ == '__main__':
     main()
