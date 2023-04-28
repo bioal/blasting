@@ -2,7 +2,7 @@
 import argparse
 import os
 from multiprocessing.pool import Pool
-from multiprocessing import Lock, Manager
+from multiprocessing import Manager
 
 def main():
     parser = argparse.ArgumentParser()
@@ -34,13 +34,13 @@ def main():
     lock = manager.Lock()
     with Pool(processes=args.num_threads) as pool:
         for src_num in range(1, 22):
-            pool.apply_async(query, args=(src_num, 1, protein_to_symbols, symbol_to_file, lock))
+            pool.apply_async(process_a_file, args=(src_num, 1, protein_to_symbols, symbol_to_file, lock))
         for dst_num in range(2, 22):
-            pool.apply_async(query, args=(1, dst_num, protein_to_symbols, symbol_to_file, lock))
+            pool.apply_async(process_a_file, args=(1, dst_num, protein_to_symbols, symbol_to_file, lock))
         pool.close()
         pool.join()
 
-def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
+def process_a_file(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
     file_name = f"{src_num}-{dst_num}.out"
     flush_interval = 1e8
     buffered_lines = {}
