@@ -10,8 +10,7 @@ def main():
     parser.add_argument('--out_dir', action='store', type=str)
     parser.add_argument('--num_threads', action='store', type=int, default=48)
     args = parser.parse_args()
-    if not os.path.isdir(args.out_dir):
-        raise f"{args.out_dir} does not exist!"
+    os.makedirs(args.out_dir, exist_ok=True)
     query_parallel(args.query_symbol_list, args.out_dir, args.num_threads)
 
 def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock, target_dir):
