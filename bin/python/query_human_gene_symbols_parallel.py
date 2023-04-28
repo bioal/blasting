@@ -1,9 +1,19 @@
-# Execute mmseqs createdb and mmseqs rbh for all fasta file 
 from multiprocessing.pool import Pool
 from multiprocessing import Lock, Manager
 import os
 import csv
- 
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('query_symbol_list', action='store', type=str)
+    parser.add_argument('--out_dir', action='store', type=str)
+    parser.add_argument('--num_threads', action='store', type=int, default=48)
+    args = parser.parse_args()
+    if not os.path.isdir(args.out_dir):
+        raise f"{args.out_dir} does not exist!"
+    query_parallel(args.query_symbol_list, args.out_dir, args.num_threads)
+
 def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock, target_dir):
     file_name = f"{src_num}-{dst_num}.out"
     print(f"Reading {file_name}...")
@@ -66,18 +76,5 @@ def query_parallel(symbol_list_path, target_dir, num_threads):
         pool.close()
         pool.join()
 
-
-
 if __name__ == '__main__':
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('query_symbol_list', action='store', type=str)
-    parser.add_argument('--out_dir', action='store', type=str)
-    parser.add_argument('--num_threads', action='store', type=int, default=48)
-
-    args = parser.parse_args()
-    if not os.path.isdir(args.out_dir):
-        raise f"{args.out_dir} does not exist!"
-        
-    query_parallel(args.query_symbol_list, args.out_dir, args.num_threads)
-
+    main()
