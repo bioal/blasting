@@ -42,7 +42,6 @@ def main():
 
 def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
     file_name = f"{src_num}-{dst_num}.out"
-    print(f"Reading {file_name}...")
     flush_interval = 1e8
     buffered_lines = {}
     buffered_count = 0
@@ -72,7 +71,6 @@ def query(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
                     buffered_lines = {}
                     buffered_count = 0
     flush()
-    print(f"Completed {file_name}!")
 
 if __name__ == '__main__':
     main()
