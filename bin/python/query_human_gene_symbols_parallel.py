@@ -4,11 +4,14 @@ import os
 from multiprocessing.pool import Pool
 from multiprocessing import Manager
 
+blast_out_dir = "/home/chiba/share/orth/blasting.homologene.2022-04/blast.out"
+ncbi_gene_dir = "/home/chiba/share/ncbi/gene"
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('query_symbol_list', action='store', type=str)
-    parser.add_argument('--out_dir', action='store', type=str)
-    parser.add_argument('--num_threads', action='store', type=int, default=48)
+    parser.add_argument('query_symbol_list')
+    parser.add_argument('-o', '--out_dir', default='out')
+    parser.add_argument('-n', '--num_threads', type=int, default=48)
     args = parser.parse_args()
     # Make out_dir
     os.makedirs(args.out_dir, exist_ok=True)
@@ -20,7 +23,7 @@ def main():
         symbol_to_file[symbol] = os.path.join(args.out_dir, f'{symbol}.out')
     # Map from RefSeq protein ID to symbols
     protein_to_symbols = {}
-    with open("/home/chiba/share/ncbi/gene/gene2refseq_tax9606", 'r') as f:
+    with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
         for line in f:
             tokens = line.strip().split("\t")
             protein = tokens[5]
@@ -50,7 +53,7 @@ def process_a_file(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
             for (symbol, lines) in buffered_lines.items():
                 with open(symbol_to_file[symbol], "a") as dst:
                     dst.write("".join(lines))     
-    with open(f"/home/chiba/share/orth/blasting.homologene.2022-04/blast.out/{file_name}", "r") as f:
+    with open(f"{blast_out_dir}/{file_name}", "r") as f:
         for line in f:
             row = line.strip().split("\t")
             query = row[0].strip()
