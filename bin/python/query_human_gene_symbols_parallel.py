@@ -6,6 +6,7 @@ from multiprocessing import Manager
 
 blast_out_dir = "/home/chiba/share/orth/blasting.homologene.2022-04/blast.out"
 ncbi_gene_dir = "/home/chiba/share/ncbi/gene"
+out_dir = "out"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -13,14 +14,14 @@ def main():
     parser.add_argument('-o', '--out_dir', default='out')
     parser.add_argument('-n', '--num_threads', type=int, default=48)
     args = parser.parse_args()
+    out_dir = args.out_dir
     # Make out_dir
     os.makedirs(args.out_dir, exist_ok=True)
     # Read gene symbols
+    symbol_dict = {}
     with open(args.query_symbol_list, 'r') as f:
-        symbol_list = f.read().strip().split('\n')
-    symbol_to_file = {}
-    for symbol in symbol_list:
-        symbol_to_file[symbol] = os.path.join(args.out_dir, f'{symbol}.out')
+        for symbol in f.read().strip().split('\n'):
+            symbol_dict[symbol] = True
     # Map from RefSeq protein ID to symbols
     protein_to_symbols = {}
     with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
@@ -28,7 +29,7 @@ def main():
             tokens = line.strip().split("\t")
             protein = tokens[5]
             symbol = tokens[15]
-            if protein != '-' and symbol in symbol_to_file:
+            if protein != '-' and symbol in symbol_dict:
                 if protein not in protein_to_symbols:
                     protein_to_symbols[protein] = []
                 protein_to_symbols[protein].append(symbol)
@@ -37,13 +38,13 @@ def main():
     lock = manager.Lock()
     with Pool(processes=args.num_threads) as pool:
         for src_num in range(1, 22):
-            pool.apply_async(process_a_file, args=(src_num, 1, protein_to_symbols, symbol_to_file, lock))
+            pool.apply_async(process_a_file, args=(src_num, 1, protein_to_symbols, lock))
         for dst_num in range(2, 22):
-            pool.apply_async(process_a_file, args=(1, dst_num, protein_to_symbols, symbol_to_file, lock))
+            pool.apply_async(process_a_file, args=(1, dst_num, protein_to_symbols, lock))
         pool.close()
         pool.join()
 
-def process_a_file(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
+def process_a_file(src_num, dst_num, protein_to_symbols, lock):
     file_name = f"{src_num}-{dst_num}.out"
     flush_interval = 1e8
     buffered_lines = {}
@@ -51,7 +52,7 @@ def process_a_file(src_num, dst_num, protein_to_symbols, symbol_to_file, lock):
     def flush():
         with lock:
             for (symbol, lines) in buffered_lines.items():
-                with open(symbol_to_file[symbol], "a") as dst:
+                with open(f"{out_dir}/{symbol}.out", "a") as dst:
                     dst.write("".join(lines))     
     with open(f"{blast_out_dir}/{file_name}", "r") as f:
         for line in f:
