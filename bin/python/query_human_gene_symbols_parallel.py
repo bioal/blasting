@@ -47,12 +47,12 @@ def main():
 
 def process_a_file(src_num, dst_num):
     file_name = f"{src_num}-{dst_num}.out"
-    flush_interval = 1e8
-    buffered_lines = {}
-    buffered_count = 0
-    def flush():
+    buffer_size = 1e8
+    buffer_dict = {}
+    buffer_count = 0
+    def flush_buffer():
         with lock:
-            for (symbol, lines) in buffered_lines.items():
+            for (symbol, lines) in buffer_dict.items():
                 with open(f"{args.out_dir}/{symbol}.out", "a") as dst:
                     dst.write("".join(lines))     
     with open(f"{blast_out_dir}/{file_name}", "r") as f:
@@ -67,15 +67,15 @@ def process_a_file(src_num, dst_num):
                 symbols = symbols + refseq_to_symbols[target]
             symbols = list(set(symbols)) # make unique
             for symbol in symbols:
-                if symbol not in buffered_lines.keys():
-                    buffered_lines[symbol] = []
-                buffered_lines[symbol].append(f"{file_name}:{line}")
-                buffered_count += 1
-                if buffered_count % flush_interval == 0:
-                    flush()
-                    buffered_lines = {}
-                    buffered_count = 0
-    flush()
+                if symbol not in buffer_dict.keys():
+                    buffer_dict[symbol] = []
+                buffer_dict[symbol].append(f"{file_name}:{line}")
+                buffer_count += 1
+                if buffer_count % buffer_size == 0:
+                    flush_buffer()
+                    buffer_dict = {}
+                    buffer_count = 0
+    flush_buffer()
 
 if __name__ == '__main__':
     main()
