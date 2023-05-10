@@ -71,7 +71,7 @@ def process_a_file(src_num, dst_num):
                     buffer_dict[symbol] = []
                 buffer_dict[symbol].append(f"{file_name}:{line}")
                 buffer_count += 1
-                if buffer_count % buffer_size == 0:
+                if buffer_count >= buffer_size:
                     flush_buffer()
                     buffer_dict = {}
                     buffer_count = 0
