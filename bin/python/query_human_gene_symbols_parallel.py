@@ -8,7 +8,7 @@ blast_out_dir = "/home/chiba/share/orth/blasting.homologene.2022-04/blast.out"
 ncbi_gene_dir = "/home/chiba/share/ncbi/gene"
 
 parser = argparse.ArgumentParser()
-parser.add_argument('query_symbol_list')
+parser.add_argument('-l', '--symbol_list')
 parser.add_argument('-o', '--out_dir', default='out')
 parser.add_argument('-n', '--num_threads', type=int, default=48)
 args = parser.parse_args()
@@ -20,9 +20,10 @@ lock = manager.Lock()
 
 # Read gene symbols
 symbol_dict = {}
-with open(args.query_symbol_list, 'r') as f:
-    for symbol in f.read().strip().split('\n'):
-        symbol_dict[symbol] = True
+if args.symbol_list:
+    with open(args.symbol_list, 'r') as f:
+        for symbol in f.read().strip().split('\n'):
+            symbol_dict[symbol] = True
 
 # Map from RefSeq protein ID to symbols
 refseq_to_symbols = {}
@@ -32,7 +33,7 @@ with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
         protein = tokens[5]
         symbol = tokens[15]
         if protein != '-':
-            if not symbol in symbol_dict:
+            if args.symbol_list and not symbol in symbol_dict:
                 continue
             if protein not in refseq_to_symbols:
                 refseq_to_symbols[protein] = []
