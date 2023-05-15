@@ -31,7 +31,9 @@ with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
         tokens = line.strip().split("\t")
         protein = tokens[5]
         symbol = tokens[15]
-        if protein != '-' and symbol in symbol_dict:
+        if protein != '-':
+            if not symbol in symbol_dict:
+                continue
             if protein not in refseq_to_symbols:
                 refseq_to_symbols[protein] = []
             refseq_to_symbols[protein].append(symbol)
