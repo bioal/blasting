@@ -4,11 +4,11 @@ import os
 from multiprocessing.pool import Pool
 from multiprocessing import Manager
 
-blast_out_dir = "/home/chiba/share/orth/blasting.homologene.2022-04/blast.out"
 ncbi_gene_dir = "/home/chiba/share/ncbi/gene"
 max_buffer_size = 1e8 # 100M lines ~ 10GB
 
 parser = argparse.ArgumentParser()
+parser.add_argument('blast_out_dir')
 parser.add_argument('-l', '--symbol_list')
 parser.add_argument('-o', '--out_dir', default='out')
 parser.add_argument('-n', '--num_threads', type=int, default=48)
@@ -54,7 +54,7 @@ def process_a_file(src_num, dst_num):
             for (symbol, lines) in buffer.items():
                 with open(f"{args.out_dir}/{symbol}.out", "a") as dst:
                     dst.write("".join(lines))     
-    with open(f"{blast_out_dir}/{src_num}-{dst_num}.out", "r") as f:
+    with open(f"{args.blast_out_dir}/{src_num}-{dst_num}.out", "r") as f:
         for line in f:
             row = line.strip().split("\t")
             query = row[0].strip()
