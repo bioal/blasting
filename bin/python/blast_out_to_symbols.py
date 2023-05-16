@@ -19,12 +19,11 @@ os.makedirs(args.out_dir, exist_ok=True)
 manager = Manager()
 lock = manager.Lock()
 
-# Read gene symbols
-symbol_dict = {}
+input_symbols = set()
 if args.symbol_list:
     with open(args.symbol_list, 'r') as f:
         for symbol in f.read().strip().split('\n'):
-            symbol_dict[symbol] = True
+            input_symbols.add(symbol)
 
 # Map from RefSeq protein ID to symbols
 refseq_to_symbols = {}
@@ -34,7 +33,7 @@ with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
         protein = tokens[5]
         symbol = tokens[15]
         if protein != '-':
-            if args.symbol_list and not symbol in symbol_dict:
+            if args.symbol_list and not symbol in input_symbols:
                 continue
             refseq_to_symbols[protein] = symbol
 
