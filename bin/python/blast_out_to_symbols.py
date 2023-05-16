@@ -36,9 +36,7 @@ with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
         if protein != '-':
             if args.symbol_list and not symbol in symbol_dict:
                 continue
-            if protein not in refseq_to_symbols:
-                refseq_to_symbols[protein] = []
-            refseq_to_symbols[protein].append(symbol)
+            refseq_to_symbols[protein] = symbol
 
 def main():
     with Pool(processes=args.num_threads) as pool:
@@ -64,9 +62,9 @@ def process_a_file(src_num, dst_num):
             target = row[1].strip()
             symbols = []
             if query in refseq_to_symbols:
-                symbols = symbols + refseq_to_symbols[query]
+                symbols.append(refseq_to_symbols[query])
             if target in refseq_to_symbols:
-                symbols = symbols + refseq_to_symbols[target]
+                symbols.append(refseq_to_symbols[target])
             symbols = list(set(symbols)) # make unique
             for symbol in symbols:
                 if symbol not in buffer.keys():
