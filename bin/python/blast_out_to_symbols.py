@@ -25,17 +25,17 @@ if args.symbol_list:
         for symbol in f.read().strip().split('\n'):
             input_symbols.add(symbol)
 
-# Map from RefSeq protein ID to symbols
-refseq_to_symbols = {}
+refseq_to_symbol = {}
 with open(f"{ncbi_gene_dir}/gene2refseq_tax9606", 'r') as f:
     for line in f:
         tokens = line.strip().split("\t")
         protein = tokens[5]
         symbol = tokens[15]
-        if protein != '-':
-            if args.symbol_list and not symbol in input_symbols:
-                continue
-            refseq_to_symbols[protein] = symbol
+        if protein == '-':
+            continue
+        if args.symbol_list and not symbol in input_symbols:
+            continue
+        refseq_to_symbol[protein] = symbol
 
 def main():
     with Pool(processes=args.num_threads) as pool:
@@ -60,10 +60,10 @@ def process_a_file(src_num, dst_num):
             query = row[0].strip()
             target = row[1].strip()
             symbols = set()
-            if query in refseq_to_symbols:
-                symbols.add(refseq_to_symbols[query])
-            if target in refseq_to_symbols:
-                symbols.add(refseq_to_symbols[target])
+            if query in refseq_to_symbol:
+                symbols.add(refseq_to_symbol[query])
+            if target in refseq_to_symbol:
+                symbols.add(refseq_to_symbol[target])
             for symbol in symbols:
                 if symbol not in buffer.keys():
                     buffer[symbol] = []
