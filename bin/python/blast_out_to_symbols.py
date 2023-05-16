@@ -60,12 +60,11 @@ def process_a_file(src_num, dst_num):
             row = line.strip().split("\t")
             query = row[0].strip()
             target = row[1].strip()
-            symbols = []
+            symbols = set()
             if query in refseq_to_symbols:
-                symbols.append(refseq_to_symbols[query])
+                symbols.add(refseq_to_symbols[query])
             if target in refseq_to_symbols:
-                symbols.append(refseq_to_symbols[target])
-            symbols = list(set(symbols)) # make unique
+                symbols.add(refseq_to_symbols[target])
             for symbol in symbols:
                 if symbol not in buffer.keys():
                     buffer[symbol] = []
