@@ -6,6 +6,7 @@ from multiprocessing import Manager
 
 blast_out_dir = "/home/chiba/share/orth/blasting.homologene.2022-04/blast.out"
 ncbi_gene_dir = "/home/chiba/share/ncbi/gene"
+max_buffer_size = 1e8 # 100M lines ~ 10GB
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-l', '--symbol_list')
@@ -49,16 +50,14 @@ def main():
         pool.join()
 
 def process_a_file(src_num, dst_num):
-    file_name = f"{src_num}-{dst_num}.out"
-    buffer_size = 1e8
-    buffer_dict = {}
-    buffer_count = 0
+    buffer = {}
+    count = 0
     def flush_buffer():
         with lock:
-            for (symbol, lines) in buffer_dict.items():
+            for (symbol, lines) in buffer.items():
                 with open(f"{args.out_dir}/{symbol}.out", "a") as dst:
                     dst.write("".join(lines))     
-    with open(f"{blast_out_dir}/{file_name}", "r") as f:
+    with open(f"{blast_out_dir}/{src_num}-{dst_num}.out", "r") as f:
         for line in f:
             row = line.strip().split("\t")
             query = row[0].strip()
@@ -70,14 +69,14 @@ def process_a_file(src_num, dst_num):
                 symbols = symbols + refseq_to_symbols[target]
             symbols = list(set(symbols)) # make unique
             for symbol in symbols:
-                if symbol not in buffer_dict.keys():
-                    buffer_dict[symbol] = []
-                buffer_dict[symbol].append(f"{file_name}:{line}")
-                buffer_count += 1
-                if buffer_count >= buffer_size:
+                if symbol not in buffer.keys():
+                    buffer[symbol] = []
+                buffer[symbol].append(f"{src_num}-{dst_num}.out:{line}")
+                count += 1
+                if count >= max_buffer_size:
                     flush_buffer()
-                    buffer_dict = {}
-                    buffer_count = 0
+                    buffer = {}
+                    count = 0
     flush_buffer()
 
 if __name__ == '__main__':
